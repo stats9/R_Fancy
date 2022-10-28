@@ -1,0 +1,2 @@
+# Neadle Buffon Problem
+This repository is used to solve the Buffon's needle problem, with two different codings in R, one without using a special package and the other with the use of packages, to simulate the Buffon's needle problem.
