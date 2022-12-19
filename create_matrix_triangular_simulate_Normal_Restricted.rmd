@@ -1,0 +1,66 @@
+---
+title: "Untitled"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/quarto/bin/tools")
+```
+
+## Ex I.
+
+#### A function that takes a square matrix and sets it to zero above the main diagonal
+
+```{r}
+
+fun_tri_mat <- function(A){
+    D <- dim(A)
+    if(D[1] != D[2]) stop("A must be square matrix")
+    n <- D[1]
+    for(i in 1:(n-1)){
+        for(j in (i+1):n){
+            A[i, j] <- 0
+        }
+    }
+    return(A)
+}
+A <- matrix(1, 4, 4)
+A
+A2 <- fun_tri_mat(A)
+A2
+```
+
+
+
+***
+
+
+
+## EX II.
+
+#### A function that is a normal sample of the given limits, in such a way that the simulated 
+#### values must be larger than the specified value of A and smaller than the specified value of B. 
+#### In this function, the size of the production sample and the user's desired mean and standard deviation, 
+#### as well as the user's desired limits, are given in the function arguments.
+
+
+
+```{r}
+create_normal_restrict <- function(size, 
+Mu, Sig, a, b){
+    i = 0
+    Sample <- c()
+    while(i <= size){
+        temp1 <- rnorm(1, Mu, Sig)
+        if(temp1 < b && temp1 > a){
+            i = i + 1; Sample[i] <- temp1
+        }
+    }
+    return(Sample)
+}
+s <- create_normal_restrict(size = 10, Mu = 0, Sig = 2, a = 2, b = 4)
+s
+all(s > 2) && all(s < 4)
+
+```
