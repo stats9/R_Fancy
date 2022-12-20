@@ -114,8 +114,8 @@ Weak_law_large_num <- function(size, Mu, showPlot = TRUE){
     list_result <- list(Mean_result = E_mean, list_result = E)
     if(showPlot){
         plot(x = 1:n, y = E_mean, col = "darkblue", type = "l", xlab = "size of sample", ylab = "Sample Mean")
-        abline(h = Mu, lwd = 3, lty = 2, col = "yellow")
-        legend("topright", legend = expression(mu), lty = 3, lwd = 2, col = "yellow", bg = "black", cex = 3, 
+        abline(h = Mu, lwd = 1.5, lty = 2, col = "yellow")
+        legend("topright", legend = expression(mu), lty = 2, lwd = 3, col = "yellow", bg = "black", cex = 3, 
         text.col = "white")
     }
     return(list_result)
