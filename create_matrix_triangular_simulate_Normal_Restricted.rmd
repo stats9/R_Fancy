@@ -64,3 +64,62 @@ s
 all(s > 2) && all(s < 4)
 
 ```
+
+
+
+***
+
+
+## EX III. 
+
+#### Edit code for EX II.
+
+```{r}
+create_normal_restrict <- function(size, 
+Mu, Sig, a, b){
+    Sample <- c()
+    for(i in 1:size){
+        temp1 <- rnorm(1, Mu, Sig)
+        while(temp1 < a || temp1 > b){
+            temp1 <- rnorm(1, Mu, Sig)
+        }
+        Sample[i] <- temp1
+    }
+    return(Sample)
+}
+s <- create_normal_restrict(size = 20, Mu = 2, Sig = 3, a = 3, b = 5)
+s
+all(s > 3) && all(s < 5)
+
+```
+
+
+
+***
+
+
+## EX IV. 
+
+#### Simulation to prove the weak law of large numbers
+
+```{r}
+
+Weak_law_large_num <- function(size, Mu, showPlot = TRUE){
+    n <- size
+    E <- list()
+    for(i in 1:n){
+        E[[i]] <- rnorm(i, )
+    }
+    E_mean <- unlist(lapply(E, mean))
+    list_result <- list(Mean_result = E_mean, list_result = E)
+    if(showPlot) plot(x = 1:n, y = E_mean, col = "darkblue", type = "l", xlab = "size of sample", ylab = "Sample Mean")
+    return(list_result)
+}
+
+Result <- Weak_law_large_num(size = 1e+4, Mu = 2.5, showPlot = T) 
+E <- Result$list_result
+E[[5]]
+E[[10]]
+E[[20]]
+E[[50]]
+```
