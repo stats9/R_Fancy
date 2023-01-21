@@ -1,0 +1,502 @@
+---
+title: "Regressions Models for Count data (hcrabs)"
+author: "habib ezatabadi (stats9)"
+output: github_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools")
+
+```
+
+## loading libraries
+
+```{r}
+library(bayesrules)
+library(rstanarm)
+library(bayesplot)
+library(tidyverse)
+library(tidybayes)
+library(pscl) 
+library(broom.mixed)
+library(summarytools)
+library(rsq)
+library(MASS)
+library(caret)
+```
+
+
+
+## loading data
+
+```{r}
+data(hcrabs)
+## get summary of data ---------------------------------
+dfSummary(hcrabs)
+```
+
+
+
+
+## define train and test set for implement Model and evaluate
+
+
+```{r}
+## define seed
+set.seed(2012)
+## create train data and test data
+ind_train <- createDataPartition(hcrabs$num.satellites, p = .75, 
+list = F)
+train_dat <- hcrabs[ind_train, ]; test_dat <- hcrabs[-ind_train, ]
+dfSummary(train_dat)
+dfSummary(test_dat)
+
+```
+
+
+
+
+
+## barplot for freq of num.satellite (response variable)
+
+
+```{r}
+
+hcrabs$num.satellites %>% table %>% 
+data.frame %>%
+setNames(c("num.satellites", "freq")) %>%
+ggplot(aes(x = num.satellites, y = freq)) +
+geom_col(fill = "gold") +
+geom_line(colour = "red", aes(x = as.numeric(num.satellites, y = freq))) + 
+geom_text(aes(x = num.satellites, y = freq, label = freq, vjust = -1)) + 
+theme_bw()
+####################################
+```
+
+
+
+
+
+# define model I, poisson model with fixed parameter as lambda -------------------------------------------
+
+
+```{r}
+Model1 <- glm(num.satellites ~ . , data = train_dat, 
+family = poisson(link = "log"))
+summary(Model1)
+AIC_model1 <- AIC(Model1)
+dispersion_index <- Model1$deviance / Model1$df.residual
+dispersion_index
+ifelse(pchisq(Model1$deviance, df = Model1$df.residual, lower.tail = F) > .05, 
+"Goodness of fit model accepted", "Model not fit")
+```
+
+
+
+
+
+# define Model II,  negative binomial model -----------------------------------
+
+```{r}
+Model2 <- glm.nb(num.satellites ~ ., 
+data = train_dat)
+summary(Model2)
+AIC_model2 <- AIC(Model2)
+dispersion_index <- Model2$deviance / Model2$df.residual
+dispersion_index
+ifelse(pchisq(Model2$deviance, df = Model2$df.residual, lower.tail = F) > .05, 
+"Goodness of fit model accepted", "Model not fit")
+
+```
+
+
+# define Model III, poisson zero inflated Model -------------------------------------------
+
+```{r}
+train_dat$num.satellites %>% freq
+Model3 <- zeroinfl(num.satellites ~ . | ., dist = "poisson", data = train_dat)
+summary(Model3)
+AIC_model3 <- AIC(Model3)
+```
+
+
+
+
+# define Model IV, negative bonomial zero inflated Model -----------------------------------------
+```{r}
+Model4 <- zeroinfl(num.satellites ~ . | ., dist = "negbin", data = train_dat)
+summary(Model4)
+AIC_model4 <- AIC(Model4)
+```
+
+
+
+
+# define Model V, bayesian poisson regression model ----------------------------------------
+
+
+```{r}
+hcrabs %>%
+ggplot(aes(x = num.satellites, y = weight, 
+colour = color)) + 
+geom_point() +
+theme_bw()
+
+hcrabs %>%
+ggplot(aes(x = num.satellites, y = weight, 
+colour = spine)) + 
+geom_point() +
+theme_bw()
+
+
+temp1 <- mean(hcrabs$num.satellites)
+mean_intercept <- log(temp1)
+
+Model5 <- stan_glm(num.satellites ~ ., 
+data = train_dat, 
+family = poisson(link = "log"), 
+prior_intercept = normal(mean_intercept, 1), 
+prior = normal(0, 4, autoscale = TRUE), 
+chains = 4, 
+iter = 1e+4, 
+seed = 2012)
+
+
+## check model
+set.seed(2012)
+pp_check(Model5, 
+plotfun = "hist", 
+nreps = 5) + 
+xlab("nums_satellite")
+pp_check(Model5) + 
+xlab("nums_satellite")
+
+
+train_dat %>%
+add_epred_draws(newdata = ., object = Model5, ndraws = 10) %>%
+ggplot(aes(x = weight, y = num.satellites, color = color)) + 
+geom_line(aes(y = .epred, group = paste(color, .draw)), 
+alpha = .1) + 
+geom_point(data = hcrabs, size = 1, alpha = .5) + 
+theme_bw()
+
+
+train_dat %>%
+add_epred_draws(newdata = ., object = Model5, ndraws = 10) %>%
+ggplot(aes(x = width, y = num.satellites, color = spine)) + 
+geom_line(aes(y = .epred, group = paste(spine, .draw)), 
+alpha = .2) + 
+geom_point(data = hcrabs, size = 1, alpha = .5) + 
+theme_bw()
+
+tidy(Model5, conf.int = TRUE, 
+conf.level = 0.95)
+
+## Model evaluation
+
+set.seed(2012)
+
+poiss_pred <- posterior_predict(Model5, newdata = train_dat)
+
+## plot the posterior predictive models for each color and spine
+
+
+ppc_intervals_grouped(train_dat$num.satellites, 
+yrep = poiss_pred, x = train_dat$width, group = train_dat$color, 
+prob = .5, prob_outer = .95, 
+facet_args = list(scales = "fixed"))
+
+
+ppc_intervals_grouped(train_dat$num.satellites, 
+yrep = poiss_pred, x = train_dat$width, group = train_dat$spine, 
+prob = .5, prob_outer = .95, 
+facet_args = list(scales = "fixed"))
+
+ppc_intervals(y = train_dat$num.satellites, 
+yrep = poiss_pred, 
+x = train_dat$weight, 
+prob = .5, prob_outer = .95, 
+size = 1)
+
+
+## for get accuracy of model
+prediction_summary(model = Model5, 
+data = train_dat)
+
+
+## cross validation accuracy
+
+pois_cv <- prediction_summary_cv(model = Model5, 
+data = train_dat, k = 5)
+pois_cv$cv
+```
+
+
+
+# define Model VI, negative binomail bayesian Model --------------------------------------------
+
+```{r}
+
+Model6 <- stan_glm(num.satellites ~ ., 
+data = train_dat, 
+family = neg_binomial_2, 
+prior_intercept = normal(mean_intercept, 1), 
+prior = normal(0, 4, autoscale = TRUE), 
+prior_aux = exponential(1, autoscale = TRUE),
+chains = 4, 
+iter = 1e+4, 
+seed = 2012)
+
+
+## check model
+set.seed(2012)
+pp_check(Model6, 
+plotfun = "hist", 
+nreps = 5) + 
+xlab("nums_satellite")
+pp_check(Model6) + 
+xlab("nums_satellite")
+
+
+train_dat %>%
+add_epred_draws(newdata = ., object = Model6, ndraws = 10) %>%
+ggplot(aes(x = weight, y = num.satellites, color = color)) + 
+geom_line(aes(y = .epred, group = paste(color, .draw)), 
+alpha = .1) + 
+geom_point(data = hcrabs, size = 1, alpha = .5) + 
+theme_bw()
+
+
+train_dat %>%
+add_epred_draws(newdata = ., object = Model6, ndraws = 10) %>%
+ggplot(aes(x = width, y = num.satellites, color = spine)) + 
+geom_line(aes(y = .epred, group = paste(spine, .draw)), 
+alpha = .2) + 
+geom_point(data = hcrabs, size = 1, alpha = .5) + 
+theme_bw()
+
+tidy(Model6, conf.int = TRUE, 
+conf.level = 0.95)
+
+## Model evaluation
+
+set.seed(2012)
+
+neg_pred <- posterior_predict(Model6, newdata = train_dat)
+
+## plot the posterior predictive models for each color and spine
+
+
+ppc_intervals_grouped(train_dat$num.satellites, 
+yrep = neg_pred, x = train_dat$width, group = train_dat$color, 
+prob = .5, prob_outer = .95, 
+facet_args = list(scales = "fixed"))
+
+
+ppc_intervals_grouped(train_dat$num.satellites, 
+yrep = neg_pred, x = train_dat$width, group = train_dat$spine, 
+prob = .5, prob_outer = .95, 
+facet_args = list(scales = "fixed"))
+
+ppc_intervals(y = train_dat$num.satellites, 
+yrep = neg_pred, 
+x = train_dat$weight, 
+prob = .5, prob_outer = .95, 
+size = 1)
+
+
+## for get accuracy of model
+prediction_summary(model = Model6, 
+data = train_dat)
+
+
+## cross validation accuracy
+
+neg_cv <- prediction_summary_cv(model = Model6, 
+data = train_dat, k = 5)
+neg_cv$cv
+
+```
+
+
+
+
+
+
+
+
+# Compare Models ---------------------------------------------------
+
+
+```{r}
+x_test <- test_dat %>% mutate(num.satellites = NULL)
+y_test <- test_dat$num.satellites
+yhat_test_model1 <- predict(Model1, newdata = x_test, type = "response")
+yhat_test_model2 <- predict(Model2, newdata = x_test, type = "response")
+yhat_test_model3 <- predict(Model3, newdata = x_test, type = "response")
+yhat_test_model4 <- predict(Model4, newdata = x_test, type = "response")
+
+yhat_train_model1 <- predict(Model1, type = "response")
+yhat_train_model2 <- predict(Model2, type = "response")
+yhat_train_model3 <- predict(Model3, type = "response")
+yhat_train_model4 <- predict(Model4, type = "response")
+
+y_test <- test_dat$num.satellites
+
+coef_model5 <- tidy(Model5, conf.int = TRUE, 
+conf.level = 0.95)$estimate
+coef_model5
+
+get_pred_bayes <- function(x, Coef, dat){
+    xx <- dat[x, ]
+    beta0 <- Coef[1]
+    beta_col2 <- 0
+    beta_col3 <- Coef[2]
+    beta_col4 <- Coef[3]
+    beta_col5 <- Coef[4]
+    beta_spine1 <- 0
+    beta_spine2 <- Coef[5]
+    beta_spine3 <- Coef[6]
+    beta_width <- Coef[7]
+    beta_weight <- Coef[8]
+    color1 <- xx[1]
+    spine1 <- xx[2]
+    temp2 <-as.character(color1)
+    beta_hat_col <- switch(temp2, 
+    "2" = beta_col2, 
+    "3" = beta_col3, 
+    "4" = beta_col4, 
+    beta_col5)
+    temp4 <- as.character(spine1)
+    beta_hat_spine <- switch(temp4, 
+    "1" = beta_spine1, 
+    "2" = beta_spine2, 
+    beta_spine3)
+    res <- exp(beta0 + beta_width * xx[3] + beta_weight * xx[4] + 
+    beta_hat_col + beta_hat_spine) %>% setNames(NULL)
+    return(res)
+    } 
+
+
+
+
+
+
+
+
+x_train <- train_dat %>% mutate(num.satellites = NULL)
+yhat_test_model5 <- lapply(1:nrow(x_test), get_pred_bayes, Coef = coef_model5, 
+dat = x_test) %>%
+unlist
+
+yhat_train_model5 <- lapply(1:nrow(x_train), get_pred_bayes, 
+Coef = coef_model5, dat = x_train) %>%
+unlist
+
+
+coef_model6 <-tidy(Model6, conf.int = TRUE, 
+conf.level = 0.95)$estimate
+
+yhat_test_model6 <- lapply(1:nrow(x_test), get_pred_bayes, Coef = coef_model6, 
+dat = x_test) %>%
+unlist
+
+
+yhat_train_model6 <- lapply(1:nrow(x_train), get_pred_bayes, 
+Coef = coef_model6, dat = x_train) %>%
+unlist
+x_train
+
+AIC_model5 <- waic(Model5)$estimates[][3, 1]
+AIC_model6 <- waic(Model6)$estimates[][3, 1]
+
+
+result_aic <- data.frame(
+    Model = c("poisson", "negative binomial", 
+    "poisson zero inflated", "negative binomial zero inflated", 
+    "Bayesian Poisson", "Bayesian Negative Binomial"), 
+    AIC = c(AIC_model1, AIC_model2, AIC_model3, 
+    AIC_model4, AIC_model5, AIC_model6)
+)
+knitr :: kable(result_aic, 
+caption = "Compare Models with AIC criteria", align = "l")
+
+RMSE_model1 <- sqrt(mean((y_test - yhat_test_model1)^2))
+RMSE_model2 <- sqrt(mean((y_test - yhat_test_model2)^2))
+RMSE_model3 <- sqrt(mean((y_test - yhat_test_model3)^2))
+RMSE_model4 <- sqrt(mean((y_test - yhat_test_model4)^2))
+RMSE_model5 <- sqrt(mean((y_test - yhat_test_model5)^2))
+RMSE_model6 <- sqrt(mean((y_test - yhat_test_model6)^2))
+
+y_train <- train_dat$num.satellites
+
+
+RMSE_train_model1 <- sqrt(mean((y_train - yhat_train_model1)^2))
+RMSE_train_model2 <- sqrt(mean((y_train - yhat_train_model2)^2))
+RMSE_train_model3 <- sqrt(mean((y_train - yhat_train_model3)^2))
+RMSE_train_model4 <- sqrt(mean((y_train - yhat_train_model4)^2))
+RMSE_train_model5 <- sqrt(mean((y_train - yhat_train_model5)^2))
+RMSE_train_model6 <- sqrt(mean((y_train - yhat_train_model6)^2))
+result_rmse_test <- data.frame(
+    Model = c("poisson", "negative binomial", 
+    "poisson zero inflated", "negative binomial zero inflated", 
+    "Bayesian Poisson", "Bayesian Negative Binomial"), 
+    RMSE = c(RMSE_model1, RMSE_model2, RMSE_model3, 
+    RMSE_model4, RMSE_model5, RMSE_model6)
+)
+
+
+result_rmse_train <- data.frame(
+    Model = c("poisson", "negative binomial", 
+    "poisson zero inflated", "negative binomial zero inflated", 
+    "Bayesian Poisson", "Bayesian Negative Binomial"), 
+    RMSE = c(RMSE_train_model1, RMSE_train_model2, RMSE_train_model3, 
+    RMSE_train_model4, RMSE_train_model5, RMSE_train_model6)
+)
+
+knitr :: kable(result_rmse_train, 
+caption = "Compare Models with RMSE criteria in train data", align = "l")
+
+knitr :: kable(result_rmse_test, 
+caption = "Compare Models with RMSE criteria in test data", align = "l")
+
+result_aic %>% 
+ggplot(aes(y = Model, x = AIC, fill = Model)) +
+geom_col() + 
+theme_bw() + 
+xlim(c(0, 850)) +  
+guides(fill = 'none') + 
+geom_text(aes(y = Model, x = AIC, label = AIC %>% round(2)), 
+hjust = -.1) + 
+labs(title = "Compare Models With AIC", y = "Models")  
+
+result_rmse_train %>% 
+ggplot(aes(y = Model, x = RMSE, fill = Model)) +
+geom_col() + 
+theme_bw() + 
+xlim(c(0, 5)) + 
+guides(fill = 'none') + 
+geom_text(aes(y = Model, x = RMSE, label = RMSE %>% round(4)), 
+hjust = -.2) + 
+labs(x = "RMSE Train", 
+title = "Compare Models With RMSE Train", y = "Models") 
+
+
+
+result_rmse_test %>% 
+ggplot(aes(y = Model, x = RMSE, fill = Model)) +
+geom_col() + 
+theme_bw() + 
+xlim(c(0, 8)) + 
+guides(fill = 'none') + 
+geom_text(aes(y = Model, x = RMSE, label = RMSE %>% round(4)), 
+hjust = -.2) + 
+labs(x = "RMSE Test", 
+title = "Compare Models With RMSE Test", y = "Models") 
+```
+
+
+
+
