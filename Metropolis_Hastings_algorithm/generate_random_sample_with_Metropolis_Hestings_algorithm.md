@@ -2,28 +2,28 @@ Metropolis-Hastings algorithm
 ================
 
 > Define a function for generate x from f density function that
-> $f(x) \propto x^2 \exp(-x^2/2)$ $$
-> \def\innt{\int_{-\infty}^{+\infty}}
-> \begin{aligned}
-> \mathcal{E}(X) = \innt xf(x)dx &=\\ 
-> & \int_{-\infty}^{+\infty}x \times x^2 \times c\times\exp(-x^2/2)dx = \\
-> & c\times \sqrt{2\pi}\times \innt x^3 \times \frac{1}{\sqrt{2\pi}}\exp(-x^2/2)dx \\
-> & = 0, 
-> \end{aligned}
-> $$
+> $f(x) \propto x^2 \exp(-x^2/2)$
 
 $$
-  \def\innt{\int_{-\infty}^{+\infty}}
   \begin{aligned}
-  \text{Var}(X) = \innt c \times x^4\exp(-x^2/2)dx &=\\
-  & \sqrt{2\pi} \times c \innt x^4 \times \frac{1}{\sqrt{2\pi}}\exp(-x^2/2)dx= \\
+  \mathcal{E}(X) = \int_{-\infty}^{+\infty}~ xf(x)dx &=\\ 
+  & \int_{-\infty}^{+\infty}x \times x^2 \times c\times\exp(-x^2/2)dx = \\
+  & c\times \sqrt{2\pi}\times \int_{-\infty}^{+\infty}~ x^3 \times \frac{1}{\sqrt{2\pi}}\exp(-x^2/2)dx \\
+  & = 0, 
+  \end{aligned}
+  $$
+
+$$
+  \begin{aligned}
+  \text{Var}(X) = \int_{-\infty}^{+\infty}~ c \times x^4\exp(-x^2/2)dx &=\\
+  & \sqrt{2\pi} \times c \int_{-\infty}^{+\infty}~ x^4 \times \frac{1}{\sqrt{2\pi}}\exp(-x^2/2)dx= \\
   & \sqrt{2\pi}\times c\times \mathcal{E}(Y^4) ~~s.t~ Y \sim N(0, 1) \\
   & \mathcal{E}(Y^4) = \mathcal{E}((Y^2)^2), ~~\text{if} ~~~ V = Y^2 \implies \\
   & V \sim \chi^2_{(1)} \implies \mathcal{E}((Y^2)^2) = \mathcal{E}(V^2) = \\ 
   & \text{Var}(V) + \mathcal{E}(V)^2 = 2 + 1 = 3 \implies \\
   & \text{Var}(X) = 3 + c \times \sqrt{2\pi} \\
-  & c = ?, ~~\innt f(x) dx = 1 \implies \\
-  & \innt c\times  x^2 \exp(-x^2)dx=1 \implies
+  & c = ?, ~~\int_{-\infty}^{+\infty}~ f(x) dx = 1 \implies \\
+  & \int_{-\infty}^{+\infty}~ c\times  x^2 \exp(-x^2)dx=1 \implies
   c = \frac{1}{\sqrt{2\pi}}
   \end{aligned}
   $$
@@ -58,13 +58,13 @@ res <- mcmc_generate(n = n)
 var(res)
 ```
 
-    ## [1] 3.032806
+    ## [1] 2.982526
 
 ``` r
 mean(res)
 ```
 
-    ## [1] -0.02009365
+    ## [1] 0.03100334
 
 ``` r
 hist(res)
@@ -81,13 +81,13 @@ res2 <- mcmc_generate(n2, tau2, x_init2)
 var(res2)
 ```
 
-    ## [1] 3.000335
+    ## [1] 3.008554
 
 ``` r
 mean(res2)
 ```
 
-    ## [1] -0.006530159
+    ## [1] -0.002719747
 
 ``` r
 hist(res2)
@@ -102,13 +102,13 @@ res3 <- mcmc_generate(n2, tau3, x_init2)
 var(res3)
 ```
 
-    ## [1] 2.994389
+    ## [1] 3.001546
 
 ``` r
 mean(res3)
 ```
 
-    ## [1] 0.02791776
+    ## [1] 0.01051213
 
 ``` r
 hist(res3)
@@ -123,13 +123,13 @@ res4 <- mcmc_generate(n2, tau3, x_init2)
 var(res4)
 ```
 
-    ## [1] 3.001354
+    ## [1] 2.997287
 
 ``` r
 mean(res4)
 ```
 
-    ## [1] 0.004070809
+    ## [1] 0.01499242
 
 ``` r
 hist(res4)
@@ -145,14 +145,14 @@ dfun2 <- function(x) var(mcmc_generate(x, tau = 1, x_init = 0))
 Mean_result <- unlist(lapply(N, dfun))
 Var_result <- unlist(lapply(N, dfun2))
 plot(x = N, y = Mean_result, type = "l", col = "red", main = "Converge Plot for Mean")
-abline(h = 0, type = 2, col = "darkblue", lwd = 1.5)
+abline(h = 0, lty = 2, col = "darkblue", lwd = 1.5)
 ```
 
 ![](generate_random_sample_with_Metropolis_Hestings_algorithm_files/figure-gfm/unnamed-chunk-1-5.png)<!-- -->
 
 ``` r
 plot(x = N, y = Var_result, type = "l", col = "red", main = "Converge Plot for Variance")
-abline(h = 3, type = 2, col = "darkblue", lwd = 1.5)
+abline(h = 3, lty = 2, col = "darkblue", lwd = 1.5)
 ```
 
 ![](generate_random_sample_with_Metropolis_Hestings_algorithm_files/figure-gfm/unnamed-chunk-1-6.png)<!-- -->
