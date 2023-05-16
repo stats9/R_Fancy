@@ -70,3 +70,11 @@ g <- rasterGrob(my_image1, interpolate=TRUE)
 Final_Plot <- my_plot +
   annotation_custom(g, xmin = -4, xmax = 4, ymin = 0.5, ymax = 2) 
 ```
+
+------------------------------------------------------------------------
+
+``` r
+Final_Plot
+```
+
+![](Create_a_log_for_biostatistics_for_sums_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
