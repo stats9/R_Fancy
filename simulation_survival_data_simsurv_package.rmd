@@ -1,0 +1,142 @@
+---
+title: "Simulation Survival data"
+output: github_document
+author: habib ezatabadi
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+if (! require(simsurv))  {
+    install.packages("simsurv")
+    require(simsurv)
+}
+if (! require(tidyverse))  {
+    install.packages("tidyverse")
+    require(tidyverse)
+}
+
+if(! require(ggsurvfit)) {
+    install.packages("ggsurvfit")
+    library(ggsurvfit)
+}
+if (! require (gtsummary)) {
+    install.packages("gtsummary")
+    library(gtsummary)
+}
+if (! require (tidycmprsk)) {
+    install.packages("tidycmprsk")
+    library(tidycmprsk)
+}
+
+if (! require (condSURV)) {
+    install.packages("condSURV")
+    library(condSURV)
+}
+library(survival)
+if (! require(survminer)) {
+    install.packages("survminer")
+    require(survminer)
+}
+```
+
+```{r}
+library(httpgd)
+hgd()
+hgd_browse()
+date_ex <- 
+  tibble(
+    sx_date = c("2007-06-22", "2004-02-13", "2010-10-27"), 
+    last_fup_date = c("2017-04-15", "2018-07-04", "2016-10-31")
+    )
+
+date_ex
+```
+
+
+
+```{r}
+
+```
+## Simulate Data
+
+```{r}
+
+## use simsurv package
+set.seed(215)
+nsim = 100
+Treat <- rbinom(n = nsim, size = 1, prob = 0.55)
+bp <- rnorm(n = nsim, mean = 120, sd = 2)
+dat <- data.frame(treat = Treat, bp = bp)
+betas = data.frame(lambda = rep(4, nsim), beta1 = rep(2, nsim), beta2 = rep(-3, nsim))
+hAzard <- function(t, x, betas) t ** betas[['lambda']] * exp(-betas['lambda'] * t ** betas[['lambda']] * (betas[['beta1']] * x[['treat']] + betas[['beta2']]*x[['bp']]))
+
+Time <- simsurv(hazard = hAzard, x = dat, betas = betas, maxt = 2, seed = 215)
+
+Data <- data.frame(id = Time$id, Event_time = Time$eventtime, Status = Time$status, 
+                    Group = dat$treat, bp = dat$bp)
+
+knitr :: kable(Data, caption = "Simulated Data", align = "c")
+```
+
+
+## estimate survival function with Kaplan Meier 
+```{r}
+y <- with(Data, {Surv(Event_time, Status)})
+Model1 <- survfit(y ~ 1, data = Data)
+Model2 <- coxph(y ~ 1, Data)
+
+
+ggsurvplot(survfit(Model2), 
+conf.int = FALSE, 
+conf.int.style = "step",
+ggtheme = theme_bw(), 
+surv.median.line = "hv", 
+log.rank.weights = "1", 
+data = Data,
+colour = "darkblue")
+
+ggsurvplot(Model1, 
+conf.int = FALSE, 
+conf.int.style = "step",
+ggtheme = theme_bw(), 
+surv.median.line = "hv", 
+log.rank.weights = "1", 
+data = Data)
+
+```
+
+```{r}
+Model3 <- survfit(y ~ Group, data = Data)
+Model4 <- coxph(y ~ Group, data = Data)
+
+
+
+
+ggsurvplot(Model3, 
+conf.int = FALSE, 
+conf.int.style = "step",
+ggtheme = theme_bw(), 
+surv.median.line = "hv", 
+log.rank.weights = "1", 
+data = Data)
+
+
+
+ggsurvplot(survfit(Model4), 
+conf.int = FALSE, 
+conf.int.style = "step",
+ggtheme = theme_bw(), 
+surv.median.line = "hv", 
+log.rank.weights = "1", 
+data = Data,
+colour = "darkblue")
+```
+```{r}
+
+
+```
