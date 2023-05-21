@@ -5,7 +5,7 @@ author: habib ezatabadi
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 ```
 
 
@@ -13,11 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 if (! require(simsurv))  {
     install.packages("simsurv")
-    require(simsurv)
+    library(simsurv)
 }
 if (! require(tidyverse))  {
     install.packages("tidyverse")
-    require(tidyverse)
+    library(tidyverse)
 }
 
 if(! require(ggsurvfit)) {
@@ -40,8 +40,19 @@ if (! require (condSURV)) {
 library(survival)
 if (! require(survminer)) {
     install.packages("survminer")
-    require(survminer)
+    library(survminer)
 }
+
+if (! require(magick)) {
+    install.packages("magick")
+    library(magick)
+}
+
+if (! require(cowplot)) {
+    install.packages("cowplot")
+    library(cowplot)
+}
+
 ```
 
 ```{r}
@@ -91,23 +102,30 @@ Model1 <- survfit(y ~ 1, data = Data)
 Model2 <- coxph(y ~ 1, Data)
 
 
-ggsurvplot(survfit(Model2), 
+P1 <- ggsurvplot(Model1, 
 conf.int = FALSE, 
 conf.int.style = "step",
 ggtheme = theme_bw(), 
 surv.median.line = "hv", 
 log.rank.weights = "1", 
 data = Data,
-colour = "darkblue")
+colour = "darkblue") + 
+labs(title = "Kaplan-Meier Curve")
 
-ggsurvplot(Model1, 
+
+P11 = ggsurvfit(Model1) + labs(title = "Kaplan-Meier Curve")
+
+
+P2 <- ggsurvplot(survfit(Model2), 
 conf.int = FALSE, 
 conf.int.style = "step",
 ggtheme = theme_bw(), 
 surv.median.line = "hv", 
 log.rank.weights = "1", 
-data = Data)
-
+data = Data) + 
+theme(legend.position = element_blank())
+ggdraw(P11) + draw_label("stats9", colour = "#8557f180", size = 120, angle = 45, alpha = 0.3)
+print(P2 + labs(title = "Survival Curve with estimation by Cox Regression"))
 ```
 
 ```{r}
