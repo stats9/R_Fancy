@@ -82,9 +82,7 @@ if (! require(ggimage)) {
     install.packages("ggimage")
     library(ggimage)
 }
-
-
-image <- readPNG(file.choose())   
+  
 ```
 
 ```{r}
@@ -96,9 +94,6 @@ hgd_browse()
 
 
 
-```{r}
-
-```
 ## Simulate Data
 
 ```{r}
