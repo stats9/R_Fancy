@@ -85,7 +85,7 @@ if (! require(ggimage)) {
   
 ```
 
-```{r}
+```{r eval = FALSE, echo = FALSE}
 library(httpgd)
 hgd()
 hgd_browse()
@@ -205,36 +205,6 @@ dat1
 
 
 
-########## Fine gray cause-specific model for dat1
-
-explanatory   <- c("x1", "x2")
-dependent_dss <- "Surv(time, status)"
-dependent_crr <- "Surv(time, cause)"
-
-dat1 %>%
-    # Summary table
-  summary_factorlist(dependent_dss, explanatory, 
-                     column = TRUE, fit_id = TRUE) %>%
-    # CPH univariable
-      ff_merge(
-    dat1 %>%
-      coxphmulti(dependent_dss, explanatory) %>%
-      fit2df(estimate_suffix = " (DSS CPH univariable)")
-    ) %>%
-    # CPH multivariable
-  ff_merge(
-    dat1 %>%
-      coxphmulti(dependent_dss, explanatory) %>%
-      fit2df(estimate_suffix = " (DSS CPH multivariable)")
-    ) %>%
-    # Fine and Gray competing risks regression
-  ff_merge(
-    dat1 %>%
-      crrmulti(dependent_crr, explanatory) %>%
-      fit2df(estimate_suffix = " (competing risks multivariable)")
-    ) %>%
-  select(-fit_id, -index) %>%
-  dependent_label(dat1, "Survival")
 
 
 
