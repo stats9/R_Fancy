@@ -266,8 +266,8 @@ cuminc(Surv(time, status) ~ 1, data = .) %>%
 ggdraw(Pcmp) + draw_label("stats9", colour = "#8557f180", size = 120, angle = 45, alpha = 0.3)
 
 
-
-
+image
+rasterImage(image)
 ggbackground(Pcmp, image, alpha = .3)
 background_image(image, alpha = 0.3) 
 ```
