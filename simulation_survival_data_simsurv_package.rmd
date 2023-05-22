@@ -15,6 +15,14 @@ if (! require(simsurv))  {
     install.packages("simsurv")
     library(simsurv)
 }
+
+
+if (! require(survsim))  {
+    install.packages("survsim")
+    library(survsim)
+}
+
+
 if (! require(tidyverse))  {
     install.packages("tidyverse")
     library(tidyverse)
@@ -53,19 +61,37 @@ if (! require(cowplot)) {
     library(cowplot)
 }
 
+
+if (! require(finalfit)) {
+    install.packages("finalfit")
+    library(finalfit)
+}
+
+if (! require(ggpubr)) {
+    install.packages("ggpubr")
+    library(ggpubr)
+}
+
+if (! require(png)) {
+    install.packages("png")
+    library(png)
+}
+
+
+if (! require(ggimage)) {
+    install.packages("ggimage")
+    library(ggimage)
+}
+
+
+image <- readPNG(file.choose())   
 ```
 
 ```{r}
 library(httpgd)
 hgd()
 hgd_browse()
-date_ex <- 
-  tibble(
-    sx_date = c("2007-06-22", "2004-02-13", "2010-10-27"), 
-    last_fup_date = c("2017-04-15", "2018-07-04", "2016-10-31")
-    )
 
-date_ex
 ```
 
 
@@ -90,7 +116,8 @@ Time <- simsurv(hazard = hAzard, x = dat, betas = betas, maxt = 2, seed = 215)
 
 Data <- data.frame(id = Time$id, Event_time = Time$eventtime, Status = Time$status, 
                     Group = dat$treat, bp = dat$bp)
-
+# save(Data, file = "Data.RData")
+# load("Data.RData")
 knitr :: kable(Data, caption = "Simulated Data", align = "c")
 ```
 
@@ -122,8 +149,7 @@ conf.int.style = "step",
 ggtheme = theme_bw(), 
 surv.median.line = "hv", 
 log.rank.weights = "1", 
-data = Data) + 
-theme(legend.position = element_blank())
+data = Data) 
 ggdraw(P11) + draw_label("stats9", colour = "#8557f180", size = 120, angle = 45, alpha = 0.3)
 print(P2 + labs(title = "Survival Curve with estimation by Cox Regression"))
 ```
@@ -155,6 +181,93 @@ data = Data,
 colour = "darkblue")
 ```
 ```{r}
+?crisk.sim
+help(package = "survsim")
+
+sim.data <- crisk.sim(n=50, foltime=100, dist.ev=c("lnorm","lnorm"),
+anc.ev=c(1.479687, 0.5268302),beta0.ev=c(3.80342, 2.535374),dist.cens="lnorm",
+anc.cens=1.242733,beta0.cens=5.421748,z=list(c("unif", 0.8,1.2), c("unif", 0.9, 1.5)), 
+beta=list(c(0.1698695,0.0007010932),c(0.3735146,0.5591244)), 
+x=list(c("bern", 0.381), c("bern", 0.564)), nsit=2)
+sim.data
 
 
+set.seed(125)
+dat_sim <- crisk.sim(n = 100, foltime=50, dist.ev=c("lnorm","lnorm"),
+anc.ev=c(1.479687, 0.5268302), beta0.ev=c(3.80342, 2.535374), dist.cens = "lnorm",
+anc.cens = 0.1, beta0.cens = 3.2,  
+beta = list(c(0.1698695, 0.0007010932), c(0.02, 0.03)), 
+x=list(c("bern", 0.381), c("normal", 2, .5)), nsit = 2)
+Nc <- ncol(dat_sim)
+
+dat1 <- dat_sim %>% data.frame %>% .[, 1:9] %>%
+mutate(cause = case_when(is.na(cause) ~ 0, 
+.default = cause), start = NULL, stop = NULL, z = NULL) %>% 
+rename(x2 = x.1, x1 = x) %>%
+mutate(cause = as.factor(cause), status = as.factor(status)) 
+
+dat1
+
+
+
+########## Fine gray cause-specific model for dat1
+
+explanatory   <- c("x1", "x2")
+dependent_dss <- "Surv(time, status)"
+dependent_crr <- "Surv(time, cause)"
+
+dat1 %>%
+    # Summary table
+  summary_factorlist(dependent_dss, explanatory, 
+                     column = TRUE, fit_id = TRUE) %>%
+    # CPH univariable
+      ff_merge(
+    dat1 %>%
+      coxphmulti(dependent_dss, explanatory) %>%
+      fit2df(estimate_suffix = " (DSS CPH univariable)")
+    ) %>%
+    # CPH multivariable
+  ff_merge(
+    dat1 %>%
+      coxphmulti(dependent_dss, explanatory) %>%
+      fit2df(estimate_suffix = " (DSS CPH multivariable)")
+    ) %>%
+    # Fine and Gray competing risks regression
+  ff_merge(
+    dat1 %>%
+      crrmulti(dependent_crr, explanatory) %>%
+      fit2df(estimate_suffix = " (competing risks multivariable)")
+    ) %>%
+  select(-fit_id, -index) %>%
+  dependent_label(dat1, "Survival")
+
+
+
+
+```
+
+
+## competing risk 
+
+
+```{r}
+dat1 %>%
+cuminc(Surv(time, cause) ~ 1, data = .)  ## tidycmprsk
+
+Pcmp <- dat1 %>% 
+cuminc(Surv(time, status) ~ 1, data = .) %>% 
+  ggcuminc() + 
+  labs(
+    x = "Days"
+  ) + 
+  add_confidence_interval() +
+  add_risktable()
+
+ggdraw(Pcmp) + draw_label("stats9", colour = "#8557f180", size = 120, angle = 45, alpha = 0.3)
+
+
+
+
+ggbackground(Pcmp, image, alpha = .3)
+background_image(image, alpha = 0.3) 
 ```
