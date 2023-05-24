@@ -40,13 +40,13 @@ colour = "#0a6d17") +
   coord_cartesian(x = c(-20, 20), y = c(-1, 2)) +
   geom_segment(data = dat, aes(x = x, xend = xend, y = y, 
   yend = yend, group = Group), colour = "#0a6d17") +
-  annotate(geom = "text", label = "Bridging", angle = -54.3, x = -5, 
-  y = f2(-5) + 0.3, colour = "black", size = 10, family = "serif") + 
+  annotate(geom = "text", label = "Bridging", angle = -60, x = -5, 
+  y = f2(-5) + 0.35, colour = "black", size = 10, family = "serif") + 
     annotate(geom = "text", label = "The", angle = 0, x = 0, 
   y = f2(0) + 0.15, colour = "black", size = 10, family = "serif") +
-    annotate(geom = "text", label = "Sciences", angle = 55, x = 5, 
+    annotate(geom = "text", label = "Sciences", angle = 62.5, x = 5, 
   y = f2(5) + 0.3, colour = "black", size = 10, family = "serif") + 
-  annotate(geom = "text", label = "Faculty of Biostatistics 
+  annotate(geom = "text", label = "Departement of Biostatistics 
   Shiraz University of Medical Sciences", 
   x = 0, y = -.75, colour = "black", family = "serif", 
   size = 5) + 
