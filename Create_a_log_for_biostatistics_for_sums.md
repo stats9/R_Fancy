@@ -15,7 +15,7 @@ library(png)
 set.seed(769534)                              # Create example data
 f1 <- function(x) 1/64* (x + 20)**2 
 f2 <- function(x) 1/64 * x**2 
-f3 <- function(x) 1/64 * (x - 20)**2 
+f3 <- function(x) 1/64 * (x ****- 20)**2 
 
 seq1 <- f1((-20):(-11))
 seq2 <- f2((-10):(9))
