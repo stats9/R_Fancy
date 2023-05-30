@@ -150,35 +150,6 @@ print(P2 + labs(title = "Survival Curve with estimation by Cox Regression"))
 ```
 
 ```{r}
-Model3 <- survfit(y ~ Group, data = Data)
-Model4 <- coxph(y ~ Group, data = Data)
-
-
-
-
-ggsurvplot(Model3, 
-conf.int = FALSE, 
-conf.int.style = "step",
-ggtheme = theme_bw(), 
-surv.median.line = "hv", 
-log.rank.weights = "1", 
-data = Data)
-
-
-
-ggsurvplot(survfit(Model4), 
-conf.int = FALSE, 
-conf.int.style = "step",
-ggtheme = theme_bw(), 
-surv.median.line = "hv", 
-log.rank.weights = "1", 
-data = Data,
-colour = "darkblue")
-```
-```{r}
-?crisk.sim
-help(package = "survsim")
-
 sim.data <- crisk.sim(n=50, foltime=100, dist.ev=c("lnorm","lnorm"),
 anc.ev=c(1.479687, 0.5268302),beta0.ev=c(3.80342, 2.535374),dist.cens="lnorm",
 anc.cens=1.242733,beta0.cens=5.421748,z=list(c("unif", 0.8,1.2), c("unif", 0.9, 1.5)), 
@@ -251,13 +222,13 @@ cuminc(Surv(time, status) ~  x1, data = dat1) %>%
 
 ## draw cif based level of x1
 
-cuminc(Surv(time, status) ~ x1, data = dat1) %>% 
-  ggcuminc() + 
+Pcmp2 <- cuminc(Surv(time, status) ~ x1, data = dat1) %>% 
+  ggcuminc(size = 1.5) + 
   labs(
-    x = "Days"
-  ) + 
-  add_confidence_interval() +
-  add_risktable()
+    x = "Days")  +
+  add_risktable() 
+Pcmp2
+ggdraw(Pcmp2 + labs(title = "CIF function")) + draw_label("stats9", colour = "black", size = 120, angle = 45, alpha = 0.15) 
 
 ## cause-specific regression 
 
