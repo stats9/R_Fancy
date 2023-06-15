@@ -8,13 +8,6 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-
 ## import data
 
 ```{r}
@@ -219,8 +212,6 @@ knitr :: kable(Final_Results, caption = "Final Results for First Season",
 
 
 ```{r}
-tiff("Plot_1.tiff", width = 16, height = 9, family = "courier new", res = 300, 
-unit = "in", bg = "wheat")
 plot(y1 ~ x, cex = 2,
 col = adjustcolor("black", .4), pch = 15, main = "Robust Models")
 
@@ -255,9 +246,6 @@ legend("topleft", legend = c("LAD: q = 0.1", "LAD: q = 0.5",
 "LAD: q = 0.9", "LMS", "LSE", "LTS"), 
 col = c(1, "red", 3, 4, "darkgreen", "blue"), lty= c(6:3, 1, 9), 
 lwd = rep(c(3, 5), c(5, 1)), bty = "n", cex = 2.5)
-dev.off()
-
-
 ```
 
 
