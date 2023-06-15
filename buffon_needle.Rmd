@@ -1,6 +1,6 @@
 ---
 title: "buffon Needle"
-author: "habib ezatabadi"
+author: "habib ezatabadi (Stats9)"
 date: ''
 output: "github_document"
 ---
