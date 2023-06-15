@@ -211,7 +211,7 @@ knitr :: kable(Final_Results, caption = "Final Results for First Season",
 ## show Figure for 6 Models
 
 
-```{r}
+```{r fig.width = 16, fig.height = 9}
 plot(y1 ~ x, cex = 2,
 col = adjustcolor("black", .4), pch = 15, main = "Robust Models")
 
@@ -245,7 +245,7 @@ col = adjustcolor("blue", alpha = 0.5), lty = 9, lwd = 5)
 legend("topleft", legend = c("LAD: q = 0.1", "LAD: q = 0.5", 
 "LAD: q = 0.9", "LMS", "LSE", "LTS"), 
 col = c(1, "red", 3, 4, "darkgreen", "blue"), lty= c(6:3, 1, 9), 
-lwd = rep(c(3, 5), c(5, 1)), bty = "n")
+lwd = rep(c(3, 5), c(5, 1)), bty = "n", cex = 2.5)
 ```
 
 

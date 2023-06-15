@@ -346,7 +346,7 @@ col = adjustcolor("blue", alpha = 0.5), lty = 9, lwd = 5)
 legend("topleft", legend = c("LAD: q = 0.1", "LAD: q = 0.5", 
 "LAD: q = 0.9", "LMS", "LSE", "LTS"), 
 col = c(1, "red", 3, 4, "darkgreen", "blue"), lty= c(6:3, 1, 9), 
-lwd = rep(c(3, 5), c(5, 1)), bty = "n")
+lwd = rep(c(3, 5), c(5, 1)), bty = "n", cex = 2.5)
 ```
 
 ![](Quantile_Regression_NonLinear_Regression_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
