@@ -8,7 +8,7 @@ Habib Ezatabadi Sample Code
 ``` r
 set.seed(1)
 library(tidyverse)
-library(rstatix)
+
 n <- 1000
 National_number <- sample(1:20, size = n, replace = TRUE)
 khedmat <- sample(1:6, size = n, replace = TRUE)
