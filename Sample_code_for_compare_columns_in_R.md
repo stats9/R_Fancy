@@ -72,37 +72,14 @@ get_khesarat(2)
 dat2 <- dat %>% 
         group_by(khedmat, FR_CR, sex) %>%
             summarise(TOT_khesarat = sum(khesarat))
-```
-
-    `summarise()` has grouped output by 'khedmat', 'FR_CR'. You can override using
-    the `.groups` argument.
-
-``` r
 library(quantreg)
-```
 
-    Loading required package: SparseM
-
-    Attaching package: 'SparseM'
-
-    The following object is masked from 'package:base':
-
-        backsolve
-
-``` r
 ## q = 0.5 
 
 Median_Model  <- rq(TOT_khesarat ~ ., data = dat2, tau = 0.5)
-```
 
-    Warning in rq.fit.br(x, y, tau = tau, ...): Solution may be nonunique
-
-``` r
 summary(Median_Model)
 ```
-
-    Warning in rq.fit.br(x, y, tau = tau, ci = TRUE, ...): Solution may be
-    nonunique
 
 
     Call: rq(formula = TOT_khesarat ~ ., tau = 0.5, data = dat2)
@@ -124,16 +101,9 @@ summary(Median_Model)
 ## q = 0.75
 
 Model2  <- rq(TOT_khesarat ~ ., data = dat2, tau = 0.75)
-```
 
-    Warning in rq.fit.br(x, y, tau = tau, ...): Solution may be nonunique
-
-``` r
 summary(Model2)
 ```
-
-    Warning in rq.fit.br(x, y, tau = tau, ci = TRUE, ...): Solution may be
-    nonunique
 
 
     Call: rq(formula = TOT_khesarat ~ ., tau = 0.75, data = dat2)

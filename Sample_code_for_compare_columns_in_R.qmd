@@ -42,6 +42,9 @@ head(dat)
 
 
 ```{r}
+#| warning: false
+#| message: false
+
 get_khesarat <- function(x) {    # x is National_number
     if (! (x %in% dat$National_number)) {
         stop ("this value is not in data set")
@@ -62,7 +65,8 @@ get_khesarat(2)
 
 
 ```{r}
-
+#| warning: false
+#| message: false
 
 dat2 <- dat %>% 
         group_by(khedmat, FR_CR, sex) %>%
