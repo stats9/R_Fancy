@@ -8,16 +8,24 @@ editor: visual
 ## sample code 
 
 
+#### (a) Get khesarat --------------------
+
+
 ```{r}
 #| warning: false
 #| message: false
 
-
+set.seed(1)
 library(tidyverse)
+library(rstatix)
 n <- 1000
-code_meli <- sample(1:20, size = n, replace = TRUE)
+National_number <- sample(1:20, size = n, replace = TRUE)
 khedmat <- sample(1:6, size = n, replace = TRUE)
-dat <- tibble(code_meli, khedmat) %>%
+sex <- sample(c("female", "male"), size = n, replace = TRUE, 
+prob = c(.4, .6))
+FR_CR <- sample(c("Ten", "Twenty"), size = n, replace = TRUE)
+
+dat <- tibble(National_number, khedmat, sex, FR_CR) %>%
                 mutate(khesarat = case_when(
                     khedmat == 1 ~ 1000, 
                     khedmat == 2 ~ 2000, 
@@ -25,19 +33,21 @@ dat <- tibble(code_meli, khedmat) %>%
                     khedmat == 4 ~ 4000,
                     khedmat == 5 ~ 5000, 
                     TRUE ~ 6000 
-                ))
+                )) %>% mutate(across(c(2, 3, 4), as.factor))
+
+
 
 head(dat)
 ```
 
 
 ```{r}
-get_khesarat <- function(x) {    # x is code melli 
-    if (! (x %in% dat$code_meli)) {
+get_khesarat <- function(x) {    # x is National_number
+    if (! (x %in% dat$National_number)) {
         stop ("this value is not in data set")
     }
     result <- dat %>%
-    filter (code_meli == x) %>%
+    filter (National_number == x) %>%
     group_by (khedmat) %>%
     summarise(Khesarat_kol = sum(khesarat))
     return (result)
@@ -45,3 +55,31 @@ get_khesarat <- function(x) {    # x is code melli
 
 get_khesarat(2)
 ```
+
+
+
+## quantile regression 
+
+
+```{r}
+
+
+dat2 <- dat %>% 
+        group_by(khedmat, FR_CR, sex) %>%
+            summarise(TOT_khesarat = sum(khesarat))
+library(quantreg)
+
+## q = 0.5 
+
+Median_Model  <- rq(TOT_khesarat ~ ., data = dat2, tau = 0.5)
+
+summary(Median_Model)
+
+
+## q = 0.75
+
+Model2  <- rq(TOT_khesarat ~ ., data = dat2, tau = 0.75)
+
+summary(Model2)
+```
+
