@@ -101,6 +101,59 @@ summary(Model2)
 ```{r}
 #| warning: false
 #| message: false
+#| eval: false
+#| echo: false
+
+library(tidyverse)
+library(readxl)
+# dat <- read_xlsx(file.choose(), col_names = TRUE)
+# saveRDS(dat, file = "b_a_k.RDS")
+dat <- readRDS(file = "b_a_k.RDS")
+head(dat)
+tail(dat)
+dim(dat)
+names(dat)
+glimpse(dat)
+
+if (! require(summarytools)) {
+    install.packages ("summarytools")
+    library (summarytools)
+}
+
+dfSummary(dat)
+dat$khedmat %>% table
+
+dat2 <- dat %>%
+    filter(khedmat %in% as.character(1:8))
+
+# dat2 <- dat %>% mutate(
+#     khedmat = case_when(
+#         khedmat == "آمبولانس" ~ "Ambulance", 
+#         khedmat == "خدمات توانبخشي" ~ "khedmat Tavanbakhshi", 
+#         khedmat == "زايمان" ~ "zayeman", 
+#         khedmat == "سمعک" ~ "samAk", 
+#         khedmat == "لنز ،عينک" ~ "Lenz, Eynak", 
+#         khedmat == "هزينه رفع عيوب انکساري ديددوچشم" ~ "hazineh enkesari ...",
+#         khedmat == "هزينه هاي درمان نازایي و ناباروري" ~ "hazineh nazayi , ...", 
+#         .default = khedmat 
+#     )
+# )
+dat2 %>% .$khedmat %>% table
+
+
+dat2 <- dat2 %>%
+mutate(across(c(2, 5, 6), factor)) 
+```
+
+
+
+
+## Update new:1 ------------------
+
+
+```{r}
+#| warning: false
+#| message: false
 
 
 library(tidyverse)
@@ -120,26 +173,17 @@ if (! require(summarytools)) {
 dfSummary(dat)
 dat$khedmat %>% table
 
+dat2 <- dat %>%
+    filter(khedmat %in% as.character(1:8))
 
-dat2 <- dat %>% mutate(
-    khedmat = case_when(
-        khedmat == "آمبولانس" ~ "Ambulance", 
-        khedmat == "خدمات توانبخشي" ~ "khedmat Tavanbakhshi", 
-        khedmat == "زايمان" ~ "zayeman", 
-        khedmat == "سمعک" ~ "samAk", 
-        khedmat == "لنز ،عينک" ~ "Lenz, Eynak", 
-        khedmat == "هزينه رفع عيوب انکساري ديددوچشم" ~ "hazineh enkesari ...",
-        khedmat == "هزينه هاي درمان نازایي و ناباروري" ~ "hazineh nazayi , ...", 
-        .default = khedmat 
-    )
-)
+
 dat2 %>% .$khedmat %>% table
 
 
 dat2 <- dat2 %>%
 mutate(across(c(2, 5, 6), factor)) 
-```
 
+```
 ***
 
 
@@ -184,6 +228,7 @@ get_khesarat(id_sample)
 
 ***
 ***
+
 
 
 ## Quantile Regression ----------------------------

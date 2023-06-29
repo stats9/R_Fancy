@@ -129,6 +129,8 @@ summary(Model2)
 
 ## import data and get summary
 
+## Update new:1 ——————
+
 ``` r
 library(tidyverse)
 library(readxl)
@@ -267,32 +269,16 @@ dat$khedmat %>% table
                                   224 
 
 ``` r
-dat2 <- dat %>% mutate(
-    khedmat = case_when(
-        khedmat == "آمبولانس" ~ "Ambulance", 
-        khedmat == "خدمات توانبخشي" ~ "khedmat Tavanbakhshi", 
-        khedmat == "زايمان" ~ "zayeman", 
-        khedmat == "سمعک" ~ "samAk", 
-        khedmat == "لنز ،عينک" ~ "Lenz, Eynak", 
-        khedmat == "هزينه رفع عيوب انکساري ديددوچشم" ~ "hazineh enkesari ...",
-        khedmat == "هزينه هاي درمان نازایي و ناباروري" ~ "hazineh nazayi , ...", 
-        .default = khedmat 
-    )
-)
+dat2 <- dat %>%
+    filter(khedmat %in% as.character(1:8))
+
+
 dat2 %>% .$khedmat %>% table
 ```
 
     .
-                       1                    2                    3 
-                  106174                24811                 2285 
-                       4                    5                    6 
-                      87                 2241                 2752 
-                       7                    8            Ambulance 
-                    4864                29882                   12 
-    hazineh enkesari ... hazineh nazayi , ... khedmat Tavanbakhshi 
-                      39                  224                    3 
-             Lenz, Eynak                samAk              zayeman 
-                       2                    9                  566 
+         1      2      3      4      5      6      7      8 
+    106174  24811   2285     87   2241   2752   4864  29882 
 
 ``` r
 dat2 <- dat2 %>%
@@ -332,82 +318,85 @@ id_sample <- sample(unique(dat2$National_number), 10)
 get_khesarat(id_sample)
 ```
 
-    $`45782131`
-    # A tibble: 6 × 2
+    $`45826080`
+    # A tibble: 4 × 2
       khedmat Khesarat_kol
       <fct>          <dbl>
-    1 1            6420000
-    2 2           12619120
-    3 3            8204000
-    4 4          880101784
-    5 5          725219216
-    6 8            3630233
+    1 1            3325000
+    2 2           29182499
+    3 3            9480240
+    4 8            7203970
 
-    $`520217446`
+    $`520295153`
+    # A tibble: 2 × 2
+      khedmat Khesarat_kol
+      <fct>          <dbl>
+    1 1           24917500
+    2 8            9338890
+
+    $`70892067`
+    # A tibble: 3 × 2
+      khedmat Khesarat_kol
+      <fct>          <dbl>
+    1 1            6163800
+    2 2           10000000
+    3 8            5680000
+
+    $`941788601`
+    # A tibble: 4 × 2
+      khedmat Khesarat_kol
+      <fct>          <dbl>
+    1 1           21238100
+    2 2           13800053
+    3 4          366761658
+    4 8             517000
+
+    $`521291488`
+    # A tibble: 2 × 2
+      khedmat Khesarat_kol
+      <fct>          <dbl>
+    1 1            1040000
+    2 8             850000
+
+    $`33920461`
     # A tibble: 5 × 2
       khedmat Khesarat_kol
       <fct>          <dbl>
-    1 1           10601764
-    2 2            3215000
-    3 6             460000
-    4 7           12040000
-    5 8            9663080
+    1 1           34270040
+    2 2           42330460
+    3 3            3708500
+    4 6            1500000
+    5 8           23300000
 
-    $`70803765`
+    $`77991044`
     # A tibble: 2 × 2
       khedmat Khesarat_kol
       <fct>          <dbl>
-    1 2           42383008
-    2 5           94732188
+    1 1            3005000
+    2 3            7600000
 
-    $`941523977`
-    # A tibble: 3 × 2
-      khedmat Khesarat_kol
-      <fct>          <dbl>
-    1 1           16689300
-    2 2           21979600
-    3 8            2783010
-
-    $`521136611`
-    # A tibble: 3 × 2
-      khedmat Khesarat_kol
-      <fct>          <dbl>
-    1 1           30664144
-    2 2           13191750
-    3 8           58942950
-
-    $`33861595`
+    $`1229948236`
     # A tibble: 1 × 2
       khedmat Khesarat_kol
       <fct>          <dbl>
-    1 2           11568500
+    1 1             303000
 
-    $`77981162`
-    # A tibble: 1 × 2
+    $`6199751957`
+    # A tibble: 4 × 2
       khedmat Khesarat_kol
       <fct>          <dbl>
-    1 8            6946254
+    1 1            6417000
+    2 6            2150000
+    3 7           17000000
+    4 8             333000
 
-    $`1229363351`
-    # A tibble: 2 × 2
+    $`2700197666`
+    # A tibble: 3 × 2
       khedmat Khesarat_kol
       <fct>          <dbl>
-    1 1            1476980
-    2 8            5662600
-
-    $`6190082491`
-    # A tibble: 2 × 2
-      khedmat Khesarat_kol
-      <fct>          <dbl>
-    1 1            2253628
-    2 8             935950
-
-    $`2700092945`
-    # A tibble: 2 × 2
-      khedmat Khesarat_kol
-      <fct>          <dbl>
-    1 1           12800000
-    2 8           14248810
+    1 1            4151760
+    2 2            8070000
+    3 8            2124370
 
 ------------------------------------------------------------------------
 
@@ -434,25 +423,18 @@ summary(Median_Model)
     tau: [1] 0.5
 
     Coefficients:
-                                coefficients   lower bd       upper bd      
-    (Intercept)                   2.132091e+10   1.865686e+10  1.797693e+308
-    khedmat2                      4.277328e+06  -3.607033e+10   1.496294e+10
-    khedmat3                     -1.815905e+10  -5.284482e+10  -1.705335e+10
-    khedmat4                     -1.471187e+10  -4.323682e+10  -9.852005e+09
-    khedmat5                      3.507144e+10  -6.958138e+08   6.234190e+10
-    khedmat6                     -1.671983e+10  -5.136526e+10  -1.514319e+10
-    khedmat7                      1.812409e+09  -3.250619e+10   9.461485e+09
-    khedmat8                      8.052000e+06  -3.749028e+10   3.424149e+10
-    khedmatAmbulance             -1.988427e+10  -5.541091e+10  -1.866299e+10
-    khedmathazineh enkesari ...  -1.941154e+10  -5.466224e+10  -1.789755e+10
-    khedmathazineh nazayi , ...  -1.785870e+10  -5.339850e+10  -1.520638e+10
-    khedmatkhedmat Tavanbakhshi  -1.985927e+10  -5.590219e+10  1.797693e+308
-    khedmatLenz, Eynak           -1.985927e+10  -5.594259e+10  1.797693e+308
-    khedmatsamAk                 -2.117490e+10  -5.563394e+10  -1.957243e+10
-    khedmatzayeman                7.071234e+09 -1.797693e+308   1.466159e+10
-    FR_CR20                       5.192716e+07  -2.623071e+09   2.638431e+09
-    FR_CR30                      -2.131621e+10  -3.682282e+10  -1.956489e+10
-    sex1                         -1.463563e+09  -1.237091e+10  -1.024258e+08
+                coefficients   lower bd       upper bd      
+    (Intercept)   3.117373e+10   1.844930e+10   6.038150e+10
+    khedmat2     -8.822445e+08  -2.152645e+10   1.795078e+10
+    khedmat3     -2.868721e+10  -5.941248e+10  -1.254772e+10
+    khedmat4     -1.233416e+10 -1.797693e+308  -8.255265e+09
+    khedmat5      3.910237e+10   1.239452e+10   5.613935e+10
+    khedmat6     -1.903196e+10  -5.244799e+10  -1.267098e+10
+    khedmat7     -4.997239e+08  -2.595557e+10   8.054648e+09
+    khedmat8     -8.784698e+08  -2.607564e+10   2.563111e+10
+    FR_CR20       6.394990e+09  -6.774190e+09   1.564976e+10
+    FR_CR30      -3.028251e+10  -3.630485e+10  -2.222082e+10
+    sex1         -1.534731e+10  -2.178602e+10  -2.139897e+09
 
 ``` r
 ## q = 0.75
@@ -468,25 +450,18 @@ summary(Model2)
     tau: [1] 0.75
 
     Coefficients:
-                                coefficients   lower bd       upper bd      
-    (Intercept)                   5.543332e+10   3.303589e+10  1.797693e+308
-    khedmat2                     -1.987207e+10  -2.905745e+10   7.871823e+09
-    khedmat3                     -5.253090e+10  -6.119924e+10  1.797693e+308
-    khedmat4                     -4.659802e+10  -5.593623e+10  1.797693e+308
-    khedmat5                      1.784049e+10  -8.087196e+09  1.797693e+308
-    khedmat6                     -5.083224e+10  -5.957544e+10  1.797693e+308
-    khedmat7                     -1.945844e+10  -3.224466e+10   1.321856e+09
-    khedmat8                     -7.032829e+09  -2.905368e+10   1.882759e+10
-    khedmatAmbulance             -5.420920e+10  -6.360487e+10  1.797693e+308
-    khedmathazineh enkesari ...  -5.344375e+10  -6.317616e+10  1.797693e+308
-    khedmathazineh nazayi , ...  -4.976095e+10  -5.900632e+10  1.797693e+308
-    khedmatkhedmat Tavanbakhshi  -5.527332e+10  -6.407278e+10  1.797693e+308
-    khedmatLenz, Eynak           -5.527332e+10  -6.409179e+10  1.797693e+308
-    khedmatsamAk                 -5.528732e+10  -6.190587e+10  1.797693e+308
-    khedmatzayeman               -2.020394e+10  -3.195289e+10  1.797693e+308
-    FR_CR20                       1.094118e+09  -1.431365e+08   6.461668e+09
-    FR_CR30                      -3.555228e+10  -4.521226e+10  1.797693e+308
-    sex1                         -1.204124e+09  -1.594227e+10  -4.633103e+07
+                coefficients   lower bd       upper bd      
+    (Intercept)   5.543332e+10   2.893180e+10  1.797693e+308
+    khedmat2     -1.987207e+10  -3.004075e+10   7.226527e+09
+    khedmat3     -3.539000e+10  -5.843722e+10  1.797693e+308
+    khedmat4     -2.945712e+10  -5.231140e+10  1.797693e+308
+    khedmat5      1.784049e+10   8.723702e+09  1.797693e+308
+    khedmat6     -4.036927e+10  -5.632266e+10  1.797693e+308
+    khedmat7     -2.183703e+10  -2.747188e+10   3.075638e+10
+    khedmat8     -7.032829e+09  -3.099233e+10   3.446260e+10
+    FR_CR20       6.470416e+09   7.748951e+08   1.473200e+10
+    FR_CR30      -3.320479e+10  -4.605784e+10  1.797693e+308
+    sex1         -1.834502e+10  -3.511203e+10  -8.687505e+08
 
 ------------------------------------------------------------------------
 
@@ -502,7 +477,7 @@ theme_bw()
 ```
 
 <img
-src="Sample_code_for_compare_columns_in_R_files/figure-commonmark/unnamed-chunk-7-1.png"
+src="Sample_code_for_compare_columns_in_R_files/figure-commonmark/unnamed-chunk-8-1.png"
 data-fig-align="center" />
 
 ------------------------------------------------------------------------
@@ -515,7 +490,7 @@ theme_bw()
 ```
 
 <img
-src="Sample_code_for_compare_columns_in_R_files/figure-commonmark/unnamed-chunk-8-1.png"
+src="Sample_code_for_compare_columns_in_R_files/figure-commonmark/unnamed-chunk-9-1.png"
 data-fig-align="center" />
 
 ------------------------------------------------------------------------
@@ -528,5 +503,5 @@ theme_bw()
 ```
 
 <img
-src="Sample_code_for_compare_columns_in_R_files/figure-commonmark/unnamed-chunk-9-1.png"
+src="Sample_code_for_compare_columns_in_R_files/figure-commonmark/unnamed-chunk-10-1.png"
 data-fig-align="center" />
