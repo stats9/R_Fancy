@@ -87,3 +87,190 @@ Model2  <- rq(TOT_khesarat ~ ., data = dat2, tau = 0.75)
 summary(Model2)
 ```
 
+
+***
+***
+
+
+
+## Update code for new data set ---------------------
+
+
+
+## import data and get summary 
+```{r}
+#| warning: false
+#| message: false
+
+
+library(tidyverse)
+library(readxl)
+dat <- read_xlsx(file.choose(), col_names = TRUE)
+head(dat)
+tail(dat)
+dim(dat)
+names(dat)
+glimpse(dat)
+
+if (! require(summarytools)) {
+    install.packages ("summarytools")
+    library (summarytools)
+}
+
+dfSummary(dat)
+dat$khedmat %>% table
+
+
+dat2 <- dat %>% mutate(
+    khedmat = case_when(
+        khedmat == "آمبولانس" ~ "Ambulance", 
+        khedmat == "خدمات توانبخشي" ~ "khedmat Tavanbakhshi", 
+        khedmat == "زايمان" ~ "zayeman", 
+        khedmat == "سمعک" ~ "samAk", 
+        khedmat == "لنز ،عينک" ~ "Lenz, Eynak", 
+        khedmat == "هزينه رفع عيوب انکساري ديددوچشم" ~ "hazineh enkesari ...",
+        khedmat == "هزينه هاي درمان نازایي و ناباروري" ~ "hazineh nazayi , ...", 
+        .default = khedmat 
+    )
+)
+dat2 %>% .$khedmat %>% table
+
+
+dat2 <- dat2 %>%
+mutate(across(c(2, 5, 6), factor)) 
+```
+
+***
+
+
+```{r}
+#| warning: false
+#| message: false
+
+
+
+
+
+get_khesarat <- function(x) {# x is National_number or vector of national number
+    if (length(x) == 1) {
+        if (! (x %in% dat2$National_number)) {
+            stop ("this value is not in data set")
+        } else {
+            result <- dat2 %>%
+            filter (National_number == x) %>%
+            group_by (khedmat) %>%
+            summarise(Khesarat_kol = sum(Khesarat))
+        }
+    } else {
+        result <- list()
+        for (i in x) {
+            if (! (i %in% dat2$National_number)) {
+            result[[as.character(i)]] = "this value is not in data set"
+        } else {
+            result[[as.character(i)]] <- dat2 %>%
+            filter (National_number == i) %>%
+            group_by (khedmat) %>%
+            summarise(Khesarat_kol = sum(Khesarat))
+            }
+        }
+    }
+    return (result)
+}
+
+id_sample <- sample(unique(dat2$National_number), 10)
+get_khesarat(id_sample)
+
+```
+
+***
+***
+
+
+## Quantile Regression ----------------------------
+
+
+```{r}
+#| warning: false
+#| message: false
+
+dat3 <- dat2 %>% 
+        group_by(khedmat, FR_CR, sex) %>%
+            summarise(TOT_khesarat = sum(Khesarat))
+library(quantreg)
+
+## q = 0.5 
+
+Median_Model  <- rq(TOT_khesarat ~ ., data = dat3, tau = 0.5)
+
+summary(Median_Model)
+
+
+## q = 0.75
+
+Model2  <- rq(TOT_khesarat ~ ., data = dat3, tau = 0.75)
+
+summary(Model2)
+
+
+
+```
+
+
+***
+***
+
+
+## for get more details  ----------------
+
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-height: 9
+#| fig-width: 9
+#| fig-align: center
+
+
+dat3 %>%
+ggplot(aes(y = TOT_khesarat, group = sex, fill = sex)) + 
+geom_boxplot() + 
+theme_bw()
+
+```
+
+***
+
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-height: 9
+#| fig-width: 9
+#| fig-align: center
+
+
+dat3 %>%
+ggplot(aes(y = TOT_khesarat, group = FR_CR, fill = FR_CR)) + 
+geom_boxplot() + 
+theme_bw()
+
+```
+
+
+***
+
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-height: 9
+#| fig-width: 9
+#| fig-align: center
+
+
+dat3 %>%
+ggplot(aes(y = TOT_khesarat, group = khedmat, fill = khedmat)) + 
+geom_boxplot() + 
+theme_bw()
+
+```
