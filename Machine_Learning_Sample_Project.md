@@ -111,9 +111,9 @@ summary(Model_Svm)
     ##  SVM-Kernel:  radial 
     ##        cost:  1 
     ## 
-    ## Number of Support Vectors:  211
+    ## Number of Support Vectors:  216
     ## 
-    ##  ( 113 98 )
+    ##  ( 120 96 )
     ## 
     ## 
     ## Number of Classes:  2 
@@ -130,16 +130,16 @@ cfMat
 
     ##     preds
     ## real  0  1
-    ##    0  1 42
-    ##    1  6 71
+    ##    0  1 45
+    ##    1  1 73
 
 ``` r
 res_svm <- acc_error(cfMat)
 res_svm
 ```
 
-    ##   Acc Error 
-    ##   0.6   0.4
+    ##       Acc     Error 
+    ## 0.6166667 0.3833333
 
 ``` r
 pred_SCORE_svm <- attributes(
@@ -171,8 +171,8 @@ cfMat
 
     ##     pred
     ## real  0  1
-    ##    0 11 32
-    ##    1 17 60
+    ##    0 12 34
+    ##    1 16 58
 
 ``` r
 res_tree <- acc_error(cfMat)
@@ -180,7 +180,7 @@ res_tree
 ```
 
     ##       Acc     Error 
-    ## 0.5916667 0.4083333
+    ## 0.5833333 0.4166667
 
 ``` r
 rpart.plot(Model_Tree)
@@ -207,8 +207,8 @@ cfMat
 
     ##     preds
     ## real  1
-    ##    0 43
-    ##    1 77
+    ##    0 46
+    ##    1 74
 
 ``` r
 res_boost1 <- acc_error(cfMat)
@@ -216,7 +216,7 @@ res_boost1
 ```
 
     ##       Acc     Error 
-    ## 0.3583333 0.6416667
+    ## 0.3833333 0.6166667
 
 ``` r
 ## better cutof
@@ -232,7 +232,7 @@ Cut_p <- cost_perf@x.values[[1]][which.min(cost_perf@y.values[[1]])]
 Cut_p
 ```
 
-    ## [1] 0.6458752
+    ## [1] 0.6566555
 
 ``` r
 pred_LABEL_boost2 <- (pred_SCORE_boost >  Cut_p) / 1 
@@ -242,8 +242,8 @@ tab
 
     ##     pred
     ## real  0  1
-    ##    0  3 40
-    ##    1  6 71
+    ##    0  3 43
+    ##    1  1 73
 
 ``` r
 res_boost_2 <- acc_error(tab)
@@ -251,7 +251,7 @@ res_boost_2
 ```
 
     ##       Acc     Error 
-    ## 0.6166667 0.3833333
+    ## 0.6333333 0.3666667
 
 ------------------------------------------------------------------------
 
@@ -273,8 +273,8 @@ tab
 
     ##     pred
     ## real  1
-    ##    0 43
-    ##    1 77
+    ##    0 46
+    ##    1 74
 
 ``` r
 res_log <- acc_error(tab)
@@ -282,7 +282,7 @@ res_log
 ```
 
     ##       Acc     Error 
-    ## 0.3583333 0.6416667
+    ## 0.3833333 0.6166667
 
 ``` r
 ## change cutpoint 
@@ -295,8 +295,8 @@ Cut_p <- cost_perf@x.values[[1]][which.min(cost_perf@y.values[[1]])]
 Cut_p
 ```
 
-    ##       172 
-    ## 0.6163819
+    ##        47 
+    ## 0.5956299
 
 ``` r
 pred_LABEL_log2 <- (pred_SCORE_log >  Cut_p) / 1 
@@ -305,17 +305,17 @@ tab
 ```
 
     ##     pred
-    ## real  1
-    ##    0 43
-    ##    1 77
+    ## real  0  1
+    ##    0  4 42
+    ##    1  0 74
 
 ``` r
 res_log_2 <- acc_error(tab)
 res_log_2
 ```
 
-    ##       Acc     Error 
-    ## 0.3583333 0.6416667
+    ##   Acc Error 
+    ##  0.65  0.35
 
 ------------------------------------------------------------------------
 
@@ -337,8 +337,8 @@ tab
 
     ##     pred
     ## real  0  1
-    ##    0  3 40
-    ##    1  1 76
+    ##    0  3 43
+    ##    1  0 74
 
 ``` r
 res_qda <- acc_error(tab)
@@ -346,7 +346,7 @@ res_qda
 ```
 
     ##       Acc     Error 
-    ## 0.6583333 0.3416667
+    ## 0.6416667 0.3583333
 
     ***
     ***
@@ -374,8 +374,8 @@ res_qda
 
     ##     preds
     ## real  0  1
-    ##    0 15 28
-    ##    1 22 55
+    ##    0 12 34
+    ##    1 15 59
 
 ``` r
 res_rf <- acc_error(tab)
@@ -383,7 +383,7 @@ res_rf
 ```
 
     ##       Acc     Error 
-    ## 0.5833333 0.4166667
+    ## 0.5916667 0.4083333
 
 ------------------------------------------------------------------------
 
@@ -404,7 +404,7 @@ tab
     ##               ytest
     ## pred_LABEL_lda  0  1
     ##              0  0  0
-    ##              1 43 77
+    ##              1 46 74
 
 ``` r
 res_lda <- acc_error(tab)
@@ -413,7 +413,7 @@ res_lda
 ```
 
     ##       Acc     Error 
-    ## 0.6416667 0.3583333
+    ## 0.6166667 0.3833333
 
 ------------------------------------------------------------------------
 
@@ -441,11 +441,11 @@ Model_bag
     ## 
     ## No pre-processing
     ## Resampling: Cross-Validated (5 fold, repeated 1 times) 
-    ## Summary of sample sizes: 224, 224, 224, 224, 224 
+    ## Summary of sample sizes: 224, 225, 224, 223, 224 
     ## Resampling results:
     ## 
-    ##   Accuracy  Kappa     
-    ##   0.575     0.03331544
+    ##   Accuracy   Kappa      
+    ##   0.5606038  -0.01540645
 
 ``` r
 pred_SCORE_bag <- predict(Model_bag, dtest, 
@@ -458,8 +458,8 @@ tab
 
     ##     pred
     ## real  0  1
-    ##    0 16 27
-    ##    1 26 51
+    ##    0 10 36
+    ##    1 20 54
 
 ``` r
 res_bag <- acc_error(tab)
@@ -467,7 +467,7 @@ res_bag
 ```
 
     ##       Acc     Error 
-    ## 0.5583333 0.4416667
+    ## 0.5333333 0.4666667
 
 ------------------------------------------------------------------------
 
@@ -496,7 +496,7 @@ plot(roc_tree, col = 8, add = T)
 legend("bottomright", 
 legend = c("Bagging", "Logistic", "LDA", 
 "QDA", "Randomforest", "SVM", "LDA", "QDA"), 
-col = 1:8, lwd = 2, lty = 1, bty = "n", cex = 2)
+col = 1:8, lwd = 2, lty = 1, bty = "n")
 ```
 
 ![](Machine_Learning_Sample_Project_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
@@ -520,14 +520,14 @@ knitr :: kable(data_result, caption = "RESULTS", align = "c")
 
 |    Model     |    AUC    |   Error   |
 |:------------:|:---------:|:---------:|
-|   bagging    | 0.4864089 | 0.4416667 |
-|   logistic   | 0.5431894 | 0.6416667 |
-|     LDA      | 0.5431894 | 0.3583333 |
-|     QDA      | 0.5561764 | 0.3416667 |
-| Randomforest | 0.5160072 | 0.4166667 |
-|   Boosting   | 0.5360918 | 0.3833333 |
-|     SVM      | 0.5359408 | 0.4000000 |
-|     TREE     | 0.5083056 | 0.4083333 |
+|   bagging    | 0.5051410 | 0.4666667 |
+|   logistic   | 0.5133666 | 0.3500000 |
+|     LDA      | 0.5127791 | 0.3833333 |
+|     QDA      | 0.5653643 | 0.3583333 |
+| Randomforest | 0.5242362 | 0.4083333 |
+|   Boosting   | 0.5132197 | 0.3666667 |
+|     SVM      | 0.5160106 | 0.3833333 |
+|     TREE     | 0.5030846 | 0.4166667 |
 
 RESULTS
 

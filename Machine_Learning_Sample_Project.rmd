@@ -304,7 +304,7 @@ plot(roc_tree, col = 8, add = T)
 legend("bottomright", 
 legend = c("Bagging", "Logistic", "LDA", 
 "QDA", "Randomforest", "SVM", "LDA", "QDA"), 
-col = 1:8, lwd = 2, lty = 1, bty = "n", cex = 2)
+col = 1:8, lwd = 2, lty = 1, bty = "n")
 Models <- c("bagging", "logistic", "LDA", "QDA", 
 "Randomforest", "Boosting", "SVM", "TREE")
 
