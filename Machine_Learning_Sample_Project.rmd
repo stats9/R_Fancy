@@ -2,7 +2,7 @@
 title: ""
 author: ""
 date: ""
-output: word_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
