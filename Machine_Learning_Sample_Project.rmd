@@ -1,0 +1,347 @@
+---
+title: ""
+author: ""
+date: ""
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+***
+***
+
+
+## Read data
+```{r}
+Data <- read.csv(file = file.choose(), header = TRUE)
+head(Data)
+FMdat <- Data[, c(9, 6, 7)]
+head(FMdat)
+nn <- dim(FMdat)[1]
+nn
+test_ind <- sample(1:nn, size = 400 * 30 / 100, replace = FALSE)
+dtrain <- FMdat[-test_ind, ]
+dtest <- FMdat[test_ind, ]
+dim(dtrain)
+dim(dtest)
+ytest <- dtest$US
+
+acc_error <- function(tab) {
+    b <- sum(tab)
+    DIM <- dim(tab)
+    if (DIM[1] == 2 && DIM[2] == 2) {
+    a = tab[1, 1] + tab[2, 2]
+    acc = a/b; error = 1 - acc
+    result <- c("Acc" = acc, "Error" = error)
+    } else {
+        a = sum(diag(tab))
+        result = c("Acc" = a / b, "Error" = 1 - a/b)
+    }
+    result
+}
+```
+
+***
+***
+
+# Classification -------------
+
+
+
+***
+***
+
+
+
+## 1- SVM Model ---------------
+
+```{r}
+library(e1071)
+
+## define Model ------------------
+set.seed(444)
+Model_Svm <- svm(factor(US) ~ Price + Age, data = dtrain, 
+kernel = "radial", gamma = 1.5, 
+cost = 1, decision.values = TRUE)
+summary(Model_Svm)
+
+pred_LABEL_svm <- predict(Model_Svm, newdata = dtest)
+
+cfMat <- table(real = ytest, preds = pred_LABEL_svm)
+cfMat
+res_svm <- acc_error(cfMat)
+res_svm
+
+
+pred_SCORE_svm <- attributes(
+    predict(Model_Svm, dtest, 
+    decision.values = TRUE) )$decision.values
+```
+
+
+***
+***
+
+## 2-  Tree Model -------------------
+
+
+```{r}
+library(rpart)
+library(rpart.plot)
+Model_Tree <- rpart(factor(US) ~ Price + Age, 
+data = dtrain, parms = list(split = "information"), 
+method = "class")
+
+# summary(Model_Tree)
+##########################
+
+pred_LABEL_tree <- predict(Model_Tree, dtest, type = "class")
+pred_SCORE_tree <- predict(Model_Tree, dtest, type = "prob")[, 2]
+cfMat <- table(real = ytest, pred = pred_LABEL_tree)
+cfMat
+res_tree <- acc_error(cfMat)
+res_tree
+rpart.plot(Model_Tree)
+```
+***
+***
+
+
+## 3- Boosting Model ---------------
+
+
+```{r}
+set.seed(123)
+library(gbm)
+Model_boost <- gbm(US ~ Price + Age, data = dtrain, 
+distribution = "bernoulli", 
+shrinkage = 0.0001)
+pred_SCORE_boost <- predict(Model_boost, 
+newdata = dtest, type = "response")
+pred_LABEL_boost <- (pred_SCORE_boost > 0.5) / 1
+cfMat <- table(real = ytest, 
+preds = pred_LABEL_boost)
+cfMat
+res_boost1 <- acc_error(cfMat)
+res_boost1
+## better cutof
+
+library(ROCR)
+
+train_pred <- predict(Model_boost, type = "response")
+yt <- dtrain$US
+temp1 <- predict(Model_boost, type = "response")
+temp2 <- prediction(temp1, yt) 
+cost_perf = performance(temp2, "cost")
+Cut_p <- cost_perf@x.values[[1]][which.min(cost_perf@y.values[[1]])] 
+Cut_p
+
+
+pred_LABEL_boost2 <- (pred_SCORE_boost >  Cut_p) / 1 
+tab <- table(real = ytest, pred = pred_LABEL_boost2)
+tab
+res_boost_2 <- acc_error(tab)
+res_boost_2
+
+```
+***
+***
+
+
+## 4-  Logistic Model -----------------
+
+```{r}
+set.seed(123)
+Model_log <- glm(US ~ Price + Age, data = dtrain,
+family = binomial)
+pred_SCORE_log <- predict(Model_log, dtest, 
+type = "response")
+pred_LABEL_log <- (pred_SCORE_log > 0.5) / 1
+
+tab <- table(real = ytest, pred = pred_LABEL_log) 
+tab
+res_log <- acc_error(tab)
+res_log
+## change cutpoint 
+
+
+temp1 <- predict(Model_log, type = "response")
+temp2 <- prediction(temp1, dtrain$US) 
+cost_perf = performance(temp2, "cost")
+Cut_p <- cost_perf@x.values[[1]][which.min(cost_perf@y.values[[1]])] 
+Cut_p
+
+pred_LABEL_log2 <- (pred_SCORE_log >  Cut_p) / 1 
+tab <- table(real = ytest, pred = pred_LABEL_log2)
+tab
+res_log_2 <- acc_error(tab)
+res_log_2
+
+```
+***
+***
+
+## 5-  QDA Model ------------------------
+
+
+
+```{r}
+library(MASS)
+Model_qda <- qda(US ~ Price + Age, data = dtrain)
+pred <- predict(Model_qda, newdata = dtest, 
+type = "class")
+
+pred_LABEL_qda <- pred$class
+pred_SCORE_qda <- pred$posterior[, 2]
+tab <- table(real = ytest, pred = pred_LABEL_qda)
+tab
+res_qda <- acc_error(tab)
+res_qda
+```
+```
+***
+***
+
+
+## 6-  RandomForest Model -----------
+
+
+```{r}
+set.seed(111)
+library(randomForest)
+
+Model_rf <- randomForest(factor(US) ~ Price + Age, 
+data = dtrain, 
+ntree = 300)
+pred_LABEL_rf <- predict(Model_rf, 
+dtest, type = "response")
+pred_SCORE_rf <- predict(Model_rf, 
+dtest, type = "prob")[, 2]
+
+tab <- table(real = ytest, 
+preds = pred_LABEL_rf)
+tab
+res_rf <- acc_error(tab)
+res_rf
+```
+
+
+***
+***
+
+
+## 7-  LDA Model -------------------
+
+```{r}
+
+library(MASS)
+Model_lda <- lda(US ~ Price + Age, data = dtrain)
+pred <- predict(Model_lda, newdata = dtest, type = "class")
+pred_LABEL_lda <- pred$class
+pred_SCORE_lda <- pred$posterior[, 2]
+tab <- table(pred_LABEL_lda, ytest)
+tab
+res_lda <- acc_error(tab)
+
+res_lda
+```
+
+***
+***
+
+## 8- bagging -------------------
+
+
+
+```{r}
+library(caret)
+cvcontrol <- trainControl(method="repeatedcv", number = 5,
+                          allowParallel=TRUE)
+Model_bag <- train(factor(US) ~ Price + Age, data = dtrain, 
+method = "treebag", 
+trControl = cvcontrol, 
+importance = TRUE) 
+
+Model_bag
+
+
+pred_SCORE_bag <- predict(Model_bag, dtest, 
+type = "prob")[, '1']
+
+pred_LABEL_bag <- predict(Model_bag, dtest, type = "raw")
+tab <- table(real = ytest, pred = pred_LABEL_bag)
+tab
+res_bag <- acc_error(tab)
+res_bag
+```
+***
+***
+
+
+## Results ---------------
+
+```{r}
+library(pROC)
+roc_bag <- roc(ytest, pred_SCORE_bag)
+roc_log <- roc(ytest, pred_SCORE_log)
+roc_lda <- roc(ytest, pred_SCORE_lda)
+roc_qda <- roc(ytest, pred_SCORE_qda)
+roc_rf <- roc(ytest, pred_SCORE_rf)
+roc_boost <- roc(ytest, pred_SCORE_boost)
+roc_svm <- roc(ytest, pred_SCORE_svm)
+roc_tree <- roc(ytest, pred_SCORE_tree)
+plot(roc_bag, main = "ROC", col = 1)
+plot(roc_log, col = 2, add = T)
+plot(roc_lda, col = 3, add = T)
+plot(roc_qda, col = 4, add = T)
+plot(roc_rf, col = 5, add = T)
+plot(roc_boost, col = 6, add = T)
+plot(roc_svm, col = 7, add = T)
+plot(roc_tree, col = 8, add = T)
+legend("bottomright", 
+legend = c("Bagging", "Logistic", "LDA", 
+"QDA", "Randomforest", "SVM", "LDA", "QDA"), 
+col = 1:8, lwd = 2, lty = 1, bty = "n", cex = 2)
+Models <- c("bagging", "logistic", "LDA", "QDA", 
+"Randomforest", "Boosting", "SVM", "TREE")
+
+AUC <- c(auc(roc_bag), auc(roc_log), auc(roc_lda), 
+auc(roc_qda), auc(roc_rf), auc(roc_boost), auc(roc_svm), 
+auc(roc_tree))
+
+ERROR = c(res_bag[2], res_log_2[2], res_lda[2], 
+res_qda[2], res_rf[2], res_boost_2[2], res_svm[2], res_tree[2])
+
+data_result <- data.frame(Model = Models, 
+AUC = AUC, Error = ERROR)
+
+knitr :: kable(data_result, caption = "RESULTS", align = "c")
+
+
+```
+
+
+***
+***
+
+# clustering ---------------
+
+
+```{r}
+library(ISLR)
+names(USArrests)
+dd <- USArrests[c('Assault', "UrbanPop")]
+dd2 <- scale(dd)
+tail(dd2, 4)
+distt <- dist(dd2, method = "euclidean")
+
+average_model <- hclust(distt, method = "average")
+
+plot(average_model, hang = -1, 
+main = "Dendogram Average Linkage")
+
+```
+
