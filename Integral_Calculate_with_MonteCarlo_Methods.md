@@ -61,7 +61,7 @@ Results
 ## Suppose we want to take the integral of the following function.
 
 $$
-I = \int_0^5 x^2 \exp(-x^2)dx
+I = \int_0^\infty x^2 \exp(-x^2)dx
 $$
 
 ## Soloution:
@@ -70,6 +70,30 @@ $$
 \begin{aligned}
 & \text{if} \quad g = x^2 \times \exp(-x^2) = x \times x \times \exp(-x^2) \\
 & \text{if}\quad U \sim Weibull(\alpha = 2, \lambda = 1) \implies \\
-& f_U(u) = 2x \times \exp(-x^2)
+& f_U(u) = 2x \times \exp(-x^2) \\
+& \implies I = \mathcal{E}(\frac{1}{2}U) = \frac{1}{2} \times\mathcal{E}(U)
 \end{aligned}
 $$
+
+## Code Soloution in R:
+
+``` r
+n <- 1e+6
+W <- rweibull(n, shape = 2, scale = 1)
+res <- 1/2 * mean(W)
+g <- function(x) x**2 * exp(-x**2)
+
+Exact_value <- integrate(g, 0, Inf)$value
+
+result <- data.frame(Integral_Method = c("MonteCarlo", "Exact_Value"), 
+            Value = c(res, Exact_value))
+result |> 
+        knitr:: kable(caption = "Results", align = "c")
+```
+
+| Integral_Method |   Value   |
+|:---------------:|:---------:|
+|   MonteCarlo    | 0.4430934 |
+|   Exact_Value   | 0.4431135 |
+
+Results
