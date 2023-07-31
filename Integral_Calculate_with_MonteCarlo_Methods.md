@@ -19,9 +19,9 @@ $$
 & u = \frac{1}{x + 1} \implies \\
 & x + 1 = \frac{1}{u} \implies x = \frac{1}{u} - 1 \implies \\
 & dx = -\frac{1}{u^2}du \implies 
-\int_{0}^{+\infty} \exp(-x)dx = \int_1^0 -\frac{1}{u^2}\times \exp\left\{-\left(\frac{1}{u} - 1\right)\right\}du \\
-& =  I = \int_0^1 \frac{1}{u^2}\times \exp\left\{-\left(\frac{1}{u} - 1\right)\right\}du \implies \\
-& \text{if} \quad g(u) = \frac{1}{u^2}\times \exp\left\{-\left(\frac{1}{u} - 1\right)\right\} \implies \\
+\int_{0}^{+\infty} \exp(-x)dx = \int_1^0 -\frac{1}{u^2}\times \exp\{-(\frac{1}{u} - 1)\}du \\
+& =  I = \int_0^1 \frac{1}{u^2}\times \exp\{-(\frac{1}{u} - 1)\}du \implies \\
+& \text{if} \quad g(u) = \frac{1}{u^2}\times \exp\{-(\frac{1}{u} - 1)\} \implies \\
 & I \approx \frac{1}{n} \sum_{1}^n g(u_i), \quad U_i \overset{iid}{\sim} \text{Uniform}(0, ~1), ~~ n = \text{number of generate} \implies 
 \end{aligned}
 $$
