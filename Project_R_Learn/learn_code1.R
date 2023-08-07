@@ -1170,6 +1170,18 @@ dat2 <- melt(dat_train)
 head(dat2)
 with(dat2, boxplot(value ~ variable, col = c("blue", "red", "green")))
 
+
+
+
+
+
+
+
+#######################################################
+
+## read persian data in R --------------
+
+
 Sys.getlocale (category = "LC_ALL")
 Sys.setlocale (category = "LC_ALL", locale = "persian")
 dat <- read.csv(file = "Persian_file.txt", sep = ";", header = TRUE)
@@ -1197,3 +1209,37 @@ read.delim(file = "Persian_file.txt", header = TRUE, sep = ";")
 dat <- read.csv(file = "Persian_file.txt", sep = ";", header = TRUE)
 head(dat)
 
+###############################################################################
+
+
+## sesseion 19 -----------------
+
+### edit axis --------------------
+# library(httpgd); hgd(); hgd_browse()
+set.seed(1)
+x <- rnorm(10000); y <- rnorm(25)
+plot(x, y, col = "red", pch = 16, 
+      xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame = FALSE)
+
+axis(1, at = seq(min(x), max(x), len = 8), labels = letters[1:8], 
+tick = TRUE, col = "gold", lwd = 2, col.axis = "violet")
+
+axis(2, at = seq(min(y), max(y), len = 8), labels = letters[1:8], 
+tick = TRUE, col = "red", lwd = 2, col.axis = "green")
+
+
+#####################################
+
+## violin Plot -------------
+
+# install.packages("vioplot")
+library(vioplot)
+
+vioplot(x, col = "gold", rectCol = "red", border = "green", 
+lineCol = "white", main = "first ViolinPlot", 
+plotCentre = "line")
+
+
+###  Plot density of x -------
+
+plot(density(x), main = "Density of X", xlab = "X")
