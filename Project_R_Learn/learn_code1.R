@@ -1217,7 +1217,7 @@ head(dat)
 ### edit axis --------------------
 # library(httpgd); hgd(); hgd_browse()
 set.seed(1)
-x <- rnorm(10000); y <- rnorm(25)
+x <- rnorm(25); y <- rnorm(25)
 plot(x, y, col = "red", pch = 16, 
       xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame = FALSE)
 
