@@ -1,0 +1,19 @@
+---
+title: First Quarto file
+format: pdf
+editor: visual
+---
+
+```{r}
+#| code-line-numbers: true
+#| fig-width: 7
+#| fig-height: 7
+#| message: false
+#| warning: false
+
+x <- rnorm(20)
+y <- rnorm(20)
+
+plot(x, y, pch = 16, col = "darkblue", cex = 3, main = "Quarto Plot")
+```
+
