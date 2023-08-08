@@ -1215,7 +1215,7 @@ head(dat)
 ## sesseion 19 -----------------
 
 ### edit axis --------------------
-# library(httpgd); hgd(); hgd_browse()
+library(httpgd); hgd(); hgd_browse()
 set.seed(1)
 x <- rnorm(25); y <- rnorm(25)
 plot(x, y, col = "red", pch = 16, 
@@ -1243,3 +1243,60 @@ plotCentre = "line")
 ###  Plot density of x -------
 
 plot(density(x), main = "Density of X", xlab = "X")
+
+
+############################################################################
+
+## Session XX -------------------------
+
+set.seed(1)
+x <- rnorm(25); y <- rnorm(25)
+
+plot(x[order(x)], y[order(x)], type = "l")
+y[which.min(x)]
+y[order(x)[2]]
+
+plot(x = x, y = y, type = "n")
+lines(x = sort(x), y = y[order(x)], lwd = 2, col = "red")
+lines(x = 1:20, y = seq(1, 5, len = 20), lwd = 1.5, lty = 2, col = "blue")
+
+set.seed(1)
+x1 <- rnorm(20, 5, 1)
+x2 <- rnorm(30, 5, 1)
+x3 <- rnorm(15, 5, 1)
+y1 <- rnorm(20, 2, 2)
+y2 <- rnorm(30, 3, 2)
+y3 <- rnorm(15, 4, 2)
+
+plot(x = extendrange(c(x1, x2, x3)), y = extendrange(c(y1, y2, y3)), 
+type = "n", main = "first Line Plot", xlab = "x", ylab = "y")
+range(x1)
+
+lines(sort(x1), y1[order(x1)], col = "green")
+lines(sort(x2), y2[order(x2)], col = "red")
+lines(sort(x3), y3[order(x3)], col = "darkblue")
+
+Model <- lm(y1 ~ x1)
+abline(Model, col = "blue", lty = 2)
+abline(v = 3, lwd = 3, col = "tomato")
+abline(h = 6, lwd = 2, lty = 4, col = "purple")
+abline(a = -5, b = 1, col = "gold", lwd = 3, lty = 1)
+abline(h = 0, lwd = 3, col = "blue")
+abline(v = 5, lwd = 3, col = "blue")
+
+fun3 <- function(x) 1/x - sin(x)
+
+# [-5, 5]
+
+x1 <- seq(-5, -1e-4, len = 1e+5)
+x2 <- seq(1e-4, 5, len = 1e+5)
+xx <- c(x1, x2)
+yy <- fun3(xx)
+
+plot(x = xx, y = yy, col = "red", type = "l", lwd = 2, 
+ylim = c(-5, 5))
+
+
+##
+
+curve(fun3, from = -5, to = 5, lty = 1, col = "blue")
