@@ -1388,3 +1388,51 @@ lines(x = sort(y), y2[order(y)], lwd = 3, lty = 1, col = "gold")
 ## Session XXII ----------
 
 ### barplot and Pichart ---------------
+# library(httpgd); hgd(); hgd_browse()
+
+data(package = "MASS")
+temp1 <- installed.packages() |> _[, 1]
+data(package = temp1)
+library(vcdExtra)
+datasets(package = "MASS")
+Aids2 |> names()
+head(Aids2)
+
+barplot(height = c(10, 20, 30), horiz = TRUE, 
+names.arg = c("kerman", "fars", "bushehr"))
+
+library(MASS)
+barplot(height = c(10, 20, 30), horiz = F, 
+names.arg = c("kerman", "fars", "bushehr"), col = c("blue", "red", 
+"purple"), main = "First BarPlot", xlab = "x", ylab = "states", 
+legend.text = TRUE)
+Aids2 |> names()
+temp2 <- with(Aids2, table(sex, status))
+temp2
+library(magrittr)
+
+temp3 <- temp2 %>% as.data.frame %>%
+with(., data.frame(Female = c(.[sex == "F" & status == "A", "Freq"], 
+.[sex == "F" & status == "D", "Freq"]), 
+Male = c(.[sex == "M" & status == "A", "Freq"], 
+.[sex == "M" & status == "D", "Freq"]), 
+Status = c("Alive", "Death")))
+barplot(cbind(Female, Male) ~ Status, data = temp3, 
+legend.text = TRUE, 
+width = .5, xlim = c(0, 2), col = c("blue", "red"))
+
+######### piechart -----------------
+
+pie(c(5, 15, 20), col = c("red", "green", "blue"), 
+labels = c("kerman", "bushehr", "fars"), 
+clockwise = TRUE)
+
+x <- c(10, 25, 30, 41, 52)
+ostan <- c("kerman", "bushehr", "fars", "sistan", "kohkiluye")
+pie(x, labels = ostan, col = 1:5, clockwise = TRUE)
+
+library(RColorBrewer)
+color <- brewer.pal(length(x), name = "Set3")
+pie(x, labels = paste0(paste(ostan, round(x/sum(x) * 100, 2), sep = ": "), "%"), 
+col = color, clockwise = TRUE, 
+lty = 2)
