@@ -1436,3 +1436,38 @@ color <- brewer.pal(length(x), name = "Set3")
 pie(x, labels = paste0(paste(ostan, round(x/sum(x) * 100, 2), sep = ": "), "%"), 
 col = color, clockwise = TRUE, 
 lty = 2)
+
+#############################################
+
+## Session XXIII
+# library(httpgd); hgd(); hgd_browse()
+### legend & adjust panels -------------------------
+
+set.seed(1)
+x1 <- rnorm(1e+4, 2, 3)
+x2 <- rgamma(1e+4, shape = 3, rate = 1/4)
+x3 <- rbeta(1e+4, shape1 = 2, shape2 = 5)
+x4 <- rlogis(1e+4, location = 2.5, scale = 1.5)
+
+library(RColorBrewer)
+Color <- brewer.pal(4, "Set3")
+hist(x1, main = "Normal distribution", col = Color[1], 
+freq = F)
+curve(dnorm(x, mean = mean(x1), sd(x1)), from = min(x1), to = max(x1), 
+lwd = 3, add = TRUE)
+
+hist(x2, main = "gamma distribution", col = Color[2], 
+freq = F)
+curve(dgamma(x, shape = 3, rate = 1/4), from = min(x2), to = max(x2), 
+lwd = 3, add = TRUE)
+
+hist(x3, main = "beta distribution", col = Color[3], 
+freq = F)
+curve(dbeta(x, shape1 = 2, shape2 = 5), form = min(x3), to = max(x3), 
+lwd = 3, add = TRUE)
+
+
+hist(x1, main = "rlogis distribution", col = Color[4], 
+freq = F)
+curve(dnorm(x, location = mean(x4), scale = 1.5), form = min(x1), to = max(x1), 
+lwd = 3, add = TRUE)
