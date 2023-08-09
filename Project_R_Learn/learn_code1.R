@@ -1300,3 +1300,81 @@ ylim = c(-5, 5))
 ##
 
 curve(fun3, from = -5, to = 5, lty = 1, col = "blue")
+
+#################################################################
+
+# library(httpgd); hgd(); hgd_browse()
+
+set.seed(1)
+x <- rnorm(100, mean = 2, sd = 1.5); y <- rgamma(100, shape = 2, rate = 2)
+hist(x)
+hist(x, col = "red", border = "gold")
+hist(x, col = "blue", border = "white")
+range(x)
+diff(range(x))
+max(x) - min(x)
+R <- diff(range(x))
+length(x[x >= 1 & x < 2])
+hist(x, col = "red", border = "gold", freq = FALSE)
+
+
+## use fd binwidth -----------
+
+hist(x, col = "blue", border = "white", freq = FALSE, 
+        breaks = "fd")
+
+## sturges formula:  ceiling(log(n) + 1)
+
+n <- 100
+ceiling(log(n, base = 2) + 1)
+# floor(log(n, base = 2) + 1)
+# round(log(n, base = 2) + 1)
+
+## freadman-diaconis formula: 2 * IQR / n^(1/3)
+iqr <- IQR(x)
+q3 <- quantile(x, 0.75)
+q1 <- quantile(x, 0.25)
+q3 - q1
+dd <- 2 * iqr / n ^(1/3)
+R / dd
+
+## scott formula: 3.49 * standard_deviation / n ^ (1/3)
+
+sdd <- sd(x)
+binwith <- 3.49 * sdd / n ^ (1/3)
+binwith
+R / binwith
+
+## use scott binwidth -----------
+
+n <- 1e+4
+y <- rnorm(1e+4, mean = 5, sd = 5)
+R2 <- diff(range(y))
+nn <- n ^ (1/3)
+iqry <- IQR(y)
+byy <- 2 * iqry / nn
+fd_bin_num <- R2 / byy
+
+sdd <- sd(y)
+binwith <- 3.49 * sdd / nn
+scott_bin_num <- R2 / binwith
+scott_bin_num
+
+sturges <- ceiling(log(n, base = 2) + 1)
+
+hist(y, col = "blue", border = "white", freq = FALSE, 
+        breaks = "scott")
+hist(y, col = "red", border = "gold", freq = FALSE, 
+        breaks = "fd")
+hist(y, col = "orange", border = "brown", freq = FALSE, 
+    breaks = "sturges")
+
+hist(y, col = "orange", border = "brown", prob = TRUE, 
+    breaks = "sturges")
+
+f1 <- function(x) dnorm(x, mean = mean(y), sd = sd(y)) 
+curve(f1, from = min(y), to = max(y), col = "gold", lwd = 2, lty = 2, 
+add = TRUE)
+
+y2 <- f1(y)
+lines(x = sort(y), y2[order(y)], lwd = 3, lty = 1, col = "gold")
