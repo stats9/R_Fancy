@@ -1444,30 +1444,48 @@ lty = 2)
 ### legend & adjust panels -------------------------
 
 set.seed(1)
-x1 <- rnorm(1e+4, 2, 3)
-x2 <- rgamma(1e+4, shape = 3, rate = 1/4)
-x3 <- rbeta(1e+4, shape1 = 2, shape2 = 5)
-x4 <- rlogis(1e+4, location = 2.5, scale = 1.5)
+n <- 1e+4
+x1 <- rnorm(n, mean = 2, sd = 2)
+x2 <- rlogis(n, location = 2.5, scale = 2.5)
+x3 <- rgamma(n, shape = 2, rate = 2)
+x4 <- rbeta(n, shape1 = 2.2, shape2 = 2.3)
+
 
 library(RColorBrewer)
-Color <- brewer.pal(4, "Set3")
-hist(x1, main = "Normal distribution", col = Color[1], 
-freq = F)
-curve(dnorm(x, mean = mean(x1), sd(x1)), from = min(x1), to = max(x1), 
-lwd = 3, add = TRUE)
+Col <- brewer.pal(4, "Set3")
 
-hist(x2, main = "gamma distribution", col = Color[2], 
-freq = F)
-curve(dgamma(x, shape = 3, rate = 1/4), from = min(x2), to = max(x2), 
-lwd = 3, add = TRUE)
-
-hist(x3, main = "beta distribution", col = Color[3], 
-freq = F)
-curve(dbeta(x, shape1 = 2, shape2 = 5), form = min(x3), to = max(x3), 
-lwd = 3, add = TRUE)
+DescTools :: HexToCol(Col)
 
 
-hist(x1, main = "rlogis distribution", col = Color[4], 
-freq = F)
-curve(dnorm(x, location = mean(x4), scale = 1.5), form = min(x1), to = max(x1), 
-lwd = 3, add = TRUE)
+opar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 2))
+par(mfcol = c(2, 2))
+par(mar = c(4, 4, 4, 2))
+layout(matrix(c(1, 2, 1, 3), 2, 2), widths = c(1, 1), 
+heights = c(1, 1))
+par(opar)
+hist(x1, main = "Normal", col = Col[1])
+hist(x2, main = "logistic", col = Col[2])
+hist(x3, main = "Gamma", col = Col[3])
+hist(x4, main = "Beta", col = Col[4])
+
+####################### legend ------------
+
+hist(x1, main = "Normal", col = Col[1], prob = TRUE)
+
+curve(dnorm(x, mean = 1, sd = 2), add = TRUE, col = "red", lty = 2, 
+lwd = 2)
+curve(dnorm(x, mean = 2, sd = 2), add = TRUE, col = "blue", lty = 1, 
+lwd = 2)
+curve(dnorm(x, mean = 3, sd = 2), add = TRUE, col = "gold", lty = 3, 
+lwd = 2)
+curve(dnorm(x, mean = 2, sd = 4), add = TRUE, col = "black", lty = 4, 
+lwd = 2)
+
+legend(x = 6.5, y = 0.2, legend = c("Normal with mean = 1, sd = 2", 
+"Normal with mean = 2, sd = 2", "Normal with mean = 3, sd = 2", 
+"Normal with mean = 2, sd = 4"), 
+lty = c(2, 1, 3, 4), lwd = 2, col = c("red", "blue", "gold", "black"), 
+cex = 0.5, bty = "n", text.col = "red", title = "راهنما")
+
+#####################################
