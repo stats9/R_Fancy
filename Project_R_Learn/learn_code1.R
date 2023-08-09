@@ -1303,7 +1303,11 @@ curve(fun3, from = -5, to = 5, lty = 1, col = "blue")
 
 #################################################################
 
-# library(httpgd); hgd(); hgd_browse()
+
+## sessoin XXI ------------------
+
+
+### library(httpgd); hgd(); hgd_browse()
 
 set.seed(1)
 x <- rnorm(100, mean = 2, sd = 1.5); y <- rgamma(100, shape = 2, rate = 2)
@@ -1378,3 +1382,9 @@ add = TRUE)
 
 y2 <- f1(y)
 lines(x = sort(y), y2[order(y)], lwd = 3, lty = 1, col = "gold")
+
+#######################################
+
+## Session XXII ----------
+
+### barplot and Pichart ---------------
