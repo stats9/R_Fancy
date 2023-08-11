@@ -1489,3 +1489,50 @@ lty = c(2, 1, 3, 4), lwd = 2, col = c("red", "blue", "gold", "black"),
 cex = 0.5, bty = "n", text.col = "red", title = "راهنما")
 
 #####################################
+
+## session XXIV -----------------------
+
+### add points into plot --------------
+
+set.seed(1)
+x <- rnorm(15, 2, 1)
+y <- rnorm(15, 5, 1)
+plot(x, y, pch = 16, col = "red", main = "Session XXIV", cex = 2, 
+xlim = c(-3, 5), ylim = c(-1, 6))
+
+x1 <- c(4, -2)
+y1 <- c(5, 0)
+
+points(x = x1, y = y1, col = "blue", cex = 3, pch = 16)
+
+text(x = c(-2, 2), y = c(1, 2), labels = c("stats9", "habib"), 
+col = c("purple", "gold4"), cex = 3)
+rm(list = ls())
+dat <- data.frame(temp = c(1, 2, 3, 4), rain = 1:4, 
+name = c("fars", "kerman", "bushehr", "hormozgan"))
+plot(rain ~ temp, data = dat, col = "red", cex = 2, pch = 16, 
+xlim = c(0, 6))
+plot(rain ~ temp, data = dat, col = "purple", cex = 3, pch = "", 
+xlim = c(0, 6))
+text(rain ~ temp, data = dat, labels = name, cex = 2, col = "gold4")
+dat <- within(dat, name <- abbreviate(dat$name, minlength = 3))
+
+#######################################
+
+
+demo(plotmath)
+
+# bquote(); expression; parse
+
+text_1 <- expression(integral(f(x)*dx, alpha, beta))
+plot(x, y, main = text_1)
+
+
+curve(dnorm(x, mean = 1, sd = 2), from = -5, to = 7, 
+col = "red", lwd = 2, ylim = c(0, .3))
+curve(dnorm(x, mean = 0, sd = 1.5), 
+from = -4.5, to = 4.5, col = "blue", lwd = 2, add = TRUE)
+temp1 <- expression(mu == 1*","~~sigma==2)
+temp2 <- expression(mu == 0*","~~sigma==1.5)
+legend("topright", legend = c(temp1, temp2), text.col = c("red", "blue"), 
+cex = 2, lwd = 2, lty = 1, col = c("red", "blue"), bty = "n")
