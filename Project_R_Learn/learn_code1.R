@@ -1536,3 +1536,5 @@ temp1 <- expression(mu == 1*","~~sigma==2)
 temp2 <- expression(mu == 0*","~~sigma==1.5)
 legend("topright", legend = c(temp1, temp2), text.col = c("red", "blue"), 
 cex = 2, lwd = 2, lty = 1, col = c("red", "blue"), bty = "n")
+library(epitools)
+?oddsratio
