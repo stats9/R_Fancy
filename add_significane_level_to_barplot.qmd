@@ -1,0 +1,148 @@
+---
+title: "Add Significance level to a barPlot"
+format: gfm
+editor: visual
+---
+
+
+## Sometimes we need to be able to show the significance of pairwise comparisons in one graph when we perform analysis of variance on grouped data. These codes can be used as templates
+
+
+
+#### read data
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 7
+#| fig-width: 7
+
+## load packages
+library(tidyverse)
+dat <- read.table("./data/dat_tab.txt", header = TRUE)
+head(dat)
+tail(dat)
+dat$time %>% table
+dat$temp %>% table
+dat2 <- dat %>%
+group_by(time) %>% nest
+lapply(dat2$time, function(x){
+    y = dat2[x, ]$data[[1]]
+    print(anova(aov(motility ~ factor(temp), y)))
+})
+
+lapply(dat2$time, function(x){
+    y = dat2[x, ]$data[[1]]
+    print(kruskal.test(motility ~ factor(temp), y))
+})
+
+
+interaction.plot(x.factor = dat$temp, trace.factor = dat$time, 
+            response = dat$motility, col = c("red", "blue", "gray", 
+            "darkgreen", "darkblue", "brown", "tomato", "orange", "black"))
+
+
+
+## final Model
+
+Model <- aov(motility ~ factor(time) + factor(temp) + 
+                factor(time):factor(temp), data = dat)
+anova(Model)
+``` 
+
+
+
+#### Second Plot 
+###### add significance to barplot
+
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 7
+#| fig-width: 7
+
+
+library(superb)
+library(rstatix)
+
+
+
+
+dat2 <- dat %>%
+group_by(time) %>% nest
+
+ 
+
+
+
+dat_new <- dat %>%
+    mutate(time = case_match(
+  time,
+  1 ~ "30s",
+  2 ~ "60s",
+  3 ~ "90s",
+  4 ~ "120s",
+  5 ~ "150s", 
+  6 ~ "180s", 
+  7 ~ "215s"
+  ), 
+  temp = case_match(
+  temp,
+  1 ~ "HT",
+  2 ~ "MT",
+  3 ~ "LT"
+)) %>%
+mutate(time = factor(time, 
+levels = c("30s", "60s", "90s", "120s", 
+"150s", "180s", "215s"), ordered = TRUE), temp = factor(temp,
+levels = c("LT", "MT", "HT"), 
+ordered = TRUE))
+
+dat_new2 <- dat_new %>%
+group_by(time) %>% nest
+
+lapply(dat_new2$time, function(x){
+       y <- dat_new2 %>% dplyr :: filter(time == x) %>%
+            .$data %>% .[[1]]
+        result <- y %>% pairwise_t_test(motility ~ temp)
+        result
+})
+xx <- c(0.83333, 1, 1.166667, 1.8333333, 2, 2.166667, 
+2.8333333333, 3, 3.166667, 3.833333333, 4, 4.166667, 4.8333333, 5, 
+5.166667, 5.83333333, 6, 6.166667, 6.833333333, 7, 7.166667)
+length(xx)
+res1 <- dat_new %>%
+        group_by(time, temp) %>%
+        summarise(MotilitY = mean(motility), 
+            SD = sd(motility))
+res1 <- res1 %>%
+        mutate(Lower = MotilitY - SD, Upper = MotilitY + SD) %>%
+        mutate(Lower = Lower * (Lower >= 0)) 
+res1 <- within(res1, xval <- xx)
+
+res1
+dim(res1); length(xx)
+print(res1, n = 22)
+res1 
+P1 <- res1 %>%
+    ggplot(aes(time, MotilitY)) + 
+        theme_bw() + scale_fill_manual(values = c("gray75", "gray45", "gray15")) + 
+        geom_bar(aes(fill = temp), stat = "identity", 
+        position = "dodge", width = 0.5) + 
+        ylim(c(0, 105))
+P2 <- P1 + 
+geom_linerange(data = res1, aes(x = xval, ymin = Lower, ymax = Upper), color = "tomato", linewidth = 0.5) +
+showSignificance( c(2.75, 3.25), 50, -1, "*") + 
+showSignificance( c(3.75, 4.08333333), 26, -1, "****") + 
+showSignificance( c(3.75, 4.25), 33, -1, "**") + 
+showSignificance( c(4.75, 5.08333333), 10, -1, "**") + 
+showSignificance( c(4.75, 5.25), 16, -1, "**") + 
+showSignificance( c(5.75, 6.08333333), 5, -1, "*") + 
+showSignificance( c(5.75, 6.25), 10, -1, "*") + 
+showSignificance( c(6.75, 7.08333333), 4, -1, "*") + 
+showSignificance( c(6.916666667, 7.25), 9.5, -1, "*")
+P2
+
+
+```
