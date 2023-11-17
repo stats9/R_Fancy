@@ -1,0 +1,39 @@
+\documentclass{beamer}
+\usetheme{Hannover} % {Berkeley} % {Hannover} % {Singapore}
+% {CambridgeUS}
+\usecolortheme{rose}
+\usefonttheme{professionalfonts} 
+\setbeamercovered{dynamic}
+% \useinnertheme[shadow]{rounded}
+
+\usepackage{inputenc}
+\usepackage{algorithm2e}
+\usepackage{times}
+\usepackage{amsmath, amsfonts, amstext}
+\graphicspath{{./Fig/}}
+
+\date{\small 1402-1403\\[0.5cm]}
+\title[R Programming WorkShop]{\includegraphics[height = 5cm, width = 8cm]{Logo_Sums_BioStatistics.png}\\  R Programming WorkShop}
+
+% \titlegraphic{\includegraphics[width=2cm]{Logo_Sums_BioStatistics.png}\hspace*{4.75cm}~%
+%    \includegraphics[width=2cm]{Logo_Sums_BioStatistics.png}
+% }
+\author{habib ezzat abadi}
+\institute{Shiraz University of Medical Scinece}
+\hypersetup{
+pdfauthor = {H_Ezzatabadi},
+pdftitle = {R WorkShop},
+pdfsubject = {1402-1403},
+pdfkeywords = {R, Programming},
+pdfpagemode = {FullScreen}
+}
+\begin{document}
+
+
+\frame[plain]{\maketitle}
+
+% \begin{frame}[plain]
+% \centering
+% \includegraphics[height = 8cm, width = 10cm]{Logo_Sums_BioStatistics.png}
+% \end{frame}
+\end{document}
