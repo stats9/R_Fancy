@@ -1,11 +1,11 @@
 # Fdb version 4
-["xdvipdfmx"] 1700238508 "WorkShop_Beemer.xdv" "WorkShop_Beemer.pdf" "WorkShop_Beemer" 1700238508 0
-  "WorkShop_Beemer.xdv" 1700238508 10928 3a2b18304fe35691c13ca90b4829a736 "xelatex"
+["xdvipdfmx"] 1700472163 "WorkShop_Beemer.xdv" "WorkShop_Beemer.pdf" "WorkShop_Beemer" 1700472164 0
+  "WorkShop_Beemer.xdv" 1700472163 10928 6ed1821cc8a59ed5ae4be880783d1d78 "xelatex"
   (generated)
   "WorkShop_Beemer.pdf"
   (rewritten before read)
-["xelatex"] 1700238506 "/home/stats9/Documents/Habib_Project/Github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" "WorkShop_Beemer.xdv" "WorkShop_Beemer" 1700238508 0
-  "/home/stats9/Documents/Habib_Project/Github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" 1700238506 2932 ef9f90318dcf2003fcca220089b150d2 ""
+["xelatex"] 1700472162 "/home/stats9/Documents/Habib_Project/Github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" "WorkShop_Beemer.xdv" "WorkShop_Beemer" 1700472164 0
+  "/home/stats9/Documents/Habib_Project/Github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" 1700472161 2775 36775c352a2501d7e9132a40211e174f ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
@@ -185,10 +185,10 @@
   "/usr/local/texlive/2023/texmf-var/web2c/xetex/xelatex.fmt" 1697496053 10502787 4930e30468f8cc8283c23c83ed8594aa ""
   "/usr/local/texlive/2023/texmf.cnf" 1697495976 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
   "Fig//Logo_Sums_BioStatistics.png" 1700223568 97898 2b8be5dc0b4ca6d68774d0f35a93ec0a ""
-  "WorkShop_Beemer.aux" 1700238508 1003 b92f11d5ff04b9682d41e055f23a067a "xelatex"
-  "WorkShop_Beemer.nav" 1700238508 307 9e520c26371a1250ff9fc1fe87f9c655 "xelatex"
-  "WorkShop_Beemer.out" 1700238508 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
-  "WorkShop_Beemer.tex" 1700238506 2932 ef9f90318dcf2003fcca220089b150d2 ""
+  "WorkShop_Beemer.aux" 1700472163 1003 b92f11d5ff04b9682d41e055f23a067a "xelatex"
+  "WorkShop_Beemer.nav" 1700472163 307 9e520c26371a1250ff9fc1fe87f9c655 "xelatex"
+  "WorkShop_Beemer.out" 1700472163 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
+  "WorkShop_Beemer.tex" 1700472161 2775 36775c352a2501d7e9132a40211e174f ""
   (generated)
   "WorkShop_Beemer.aux"
   "WorkShop_Beemer.log"

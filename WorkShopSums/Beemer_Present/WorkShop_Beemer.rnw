@@ -15,9 +15,6 @@
 \date{\small 1402-1403\\[0.5cm]}
 \title[R Programming WorkShop]{\includegraphics[height = 5cm, width = 8cm]{Logo_Sums_BioStatistics.png}\\  R Programming WorkShop}
 
-% \titlegraphic{\includegraphics[width=2cm]{Logo_Sums_BioStatistics.png}\hspace*{4.75cm}~%
-%    \includegraphics[width=2cm]{Logo_Sums_BioStatistics.png}
-% }
 \author{habib ezzat abadi}
 \institute{Shiraz University of Medical Scinece}
 \hypersetup{
