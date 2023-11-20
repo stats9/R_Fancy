@@ -49,21 +49,75 @@
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt}
-\usetheme{Hannover} % {Berkeley} % {Hannover} % {Singapore}
+\usetheme{warsaw} % {Berkeley} % {Hannover} % {Singapore}
 % {CambridgeUS}
 \usecolortheme{rose}
 \usefonttheme{professionalfonts} 
 \setbeamercovered{dynamic}
 % \useinnertheme[shadow]{rounded}
 
+
+\usepackage{geometry}
 \usepackage{inputenc}
 \usepackage{algorithm2e}
 \usepackage{times}
 \usepackage{amsmath, amsfonts, amstext}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+
+\usepackage{amssymb}
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, matrix}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+
+\usepackage{makecell}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks = true, %set true if you want colored links
+	linktoc = all,     %set to all if you want both sections and subsections linked
+	linkcolor = blue,  %choose some color if you want links to stand out
+    citecolor = red
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%
+
+
+
 \graphicspath{{./Fig/}}
 
 \date{\small 1402-1403\\[0.5cm]}
-\title[R Programming WorkShop]{\includegraphics[height = 5cm, width = 8cm]{Logo_Sums_BioStatistics.png}\\  R Programming WorkShop}
+\title[R WorkShop]{\includegraphics[height = 5cm, width = 8cm]{Logo_Sums_BioStatistics.png}\\  R Programming WorkShop}
 
 \author{habib ezzat abadi}
 \institute{Shiraz University of Medical Scinece}
@@ -74,14 +128,67 @@ pdfsubject = {1402-1403},
 pdfkeywords = {R, Programming},
 pdfpagemode = {FullScreen}
 }
+\defbeamertemplate*{footline}{shadow theme}{%
+\leavevmode%
+\hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fil,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\hfill\insertshortauthor
+\end{beamercolorbox}%
+
+\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hfill%
+\insertframenumber\,/\,\inserttotalframenumber
+\end{beamercolorbox}}%
+\vskip0pt%
+}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
 
 \frame[plain]{\maketitle}
+\section{Introduction}
+\begin{frame}{A Brief History of R}
+ \begin{itemize}
+\item 1976 S-Bell Labs: Fortran 
+\begin{itemize}
+\item[-]John Chambers
+\item[-] Rick Becker
+\item[-] Allan Wilks 
+\end{itemize}
+\item 1988 S Version 3: C language 
+\begin{itemize}
+    \item[-] John Chambers 
+\end{itemize}
+\item 1991 R Created 
+\begin{itemize}
+    \item[-] Ross Ihaka
+    \item[-] Robert Gentelman 
+\end{itemize}
+\item 1993 R Announced
+\item 2000 R Version 1 Released
+\item 2020 8th rank of programming languages
+\item 2023 16th rank of Programming language
+ \end{itemize}   
+\end{frame}
+\begin{frame}{Why R?}
 
-% \begin{frame}[plain]
-% \centering
-% \includegraphics[height = 8cm, width = 10cm]{Logo_Sums_BioStatistics.png}
-% \end{frame}
+    \tikzstyle{terminal} = [rectangle, minimum width = 2cm, minimum height = 2cm, 
+    rounded corners, text centered, draw = black, fill = yellow!20]
+    \tikzstyle{other} = [ellipse, minimum width = 2cm, minimum height = 1cm, 
+    rounded corners, text centered, draw = black, fill = blue!20]
+    \tikzstyle{arrow} = [thick, ->, >=stealth]
+
+\begin{tikzpicture}[node distance = 2cm]
+% First Rows
+\node (sas1) [other] {SAS};  \node (spss1) [other, right of = sas1, xshift = 1cm]{SPSS};  \node (minitab1) [other, right of = spss1, xshift = 1.5cm] {MINITAB}; 
+% second Rows
+\node (gr1) [other, below of = sas1, xshift = -1cm, yshift = -0.75cm] {GraphPad Prism};  \node (r1) [terminal, below of = spss1, yshift = -0.75cm] {R};  \node (stat1) [other, below of = minitab1, yshift = -0.75cm] {STATA}; 
+% third rows
+\node (matlab1) [other, below of = gr1, yshift = -0.75cm] {MATLAB};   \node (st1) [other, below of = r1, yshift = -0.75cm] {STATISTICA};  \node (ncss1) [other, below of = stat1, yshift = -0.75cm] {NCSS};
+\end{tikzpicture}
+
+
+
+\end{frame}
+
+
 \end{document}

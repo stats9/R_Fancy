@@ -983,3 +983,30 @@ cbind(Method = c("Newsted_Loop_While",
 
 
 
+
+***
+***
+
+
+
+## Using Parallel Programming 
+
+
+#### Using snow package
+
+In this part, we want to implement some of the above results using parallel programming implementation so that we can understand how much parallel programming can increase our work speed. In the first step, we will use the snow package, and in the next step, we will use the parallel package
+
+
+###### Using Snow Package 
+
+
+```{r}
+#| warning: false
+#| message: false
+
+library(snow)
+
+
+help(p)
+
+```
