@@ -1,7 +1,7 @@
 \documentclass{beamer}
 \usetheme{warsaw} % {Berkeley} % {Hannover} % {Singapore}
 % {CambridgeUS}
-\usecolortheme{rose}
+\usecolortheme{seahorse}%{rose}
 \usefonttheme{professionalfonts} 
 \setbeamercovered{dynamic}
 % \useinnertheme[shadow]{rounded}
@@ -41,6 +41,7 @@
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \hypersetup{
+    pdfpagemode=FullScreen,
 	colorlinks = true, %set true if you want colored links
 	linktoc = all,     %set to all if you want both sections and subsections linked
 	linkcolor = blue,  %choose some color if you want links to stand out
@@ -67,7 +68,7 @@
 \graphicspath{{./Fig/}}
 
 \date{\small 1402-1403\\[0.5cm]}
-\title[R WorkShop]{\includegraphics[height = 5cm, width = 8cm]{Logo_Sums_BioStatistics.png}\\  R Programming WorkShop}
+\title[R WorkShop]{\includegraphics[height = 5cm, width = 8cm]{Logo_Sums_BioStatistics.pdf}\\  R Programming WorkShop}
 
 \author{habib ezzat abadi}
 \institute{Shiraz University of Medical Scinece}
@@ -116,8 +117,29 @@ pdfpagemode = {FullScreen}
 \item 1993 R Announced
 \item 2000 R Version 1 Released
 \item 2020 8th rank of programming languages
-\item 2023 16th rank of Programming language
+\item 2023 16th rank of Programming languages
  \end{itemize}   
+\end{frame}
+
+\begin{frame}
+    \tikzstyle{terminal} = [rectangle, minimum width = 2cm, minimum height = 2cm, 
+    rounded corners, text centered, draw = black, fill = yellow!20, inner sep = 0pt]
+    \tikzstyle{arrow} = [thick, ->, >=stealth]
+
+\begin{tikzpicture}[node distance = 2cm]
+% First Rows
+\node (sas1) [terminal] {\includegraphics[width=0.2\textwidth]{hadley_wickham.pdf}};    
+\node (minitab1) [terminal, right of = sas1, xshift = 6cm] {\includegraphics[width=.2\textwidth]{ross_ihaka.pdf}}; 
+% second Rows
+\node (rr) [terminal, below of = sas1, xshift = 4cm, yshift = -0.75cm] {\includegraphics[width = 0.3\textwidth]{RLogo.pdf}};
+\node (r1) [terminal, below of = rr, xshift = -3.5cm, yshift = -0.75cm] {\includegraphics[width=0.2\textwidth]{john_chambers.pdf}};  
+% third rows
+\node (matlab1) [terminal, below of = minitab1, yshift = -3.5cm] {\includegraphics[width=0.2\textwidth]{RobertGentelman.pdf}};  
+\draw [arrow] (sas1) -- (rr);
+\draw [arrow] (minitab1) -- (rr); 
+\draw [arrow] (matlab1) -- (rr);
+\draw [arrow] (r1) -- (rr); 
+\end{tikzpicture}
 \end{frame}
 \begin{frame}{Why R?}
 
@@ -139,6 +161,254 @@ pdfpagemode = {FullScreen}
 
 
 \end{frame}
+\section{Conditional structures}
+\begin{frame}{Types of conditional structures in R}
+    \begin{alertblock}{type of conditional structures in R}
+        \begin{itemize}
+            \item if
+            \item if-else 
+            \item ifelse
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
 
 
-\end{document}
+
+
+\subsection{if}
+
+
+
+
+
+\begin{frame}{if structure}
+\begin{block}{Why We Using if structure?}
+    Sometimes we need a certain task to be done only when a condition is met, otherwise we want the normal flow of the program to be maintained if the condition is not met.
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example of if structure}
+\begin{exampleblock}{Ex. (i)}
+    Get a number from the user, if the number to the remainder of the number to the number is five times 2 or 3, put Greate value in the output, and do nothing otherwise.
+\end{exampleblock}
+\end{frame}
+
+
+
+\begin{frame}{Labs}
+    \alert{{\Large Go to the coding environment $\rightarrow$}}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{if-else}
+\begin{frame}{if-else}
+    \begin{block}
+        But there are times when we need to change the path of the program for any answer when we check the condition. And it is even possible to obtain different modes for different modes.
+    \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{structure of if-else}
+    \begin{block}{CodeBlock}
+\begin{align*}
+    & \text{if (condition) \{} \\
+    & \text{command1} \\
+    & \text{command2} \\
+    & \dots \\
+    & \text{\}}\text{~else\{}\\
+    & \text{if \{}\\
+    & \dots \\
+    & \text{\}}
+\end{align*}
+\end{block}
+    
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Example}
+\begin{exampleblock}{Ex. (ii)}
+take a number from the user, of course, with the condition that it is greater than 20, then if the remainder of this number is zero compared to five numbers, print the value of "A" in the output, if
+    was 1, print the value of "B" in the output, if it was 2, print the value of "CC" in the output and if it was 3, print the value of "C" in the output, and finally, if it was 4
+    Print the value of "D" in the output.
+\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Labs}
+    \alert{{\Large Go to the coding environment $\rightarrow$}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\subsection{ifelse}
+
+\begin{frame}{ifelse}
+
+    \begin{block}{ifelse}
+        
+    
+Sometimes we are faced with a binary situation, if the condition is met, one thing will happen, and if the condition
+    If it is not established, one more thing will happen and our conditional structure will not extend further.
+    R programming language has defined a very simple structure for this mode
+    by the name of ifelse. 
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}{Example}
+\begin{exampleblock}{Ex. (iii)}
+Get an output from the user. If the output was even, it returns the value "even" and otherwise it returns the value "odd".
+\end{exampleblock}
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}{Labs}
+    \alert{{\Large Go to the coding environment $\rightarrow$}}
+    \end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Loops in R Programming}
+\begin{frame}{Why Using Loops in Programming?}
+
+\begin{alertblock}
+{\large loops are an essential tool in programming that allow you to execute a block of code repeatedly until a certain condition is met. They are useful for performing repetitive 
+tasks without writing the same code multiple times.}
+\end{alertblock}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{Loops in R}
+\begin{itemize}
+    \item Using while loop
+    \item Using repeat loop
+    \item Using for loop
+\end{itemize}
+\end{frame}
+\subsection{while loop}
+\begin{frame}{why do we use while loop?}
+    \begin{figure}[H]
+        \centering
+    \tikzstyle{decision} = [rectangle, draw, text centered, rounded corners, minimum height=2em]
+    \tikzstyle{data} = [rectangle, draw, text centered, minimum height=2em]
+    \tikzstyle{terminator} = [diamond, draw, text centered, minimum height=2em]
+    \begin{tikzpicture}[->,>=stealth', auto, thick]
+        \node [terminator, fill=yellow!20] at (0,0) (start) {\textbf{Logical condition}};
+        \node [data, fill=green!20, yshift = -2cm] at (0,-2) (data) {Code Block};
+        \node [decision, fill=red!20] at (0,-5) (decision) {End};
+        \draw [->, green] (start.south) -- (data.north);
+        \draw [->, blue] (start.east) to [out = 50, in = 30] (decision.east);
+        \draw [->, red] (data.west) to [out = 130, in = 150]  (start.west);
+        \node[draw=none] at (-0.5, -2.5) (no) {True};  
+        \node [draw = none] at (1.75, -1.5) (yes) {False};  
+    \end{tikzpicture}
+\end{figure}
+\end{frame}
+\begin{frame}
+    
+    \begin{exampleblock}{Ex (iv).}
+        \label{ex1}
+\begin{align*}
+    & f(x) = \exp(x) - x^2, \\
+    & \text{if} \quad f(x) = 0 \implies x = ~?
+\end{align*}
+        
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Labs}
+\alert{{\Large Go to the coding environment $\rightarrow$}}
+\end{frame}
+\subsection{repeat loop}
+
+\begin{frame}{why do we use repeat loop?}
+    \begin{figure}
+        \centering
+    \tikzstyle{decision} = [rectangle, draw, text centered, rounded corners, minimum height=2em]
+    \tikzstyle{data} = [rectangle, draw, text centered, minimum height=2em]
+    \tikzstyle{terminator} = [diamond, draw, text centered, minimum height=2em]
+    \begin{tikzpicture}[->,>=stealth', auto, thick]
+        \node [data, fill=yellow!20] at (0,0) (data) {\textbf{Code Block}};
+        \node [terminator, fill=green!20, yshift = -1cm] at (0,-2) (start) {\textbf{Logical condition}};
+        \node [decision, fill=red!20, yshift = -1cm] at (0,-5) (decision) {End};
+        \draw [->, green] (data.south) -- (start.north);
+        \draw [->, blue] (start.east) to [out = 50, in = 30] (decision.east);
+        \draw [->, red] (start.west) to [out = 130, in = 150]  (data.west);
+        \node[draw=none] at (2.3, -4.5) (no) {True};  
+        \node [draw = none] at (-1.75, -1.5) (yes) {False};  
+    \end{tikzpicture}
+\end{figure}
+\end{frame}
+\begin{frame}
+    \begin{exampleblock}{Ex (v).}
+By referring to the example in slide (\ref{ex1}), get the numerical answer using loop repeat.
+    \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Labs}
+    \alert{{\Large Go to the coding environment $\rightarrow$}}
+    \end{frame}
+
+\subsection{For loop}
+
+\begin{frame}{Why do we use For loop?}
+    \begin{figure}
+        \centering
+    \tikzstyle{decision} = [rectangle, draw, text centered, rounded corners, minimum height=2em]
+    \tikzstyle{data} = [rectangle, draw, text centered, minimum height=2em]
+    \begin{tikzpicture}[->,>=stealth', auto, thick]
+        \node [data, fill=yellow!20] at (0,0) (p1) {\textbf{Initialization}};
+        \node [decision, fill=green!20] at (-1,-2) (p2) {\textbf{Code Block}};
+        \node[decision, fill = blue!20] at (0, -4) (p3) {\textbf{Last iteration?}};
+        \node [decision, fill=red!20] at (-2,-6) (p4) {End};
+        \draw [->, green] (p1) -- (p2);
+        \draw [->, blue] (p2) -- (p3);
+        \draw [->, red] (p3) -- (p4);
+        \draw [->, black] (p3.east) to [out = 50, in = 30] (p1.east);
+        \node[draw=none] at (2.7, -1.5) (no) {No};  
+        \node [draw = none] at (-1.5, -5) (yes) {Yes};  
+    \end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{exampleblock}{Example (vi):}
+Generate a matrix with 10 rows and 10 columns of integer values.
+\begin{itemize}
+    \item[a)] Calculate the row sum of this matrix using the for loop.
+    \item[b)] Using the \it{"next"} command, if the sum of a row is more than 500, do not print that row sum in the output. 
+    \item[c)] If a row is calculated whose sum is greater than 600, the loop will stop. using the command (break) 
+\end{itemize}
+    \end{exampleblock}
+\end{frame}
+\begin{frame}{Labs}
+    \alert{{\Large Go to the coding environment $\rightarrow$}}
+    \end{frame}
+    \end{document}
+

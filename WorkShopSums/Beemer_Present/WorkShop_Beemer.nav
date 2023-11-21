@@ -7,8 +7,72 @@
 \headcommand {\beamer@framepages {2}{2}}
 \headcommand {\slideentry {1}{0}{2}{3/3}{}{0}}
 \headcommand {\beamer@framepages {3}{3}}
-\headcommand {\beamer@partpages {1}{3}}
-\headcommand {\beamer@subsectionpages {2}{3}}
-\headcommand {\beamer@sectionpages {2}{3}}
-\headcommand {\beamer@documentpages {3}}
-\headcommand {\gdef \inserttotalframenumber {3}}
+\headcommand {\slideentry {1}{0}{3}{4/4}{}{0}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\beamer@sectionpages {2}{4}}
+\headcommand {\beamer@subsectionpages {2}{4}}
+\headcommand {\sectionentry {2}{Conditional structures}{5}{Conditional structures}{0}}
+\headcommand {\slideentry {2}{0}{1}{5/5}{}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\beamer@subsectionpages {5}{5}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{6}{if}}
+\headcommand {\slideentry {2}{1}{1}{6/6}{if}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {2}{1}{2}{7/7}{if}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {2}{1}{3}{8/8}{if}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\beamer@subsectionpages {6}{8}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{9}{if-else}}
+\headcommand {\slideentry {2}{2}{1}{9/9}{if-else}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\slideentry {2}{2}{2}{10/10}{if-else}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\slideentry {2}{2}{3}{11/11}{if-else}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\slideentry {2}{2}{4}{12/12}{if-else}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\beamer@subsectionpages {9}{12}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{13}{ifelse}}
+\headcommand {\slideentry {2}{3}{1}{13/13}{ifelse}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\slideentry {2}{3}{2}{14/14}{ifelse}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\slideentry {2}{3}{3}{15/15}{ifelse}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\beamer@sectionpages {5}{15}}
+\headcommand {\beamer@subsectionpages {13}{15}}
+\headcommand {\sectionentry {3}{Loops in R Programming}{16}{Loops in R Programming}{0}}
+\headcommand {\slideentry {3}{0}{1}{16/16}{}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\slideentry {3}{0}{2}{17/17}{}{0}}
+\headcommand {\beamer@framepages {17}{17}}
+\headcommand {\beamer@subsectionpages {16}{17}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{18}{while loop}}
+\headcommand {\slideentry {3}{1}{1}{18/18}{while loop}{0}}
+\headcommand {\beamer@framepages {18}{18}}
+\headcommand {\slideentry {3}{1}{2}{19/19}{while loop}{0}}
+\headcommand {\beamer@framepages {19}{19}}
+\headcommand {\slideentry {3}{1}{3}{20/20}{while loop}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\beamer@subsectionpages {18}{20}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{21}{repeat loop}}
+\headcommand {\slideentry {3}{2}{1}{21/21}{repeat loop}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\slideentry {3}{2}{2}{22/22}{repeat loop}{0}}
+\headcommand {\beamer@framepages {22}{22}}
+\headcommand {\slideentry {3}{2}{3}{23/23}{repeat loop}{0}}
+\headcommand {\beamer@framepages {23}{23}}
+\headcommand {\beamer@subsectionpages {21}{23}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{24}{For loop}}
+\headcommand {\slideentry {3}{3}{1}{24/24}{For loop}{0}}
+\headcommand {\beamer@framepages {24}{24}}
+\headcommand {\slideentry {3}{3}{2}{25/25}{For loop}{0}}
+\headcommand {\beamer@framepages {25}{25}}
+\headcommand {\slideentry {3}{3}{3}{26/26}{For loop}{0}}
+\headcommand {\beamer@framepages {26}{26}}
+\headcommand {\beamer@partpages {1}{26}}
+\headcommand {\beamer@subsectionpages {24}{26}}
+\headcommand {\beamer@sectionpages {16}{26}}
+\headcommand {\beamer@documentpages {26}}
+\headcommand {\gdef \inserttotalframenumber {26}}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.18)  20 NOV 2023 20:31
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.18)  21 NOV 2023 07:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -534,7 +534,7 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \FrameSep=\dimen295
 ) (c:/texlive/2022/texmf-dist/tex/latex/base/alltt.sty
 Package: alltt 2021/01/29 v2.0g defines alltt environment
-) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerthemeWarsaw.sty (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerinnerthemerounded.sty) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerouterthemeshadow.sty (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerouterthemesplit.sty)) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamercolorthemeorchid.sty) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamercolorthemewhale.sty)) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamercolorthemerose.sty) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerfontthemeprofessionalfonts.sty) (c:/texlive/2022/texmf-dist/tex/latex/base/inputenc.sty
+) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerthemeWarsaw.sty (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerinnerthemerounded.sty) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerouterthemeshadow.sty (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerouterthemesplit.sty)) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamercolorthemeorchid.sty) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamercolorthemewhale.sty)) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamercolorthemeseahorse.sty) (c:/texlive/2022/texmf-dist/tex/latex/beamer/beamerfontthemeprofessionalfonts.sty) (c:/texlive/2022/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks45
 \inpenc@posthook=\toks46
@@ -821,11 +821,11 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \c@nlinenum=\count366
 \TeXr@lab=\toks54
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 98.
+Package hyperref Info: Option `colorlinks' set `true' on input line 99.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 130.
+(hyperref)                removing `subscript' on input line 131.
 
 (c:/texlive/2022/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
@@ -834,21 +834,21 @@ Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 ))
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\includegraphics' on input line 144.
+(hyperref)                removing `\includegraphics' on input line 145.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 144.
+(hyperref)                removing `subscript' on input line 145.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 144.
+(hyperref)                removing `subscript' on input line 145.
 
-LaTeX Font Info:    Trying to load font information for TU+phv on input line 144.
-LaTeX Font Info:    No file TUphv.fd. on input line 144.
+LaTeX Font Info:    Trying to load font information for TU+phv on input line 145.
+LaTeX Font Info:    No file TUphv.fd. on input line 145.
 
 LaTeX Font Warning: Font shape `TU/phv/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 144.
+(Font)              using `TU/lmr/m/n' instead on input line 145.
 
 (c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2022-02-07 L3 backend support: XeTeX
@@ -864,30 +864,30 @@ File: l3backend-xetex.def 2022-02-07 L3 backend support: XeTeX
 ) (./WorkShop_Beemer.aux)
 \openout1 = `WorkShop_Beemer.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 144.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 144.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 145.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 145.
  (c:/texlive/2022/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 145.
+LaTeX Font Info:    ... okay on input line 145.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -923,7 +923,7 @@ LaTeX Font Info:    ... okay on input line 144.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 144.
+Package hyperref Info: Link coloring ON on input line 145.
 (c:/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (c:/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -933,9 +933,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count374
 )
-LaTeX Info: Redefining \ref on input line 144.
-LaTeX Info: Redefining \pageref on input line 144.
-LaTeX Info: Redefining \nameref on input line 144.
+LaTeX Info: Redefining \ref on input line 145.
+LaTeX Info: Redefining \pageref on input line 145.
+LaTeX Info: Redefining \nameref on input line 145.
  (./WorkShop_Beemer.out) (./WorkShop_Beemer.out)
 \@outlinefile=\write5
 \openout5 = `WorkShop_Beemer.out'.
@@ -957,11 +957,11 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
  (./WorkShop_Beemer.nav)
 Missing character: There is no 2 ("32) in font nullfont!
-File: ./Fig//Logo_Sums_BioStatistics.png Graphic file (type bmp)
-<./Fig//Logo_Sums_BioStatistics.png>
+File: ./Fig//Logo_Sums_BioStatistics.pdf Graphic file (type pdf)
+<use ./Fig//Logo_Sums_BioStatistics.pdf>
 Missing character: There is no 7 ("37) in font nullfont!
 
-Overfull \vbox (21.72537pt too high) detected at line 147
+Overfull \vbox (21.72353pt too high) detected at line 148
  []
 
 [1
@@ -972,13 +972,179 @@ Missing character: There is no 2 ("32) in font nullfont!
 [2
 
 ]
-Overfull \hbox (8.92924pt too wide) in paragraph at lines 191--191
+File: ./Fig//hadley_wickham.pdf Graphic file (type pdf)
+<use ./Fig//hadley_wickham.pdf>
+File: ./Fig//ross_ihaka.pdf Graphic file (type pdf)
+<use ./Fig//ross_ihaka.pdf>
+File: ./Fig//RLogo.pdf Graphic file (type pdf)
+<use ./Fig//RLogo.pdf>
+File: ./Fig//john_chambers.pdf Graphic file (type pdf)
+<use ./Fig//john_chambers.pdf>
+File: ./Fig//RobertGentelman.pdf Graphic file (type pdf)
+<use ./Fig//RobertGentelman.pdf>
+
+Missing character: There is no 2 ("32) in font nullfont!
+[3
+
+]
+Overfull \hbox (8.92924pt too wide) in paragraph at lines 213--213
 [][]  
  []
 
 Missing character: There is no 2 ("32) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
-[3
+[4
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[5
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[6
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[7
+
+]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 251.
+ (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 251.
+ (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[8
+
+]
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[9
+
+]
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[10
+
+]
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[11
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[12
+
+]
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[13
+
+]
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[14
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[15
+
+]
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[16
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[17
+
+]
+
+LaTeX Font Warning: Font shape `TU/phv/b/n' undefined
+(Font)              using `TU/phv/m/n' instead on input line 381.
+
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (1.5592pt too high) detected at line 381
+ []
+
+Missing character: There is no 2 ("32) in font nullfont!
+[18
+
+]
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[19
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[20
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[21
+
+]
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[22
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[23
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[24
+
+]
+
+LaTeX Font Warning: Font shape `TU/phv/m/it' undefined
+(Font)              using `TU/phv/m/n' instead on input line 459.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[25
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+[26
 
 ]
 \tf@nav=\write6
@@ -995,15 +1161,15 @@ Missing character: There is no 2 ("32) in font nullfont!
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `WorkShop_Beemer.out' has not changed.
-(rerunfilecheck)             Checksum: 47949AC7C3DCEDDDEEFE3CD50587DDA1;103.
+(rerunfilecheck)             Checksum: A01914AB78C1993719782CC977AB0D99;996.
  ) 
 Here is how much of TeX's memory you used:
- 30825 strings out of 476179
- 636035 string characters out of 5813071
- 907696 words of memory out of 5000000
- 50975 multiletter control sequences out of 15000+600000
- 469675 words of font info for 36 fonts, out of 8000000 for 9000
+ 31330 strings out of 476179
+ 647449 string characters out of 5813071
+ 916308 words of memory out of 5000000
+ 51442 multiletter control sequences out of 15000+600000
+ 482461 words of font info for 84 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 128i,19n,122p,569b,788s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,19n,122p,569b,929s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on WorkShop_Beemer.xdv (3 pages, 101584 bytes).
+Output written on WorkShop_Beemer.xdv (26 pages, 886752 bytes).
