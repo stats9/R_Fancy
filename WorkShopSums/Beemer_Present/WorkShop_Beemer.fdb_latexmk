@@ -1,9 +1,9 @@
 # Fdb version 3
-["xdvipdfmx"] 1700600149 "WorkShop_Beemer.xdv" "WorkShop_Beemer.pdf" "WorkShop_Beemer" 1700600149
-  "WorkShop_Beemer.xdv" 1700600148 2052988 4c615bb6c2d5706abb5d543e323e18f8 "xelatex"
+["xdvipdfmx"] 1700610717 "WorkShop_Beemer.xdv" "WorkShop_Beemer.pdf" "WorkShop_Beemer" 1700610718
+  "WorkShop_Beemer.xdv" 1700610716 2052992 d8c8e2e17794c22e73d0f046b7afcc8f "xelatex"
   (generated)
   "WorkShop_Beemer.pdf"
-["xelatex"] 1700600141 "d:/media_repos/habib_repository_github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" "WorkShop_Beemer.xdv" "WorkShop_Beemer" 1700600149
+["xelatex"] 1700610710 "d:/media_repos/habib_repository_github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" "WorkShop_Beemer.xdv" "WorkShop_Beemer" 1700610718
   "Fig//Logo_Sums_BioStatistics.pdf" 1700506435 43118 5c2cef245addb8f490ea24be683f7351 ""
   "Fig//RLogo.pdf" 1700506526 4433 0dd809fefda4f9478a93474b5a4e95e3 ""
   "Fig//RobertGentelman.pdf" 1700506552 9329 ec439630163b171be9832eb61a834610 ""
@@ -11,11 +11,11 @@
   "Fig//john_chambers.pdf" 1700506261 474492 c7444cb0d10d1afb7c0510cac9d85f8c ""
   "Fig//kharazmi.pdf" 1700561994 94929 e382cf3fd897104cd3b12b0509a8385b ""
   "Fig//ross_ihaka.pdf" 1700506577 6126 463e9937a58fc745d8d73f63ad89d6da ""
-  "WorkShop_Beemer.aux" 1700600148 14575 435208c7abfa588a2cfde165759a31d2 "xelatex"
-  "WorkShop_Beemer.nav" 1700600148 7689 0cd2db94be56527d4783793de192a5b5 "xelatex"
-  "WorkShop_Beemer.out" 1700600148 1779 50e299c6b5706f03480ee42653f9a363 "xelatex"
-  "WorkShop_Beemer.tex" 1700600133 30848 5d1f3ccff9f5ff84cf0b91f2e21e95c2 ""
-  "WorkShop_Beemer.toc" 1700600148 738 eb78cca4c82f133d7d1d9c0800ac94fe "xelatex"
+  "WorkShop_Beemer.aux" 1700610716 14575 435208c7abfa588a2cfde165759a31d2 "xelatex"
+  "WorkShop_Beemer.nav" 1700610716 7689 0cd2db94be56527d4783793de192a5b5 "xelatex"
+  "WorkShop_Beemer.out" 1700610716 1779 50e299c6b5706f03480ee42653f9a363 "xelatex"
+  "WorkShop_Beemer.tex" 1700610709 30852 8b015965b1fc533725330f5784372e98 ""
+  "WorkShop_Beemer.toc" 1700610716 738 eb78cca4c82f133d7d1d9c0800ac94fe "xelatex"
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1668722196 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1668723183 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1668721814 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -259,7 +259,7 @@
   "c:/texlive/2022/texmf-dist/web2c/texmf.cnf" 1668721784 40171 cdab547de63d26590bebb3baff566530 ""
   "c:/texlive/2022/texmf-var/web2c/xetex/xelatex.fmt" 1668723272 5419763 825ad5e2e8ed67a0fd8f0728f550924a ""
   "c:/texlive/2022/texmf.cnf" 1668723193 713 e69b156964470283e0530f5060668171 ""
-  "d:/media_repos/habib_repository_github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" 1700600133 30848 5d1f3ccff9f5ff84cf0b91f2e21e95c2 ""
+  "d:/media_repos/habib_repository_github/R_Fancy/WorkShopSums/Beemer_Present/WorkShop_Beemer.tex" 1700610709 30852 8b015965b1fc533725330f5784372e98 ""
   (generated)
   "WorkShop_Beemer.aux"
   "WorkShop_Beemer.log"
