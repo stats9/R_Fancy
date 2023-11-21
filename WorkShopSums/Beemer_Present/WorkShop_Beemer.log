@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.18)  21 NOV 2023 07:13
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.18)  21 NOV 2023 16:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -774,58 +774,39 @@ Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
 \mc@col@check@num=\count359
 ) (c:/texlive/2022/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (c:/texlive/2022/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen327
-\lightrulewidth=\dimen328
-\cmidrulewidth=\dimen329
-\belowrulesep=\dimen330
-\belowbottomsep=\dimen331
-\aboverulesep=\dimen332
-\abovetopsep=\dimen333
-\cmidrulesep=\dimen334
-\cmidrulekern=\dimen335
-\defaultaddspace=\dimen336
-\@cmidla=\count360
-\@cmidlb=\count361
-\@aboverulesep=\dimen337
-\@belowrulesep=\dimen338
-\@thisruleclass=\count362
-\@lastruleclass=\count363
-\@thisrulewidth=\dimen339
 ) (c:/texlive/2022/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2022/03/01 v3.6b Customizing captions (AR)
  (c:/texlive/2022/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
-\caption@tempdima=\dimen340
-\captionmargin=\dimen341
-\caption@leftmargin=\dimen342
-\caption@rightmargin=\dimen343
-\caption@width=\dimen344
-\caption@indent=\dimen345
-\caption@parindent=\dimen346
-\caption@hangindent=\dimen347
+\caption@tempdima=\dimen327
+\captionmargin=\dimen328
+\caption@leftmargin=\dimen329
+\caption@rightmargin=\dimen330
+\caption@width=\dimen331
+\caption@indent=\dimen332
+\caption@parindent=\dimen333
+\caption@hangindent=\dimen334
 Package caption Info: beamer document class detected.
  (c:/texlive/2022/texmf-dist/tex/latex/caption/caption-beamer.sto
 File: caption-beamer.sto 2022/01/06 v2.0c Adaption of the caption package to the beamer document classes (AR)
 ))
-\c@caption@flags=\count364
-\c@continuedfloat=\count365
+\c@caption@flags=\count360
+\c@continuedfloat=\count361
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: Hyperref support is turned off
 (caption)             because hyperref has stopped early.
 ) (c:/texlive/2022/texmf-dist/tex/latex/makecell/makecell.sty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen348
-\c@nlinenum=\count366
+\rotheadsize=\dimen335
+\c@nlinenum=\count362
 \TeXr@lab=\toks54
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 99.
+Package hyperref Info: Option `colorlinks' set `true' on input line 100.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 131.
+(hyperref)                removing `subscript' on input line 132.
 
 (c:/texlive/2022/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
@@ -834,60 +815,60 @@ Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 ))
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\includegraphics' on input line 145.
+(hyperref)                removing `\includegraphics' on input line 146.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 145.
+(hyperref)                removing `subscript' on input line 146.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 145.
+(hyperref)                removing `subscript' on input line 146.
 
-LaTeX Font Info:    Trying to load font information for TU+phv on input line 145.
-LaTeX Font Info:    No file TUphv.fd. on input line 145.
+LaTeX Font Info:    Trying to load font information for TU+phv on input line 146.
+LaTeX Font Info:    No file TUphv.fd. on input line 146.
 
 LaTeX Font Warning: Font shape `TU/phv/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 145.
+(Font)              using `TU/lmr/m/n' instead on input line 146.
 
 (c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2022-02-07 L3 backend support: XeTeX
  (|extractbb --version)
-\c__kernel_sys_dvipdfmx_version_int=\count367
-\l__color_backend_stack_int=\count368
-\g__color_backend_stack_int=\count369
-\g__graphics_track_int=\count370
+\c__kernel_sys_dvipdfmx_version_int=\count363
+\l__color_backend_stack_int=\count364
+\g__color_backend_stack_int=\count365
+\g__graphics_track_int=\count366
 \l__pdf_internal_box=\box146
-\g__pdf_backend_object_int=\count371
-\g__pdf_backend_annotation_int=\count372
-\g__pdf_backend_link_int=\count373
+\g__pdf_backend_object_int=\count367
+\g__pdf_backend_annotation_int=\count368
+\g__pdf_backend_link_int=\count369
 ) (./WorkShop_Beemer.aux)
 \openout1 = `WorkShop_Beemer.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 145.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 145.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 146.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 146.
  (c:/texlive/2022/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 145.
-LaTeX Font Info:    ... okay on input line 145.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -923,7 +904,7 @@ LaTeX Font Info:    ... okay on input line 145.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 145.
+Package hyperref Info: Link coloring ON on input line 146.
 (c:/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (c:/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -931,11 +912,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (c:/texlive/2022/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count374
+\c@section@level=\count370
 )
-LaTeX Info: Redefining \ref on input line 145.
-LaTeX Info: Redefining \pageref on input line 145.
-LaTeX Info: Redefining \nameref on input line 145.
+LaTeX Info: Redefining \ref on input line 146.
+LaTeX Info: Redefining \pageref on input line 146.
+LaTeX Info: Redefining \nameref on input line 146.
  (./WorkShop_Beemer.out) (./WorkShop_Beemer.out)
 \@outlinefile=\write5
 \openout5 = `WorkShop_Beemer.out'.
@@ -956,20 +937,36 @@ Dictionary: translator-theorem-dictionary, Language: English
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
  (./WorkShop_Beemer.nav)
+Overfull \vbox (0.97636pt too high) detected at line 146
+ []
+
 Missing character: There is no 2 ("32) in font nullfont!
 File: ./Fig//Logo_Sums_BioStatistics.pdf Graphic file (type pdf)
 <use ./Fig//Logo_Sums_BioStatistics.pdf>
 Missing character: There is no 7 ("37) in font nullfont!
 
-Overfull \vbox (21.72353pt too high) detected at line 148
+Overfull \vbox (21.72353pt too high) detected at line 149
  []
 
 [1
 
-]
+] (./WorkShop_Beemer.toc)
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [2
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[3
 
 ]
 File: ./Fig//hadley_wickham.pdf Graphic file (type pdf)
@@ -983,168 +980,511 @@ File: ./Fig//john_chambers.pdf Graphic file (type pdf)
 File: ./Fig//RobertGentelman.pdf Graphic file (type pdf)
 <use ./Fig//RobertGentelman.pdf>
 
-Missing character: There is no 2 ("32) in font nullfont!
-[3
-
-]
-Overfull \hbox (8.92924pt too wide) in paragraph at lines 213--213
-[][]  
+Overfull \vbox (8.28575pt too high) detected at line 201
  []
 
-Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [4
 
 ]
-Missing character: There is no 1 ("31) in font nullfont!
-Missing character: There is no 6 ("36) in font nullfont!
+Overfull \hbox (8.92924pt too wide) in paragraph at lines 221--221
+[][]  
+ []
+
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [5
 
 ]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
-Missing character: There is no 2 ("32) in font nullfont!
-Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [6
 
 ]
 Missing character: There is no 2 ("32) in font nullfont!
-Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [7
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 251.
- (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 251.
- (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
 Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [8
 
 ]
-Missing character: There is no 3 ("33) in font nullfont!
-Missing character: There is no 3 ("33) in font nullfont!
+LaTeX Font Info:    Trying to load font information for U+msa on input line 259.
+ (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 259.
+ (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [9
 
 ]
 Missing character: There is no 3 ("33) in font nullfont!
-Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [10
 
 ]
-Missing character: There is no 4 ("34) in font nullfont!
 Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [11
 
 ]
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [12
 
 ]
-Missing character: There is no 4 ("34) in font nullfont!
-Missing character: There is no 8 ("38) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [13
 
 ]
-Missing character: There is no 5 ("35) in font nullfont!
-Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [14
 
 ]
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [15
 
 ]
-Missing character: There is no 5 ("35) in font nullfont!
-Missing character: There is no 8 ("38) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [16
 
 ]
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [17
 
 ]
-
-LaTeX Font Warning: Font shape `TU/phv/b/n' undefined
-(Font)              using `TU/phv/m/n' instead on input line 381.
-
 Missing character: There is no 2 ("32) in font nullfont!
 
-Overfull \vbox (1.5592pt too high) detected at line 381
- []
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
 
 Missing character: There is no 2 ("32) in font nullfont!
 [18
 
 ]
-Missing character: There is no 6 ("36) in font nullfont!
-Missing character: There is no 3 ("33) in font nullfont!
+
+LaTeX Font Warning: Font shape `TU/phv/b/n' undefined
+(Font)              using `TU/phv/m/n' instead on input line 389.
+
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (6.09326pt too high) detected at line 389
+ []
+
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [19
 
 ]
-Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [20
 
 ]
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [21
 
 ]
-Missing character: There is no 6 ("36) in font nullfont!
-Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (6.66066pt too high) detected at line 424
+ []
+
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [22
 
 ]
-Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [23
 
 ]
 Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [24
 
 ]
+Missing character: There is no 2 ("32) in font nullfont!
 
-LaTeX Font Warning: Font shape `TU/phv/m/it' undefined
-(Font)              using `TU/phv/m/n' instead on input line 459.
+Overfull \vbox (11.69121pt too high) detected at line 456
+ []
 
-Missing character: There is no 7 ("37) in font nullfont!
-Missing character: There is no 3 ("33) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [25
 
 ]
-Missing character: There is no 2 ("32) in font nullfont!
+
+LaTeX Font Warning: Font shape `TU/phv/m/it' undefined
+(Font)              using `TU/phv/m/n' instead on input line 467.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
 Missing character: There is no 2 ("32) in font nullfont!
 [26
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[27
+
+]
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[28
+
+]
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[29
+
+]
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[30
+
+]
+File: ./Fig//kharazmi.pdf Graphic file (type pdf)
+<use ./Fig//kharazmi.pdf>
+
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (74.58826pt too high) detected at line 534
+ []
+
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[31
+
+]
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[32
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[33
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[34
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[35
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[36
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[37
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[38
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[39
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[40
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[41
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[42
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[43
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[44
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[45
+
+]
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[46
+
+]
+Missing character: There is no 2 ("32) in font nullfont!
+
+Overfull \vbox (0.97636pt too high) has occurred while \output is active []
+
+
+Missing character: There is no 2 ("32) in font nullfont!
+[47
 
 ]
 \tf@nav=\write6
@@ -1161,15 +1501,15 @@ Missing character: There is no 2 ("32) in font nullfont!
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `WorkShop_Beemer.out' has not changed.
-(rerunfilecheck)             Checksum: A01914AB78C1993719782CC977AB0D99;996.
+(rerunfilecheck)             Checksum: 8CF49F8E3D712EABED1AAE6A75E46A94;1556.
  ) 
 Here is how much of TeX's memory you used:
- 31330 strings out of 476179
- 647449 string characters out of 5813071
- 916308 words of memory out of 5000000
- 51442 multiletter control sequences out of 15000+600000
+ 31518 strings out of 476179
+ 654222 string characters out of 5813071
+ 926795 words of memory out of 5000000
+ 51631 multiletter control sequences out of 15000+600000
  482461 words of font info for 84 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  128i,19n,122p,569b,929s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on WorkShop_Beemer.xdv (26 pages, 886752 bytes).
+Output written on WorkShop_Beemer.xdv (47 pages, 1707084 bytes).

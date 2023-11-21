@@ -1,9 +1,13 @@
-\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
-\beamer@sectionintoc {2}{Conditional structures}{5}{0}{2}
-\beamer@subsectionintoc {2}{1}{if}{6}{0}{2}
-\beamer@subsectionintoc {2}{2}{if-else}{9}{0}{2}
-\beamer@subsectionintoc {2}{3}{ifelse}{13}{0}{2}
-\beamer@sectionintoc {3}{Loops in R Programming}{16}{0}{3}
-\beamer@subsectionintoc {3}{1}{while loop}{18}{0}{3}
-\beamer@subsectionintoc {3}{2}{repeat loop}{21}{0}{3}
-\beamer@subsectionintoc {3}{3}{For loop}{24}{0}{3}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Conditional structures}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{if}{7}{0}{2}
+\beamer@subsectionintoc {2}{2}{if-else}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{ifelse}{14}{0}{2}
+\beamer@sectionintoc {3}{Loops in R Programming}{17}{0}{3}
+\beamer@subsectionintoc {3}{1}{while loop}{19}{0}{3}
+\beamer@subsectionintoc {3}{2}{repeat loop}{22}{0}{3}
+\beamer@subsectionintoc {3}{3}{For loop}{25}{0}{3}
+\beamer@sectionintoc {4}{Fanctional Programming}{28}{0}{4}
+\beamer@subsectionintoc {4}{1}{A short look at algorithm writing}{31}{0}{4}
+\beamer@subsectionintoc {4}{2}{function}{38}{0}{4}
+\beamer@sectionintoc {5}{Labs}{47}{0}{5}

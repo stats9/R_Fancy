@@ -65,6 +65,7 @@
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%
 \usepackage{bm}
 \usepackage{graphicx}
@@ -82,7 +83,7 @@
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{setspace}
-\usepackage{booktabs}
+
 \usepackage{caption}
 
 
@@ -146,6 +147,13 @@ pdfpagemode = {FullScreen}
 
 
 \frame[plain]{\maketitle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \begin{frame}{A Brief History of R}
  \begin{itemize}
@@ -366,7 +374,7 @@ tasks without writing the same code multiple times.}
         \centering
     \tikzstyle{decision} = [rectangle, draw, text centered, rounded corners, minimum height=2em]
     \tikzstyle{data} = [rectangle, draw, text centered, minimum height=2em]
-    \tikzstyle{terminator} = [diamond, draw, text centered, minimum height=2em]
+    \tikzstyle{terminator} = [ellipse, draw, text centered, minimum width = 2em, minimum height=1em]
     \begin{tikzpicture}[->,>=stealth', auto, thick]
         \node [terminator, fill=yellow!20] at (0,0) (start) {\textbf{Logical condition}};
         \node [data, fill=green!20, yshift = -2cm] at (0,-2) (data) {Code Block};
@@ -460,5 +468,259 @@ Generate a matrix with 10 rows and 10 columns of integer values.
 \begin{frame}{Labs}
     \alert{{\Large Go to the coding environment $\rightarrow$}}
     \end{frame}
-    \end{document}
+
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+    \section{Fanctional Programming}
+    
+
+    \begin{frame}{Why do we need functions in Programming?}
+    \textcolor{blue}{Functions in programming are essential for several reasons:}
+
+    \begin{block}{Functional Programming}
+        \begin{enumerate}
+
+            \item \textcolor{red}{Code Reusability:}~ Functions allow us to write a piece of code once and reuse it multiple times. This can save a lot of time and effort, especially in large programs.
+            
+            \item \textcolor{red}{Modularity:}~ Functions help to break down large programs into small, manageable parts. This makes the code easier to understand, debug, and maintain.
+            
+            \item \textcolor{red}{Abstraction:}~ Functions hide the details of their operation, allowing us to use them without knowing exactly how they work. This is a key principle of software design known as abstraction.
+            
+        \end{enumerate}
+    \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{Functional Programming}
+\begin{block}{continue about Functional Programming}
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \item  \textcolor{red}{Namespace Separation:}~ Variables defined inside a function are not visible outside the function. This helps to prevent naming conflicts in our code.
+            
+        \item \textcolor{red}{Testing and Debugging:}~ It's easier to test and debug small functions than large monolithic code blocks. If a problem occurs, it's easier to pinpoint the issue in a small, isolated function.
+        
+        \item \textcolor{red}{Code Readability:}~ Well-named functions can make the code more readable and self-explanatory, improving its understandability.
+        
+    \end{enumerate}
+\end{block}
+
+\end{frame}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \begin{frame}{Functional Programming}
+    \begin{alertblock}{summary}
+        In summary, functions are a fundamental building block of programming that help us write better, more manageable, and efficient code. They are a key part of structured and object-oriented programming.
+    \end{alertblock}
+    \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{A short look at algorithm writing}
+\begin{frame}{Creator}
+    \small{Abullah Mohammad bin Musa al Khwarizmi, Who is often referred to as "The Father of Algebra"}
+    \begin{figure}[H]
+        \centering
+        
+    \includegraphics[width = 6cm]{kharazmi.pdf}
+    
+    \end{figure}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{frame}
+\begin{frame}{Definition}
+
+    \begin{definition}
+        An algorithm is a process or set of rules to be followed in calculations or other problem-solving operations, especially by a computer. It's a sequence of instructions that a computer must perform to solve a well-defined problem. It essentially defines what the computer needs to do and how to do it. Algorithms can instruct a computer how to perform a calculation, process data, or make a decision.
+    \end{definition}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Why do we need algorithms?}
+    \textcolor{blue}{ Algorithms are crucial in functional programming for several reasons:}
+    \begin{block}
+       
+\begin{enumerate}
+    
+
+\item \textcolor{red}{Predictability:}~ Algorithms provide a clear sequence of steps to solve a problem, which makes the program's behavior predictable.
+
+\item \textcolor{red}{Efficiency:}~ Efficient algorithms can significantly reduce the time and space complexity of your program, making it run faster and consume less memory.
+
+\item \textcolor{red}{Problem Solving:}~ Algorithms are essential tools for solving complex problems in programming. They provide a structured approach to problem solving, which is particularly important in functional programming where side effects are avoided.
+
+\end{enumerate}
+
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Algorithms}
+\begin{block}{continue about Algorithms}
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+
+\item \textcolor{red}{Code Reusability:}~ Similar to functions, algorithms can be reused across different parts of a program or even different programs. This can save a lot of time and effort in development.
+
+\item \textcolor{red}{Understanding and Communication:}~ Algorithms provide a way for programmers to communicate their ideas effectively. They are language-agnostic, meaning they can be implemented in any programming language.
+
+    \end{enumerate}
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Algorithms}
+\begin{alertblock}{Summary}
+    In summary, algorithms are a fundamental part of functional programming and programming in general. They help us solve problems efficiently and effectively, and are a key tool in a programmer's toolkit.
+
+\end{alertblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Algorithms}
+\begin{exampleblock}{Ex. (vii)}
+    Write an algorithm that takes a number from the user and determines if this number is prime or not?
+\end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Algorithms}
+    \begin{algorithm}[H]
+        \SetAlgoLined
+        \KwResult{True or False}
+         \textbf{Function} isPrime(n):\\
+         \eIf{n is less than 2}{
+          \Return False\;
+          }{
+           \For{i from 2 to n}{
+            \If{n mod i equals 0}{
+             \Return False\;
+             }
+           }
+           \Return True\;
+          }
+         \caption{Prime Check}
+        \end{algorithm}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{function}
+\begin{frame}
+\begin{alertblock}{Objects and functions in R Programming}
+    \begin{itemize}
+        \item Everything that exists is an object.
+        \item Everything that happens is a function call.
+    \end{itemize}
+    \begin{quote}
+        John Chambers
+    \end{quote}
+\end{alertblock}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{function}
+    \begin{block}{Elements of a function}
+        \begin{itemize}
+            \item formals
+            \item body
+            \item environment
+        \end{itemize}
+        
+    \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{formals of function}
+    \begin{block}{formals}
+        These are the arguments of the function. They control how you can call the function. When a function is invoked, you can pass values to it through these arguments.
+    \end{block}
+    \begin{exampleblock}{EX. (viii)}
+        \label{ex8}
+        \begin{align*}
+            & \text{myfun <- function(x1, x2, x3) \{}\\
+            & \text{temp1 = x1 * x2} \\
+            & \text{return(temp1)}\\
+            & \}
+        \end{align*}
+    \end{exampleblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Body of functions}
+    \begin{block}{Body}
+        This is the code inside the function. It contains the sequence of statements that the function will execute when it is called.
+    \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Environment of functions}
+    \begin{block}{Environment}
+        This is the "map" of the location of the function's variables. When a function is executed, it creates a new environment to hold its local variables.
+    \end{block}
+
+    
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{lazy evaluation}
+    \begin{block}{lazy evaluation}
+        Lazy evaluation, also known as call by need, is a technique used in R programming where the evaluation of an expression is delayed until its value is absolutely needed. This means that in R, an expression is not evaluated when it is not used. 
+        For instance, if a function argument is not used in the function, R will not evaluate it. This strategy increases the efficiency of the program, especially when used iteratively, as it avoids repeated evaluations. 
+    \end{block}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Primitive functions}
+
+\begin{block}{Primitive functions}
+    In R programming, primitive functions are a special type of function that are implemented at a low level for performance reasons. They are only found in the base package and include language elements like "if" and "for", operators like "and" and "\$", and mathematical functions like "exp" and "sin".
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Primitive functions}
+\textcolor{blue}{Primitive functions have several unique characteristics:}
+
+    \begin{alertblock}{Primitive funcitons}
+\begin{itemize}
+    \item They operate at a low level, which can make them more efficient.
+    \item They have different rules for argument matching.
+    \item They do not allow any R-code in the function.
+    \item They use a special technique for accessing C-code.
+\end{itemize}
+\end{alertblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Generic functions}
+\begin{block}{Generic functions}
+
+    In R programming, generic functions play a crucial role in object-oriented programming. They are functions that behave differently based on the class of the input. This is known as polymorphism.
+
+Generic functions use a system called "S3", which was introduced in "S" version 3. You can identify an S3 generic function because its entire body is a call to the R function "UseMethod". For example, "plot" and "summary" are generic functions.
+\end{block}
+\end{frame}
+
+\section{Labs}
+\begin{frame}{Labs}
+    \alert{{\Large Go to the coding environment $\rightarrow$}}
+\end{frame}
+
+\end{document}
 
