@@ -197,7 +197,7 @@ pdfpagemode = {FullScreen}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Example of if structure}
 \begin{exampleblock}{Ex. (i)}
-    Get a number from the user, if the number to the remainder of the number to the number is five times 2 or 3, put Greate value in the output, and do nothing otherwise.
+Get a number from the user. If the remainder of this number is divided by 5 ‌is 2 or 3, print "Great" in the output, otherwise, do nothing.
 \end{exampleblock}
 \end{frame}
 
@@ -221,7 +221,7 @@ pdfpagemode = {FullScreen}
 
 \subsection{if-else}
 \begin{frame}{if-else}
-    \begin{block}
+    \begin{block}{if-else}
         But there are times when we need to change the path of the program for any answer when we check the condition. And it is even possible to obtain different modes for different modes.
     \end{block}
 \end{frame}
@@ -246,7 +246,7 @@ pdfpagemode = {FullScreen}
 
 \begin{frame}{Example}
 \begin{exampleblock}{Ex. (ii)}
-take a number from the user, of course, with the condition that it is greater than 20, then if the remainder of this number is zero compared to five numbers, print the value of "A" in the output, if
+take a number from the user, with the condition that it is greater than 20, then if the remainder of this number is zero compared to five numbers, print the value of "A" in the output, if
     was 1, print the value of "B" in the output, if it was 2, print the value of "CC" in the output and if it was 3, print the value of "C" in the output, and finally, if it was 4
     Print the value of "D" in the output.
 \end{exampleblock}
@@ -281,7 +281,7 @@ Sometimes we are faced with a binary situation, if the condition is met, one thi
 
 \begin{frame}{Example}
 \begin{exampleblock}{Ex. (iii)}
-Get an output from the user. If the output was even, it returns the value "even" and otherwise it returns the value "odd".
+Get an input from the user. If the input was even, it returns the value "even" and otherwise it returns the value "odd".
 \end{exampleblock}
 \end{frame}
 
