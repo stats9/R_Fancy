@@ -63,9 +63,10 @@ $$
 ```{r}
 #| warning: false
 #| message: false
-
+Start = Sys.time()
 sim_fun <- function(nSim = 1e+3, numDice = 2, num = 5, level = "max",
-                        operator = ">=") {
+                        operator = ">=", seed = 412) {
+    set.seed(seed)
     if (!(level %in% c("max", "min"))) stop("level must be max or min")
     if (!(operator %in% c(">", ">=", "<=", "<", "=="))) 
         stop("operator must be in c(>, >=, <=, <, ==)")
@@ -76,11 +77,58 @@ sim_fun <- function(nSim = 1e+3, numDice = 2, num = 5, level = "max",
     return(mean(temp2))
 }
 
-result <- sim_fun(nSim = 1e+6, numDice = 2, num = 5, 
+result <- sim_fun(nSim = 1e+7, numDice = 2, num = 5, 
             level = "max", operator = ">=")
-sprintf("Pr(max(x, y) >= 5) = %.4f", result)
 
-
-
+End = Sys.time()
+cat("Pr(max(x, y) >= 5) = ", result, "\n", 
+"Duration Time: ", difftime(End, Start, units = "secs")[[1]], 
+" seconds", "\n", sep = "")
 ```
 
+
+
+<br><br>
+<hr><hr>
+
+
+#### Using Python Programming
+
+```{python}
+import time
+
+Start = time.time()
+import numpy as np
+import operator
+def sim_fun(nSim = 10**3, numDice = 2, num = 5, level = "max", operand = ">=", 
+            seed = 412): 
+    np.random.seed(seed)
+    if level not in ("max", "min"): 
+        raise ValueError("level must be 'max' or 'min'")
+    if operand not in (">=", "<=", "==", ">", "<"):
+        raise ValueError("operator must be '>=', '<=', '==', '>', or '<'")
+    if not isinstance(seed, int): 
+        raise ValueError("seed must be an integer")
+    if not isinstance(nSim, int):
+        raise ValueError("nSim must be an integer")
+    if not isinstance(numDice, int):
+        raise ValueError("numDice must be an integer")
+    if not isinstance(num, int):
+        raise ValueError("num must be an integer")
+    my_mat = np.random.choice([1, 2, 3, 4, 5, 6], size = numDice * nSim, 
+                              replace = True).reshape(nSim, numDice)
+    mydict = {">=": "ge", "<=": "le", "==": "eq", 
+          "!=": "ne", ">": "gt", "<": "lt"}
+    cond_fun = getattr(operator, mydict[operand])
+    mydict2 = {'max': max, 'min': min}
+    myfun = mydict2[level]
+    result1 = np.apply_along_axis(func1d = myfun, axis = 1, arr = my_mat)
+    result2 = cond_fun(result1, num)
+    return result2.mean()
+
+python_sim_result = sim_fun(nSim = 10**7)
+End = time.time()
+print("""Pr(max(x, y) >= 5) = {}, \n
+        Duration Time: {} seconds, \n
+    """.format(python_sim_result, End - Start))
+```
