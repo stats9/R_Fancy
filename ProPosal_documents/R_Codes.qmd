@@ -1,0 +1,75 @@
+---
+author: Habib Ezzatabadi
+title: Competing Risks
+format: html
+editor: visual
+---
+
+
+## First, we simulate a data set
+
+```{r}
+#| warning: false
+#| message: false
+
+
+if(!require(data.table)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("data.table")
+    library(data.table)
+}
+
+if(!require(simstudy)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("simstudy")
+    library(simstudy)
+}
+
+
+d1 <- defData(varname = "x1", formula = 0.4, variance = 2, 
+                dist = "gamma", id = "id") ## add covariate i
+d1 <- d1 |> defData(varname = "x2", formula = 2, variance = 2, 
+                        dist = "gamma") ## add covariate ii
+ds <- defSurv(varname = "cancer:i", formula = "-0.5 - 0.1 * x1", shape = 0.5) ## add event i
+ds <- ds |> defSurv(varname = "cancer:ii", formula = "-0.3 - 0.1 * x2", shape = 0.5) ## add event ii
+ds <- ds |> defSurv(varname = "censor", formula = "-2 + 0.2 * x1 - 0.3 * x2", shape = 0.5) ## add event iii
+set.seed(99)
+n <- 150
+dtCov <- genData(n, d1)
+dtSurv <- genSurv(dtCov, ds)
+
+cmpData <- addCompRisk(dtSurv, c("cancer:ii", "cancer:i", "censor"), 
+                        timeName = "time", censorName = "censor", 
+                        keepEvents = FALSE) ## Generate Data
+cmpData |> head(10)
+
+cmpData |> _$type |> table() ## table of Events
+
+
+## Generate CIF curve 
+if(!require(survminer)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("survminer")
+    library(survminer)
+}
+
+if(!require(cmprsk)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("cmprsk")
+    library(cmprsk)
+}
+
+CIF_Model <- cuminc(ftime = cmpData$time, 
+                    fstatus = cmpData$type, 
+                    cencode = "censor")
+ggcompetingrisks(fit = CIF_Model, 
+                multiple_panels = FALSE, 
+                xlab = "Time", 
+                title = "Cumulative Incidence Curve", 
+                ylim = c(0, 1), 
+                ggtheme = theme_bw())
+
+```
+
+
+
