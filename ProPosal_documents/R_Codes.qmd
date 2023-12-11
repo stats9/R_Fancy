@@ -1,7 +1,7 @@
 ---
 author: Habib Ezzatabadi
 title: Competing Risks
-format: html
+format: gfm
 editor: visual
 ---
 
@@ -73,3 +73,250 @@ ggcompetingrisks(fit = CIF_Model,
 
 
 
+***
+***
+
+
+
+
+
+```{r}
+if (! require(simsurv))  {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("simsurv")
+    library(simsurv)
+}
+
+
+if (! require(survsim))  {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("survsim")
+    library(survsim)
+}
+
+
+if (! require(tidyverse))  {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("tidyverse")
+    library(tidyverse)
+}
+
+if(! require(ggsurvfit)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("ggsurvfit")
+    library(ggsurvfit)
+}
+if (! require (gtsummary)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("gtsummary")
+    library(gtsummary)
+}
+if (! require (tidycmprsk)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("tidycmprsk")
+    library(tidycmprsk)
+}
+
+if (! require (condSURV)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("condSURV")
+    library(condSURV)
+}
+library(survival)
+if (! require(survminer)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("survminer")
+    library(survminer)
+}
+
+if (! require(magick)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("magick")
+    library(magick)
+}
+
+if (! require(cowplot)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("cowplot")
+    library(cowplot)
+}
+
+
+if (! require(finalfit)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("finalfit")
+    library(finalfit)
+}
+
+if (! require(ggpubr)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("ggpubr")
+    library(ggpubr)
+}
+
+if (! require(png)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("png")
+    library(png)
+}
+
+
+if (! require(ggimage)) {
+    chooseCRANmirror(graphics = F, ind = 1)
+    install.packages("ggimage")
+    library(ggimage)
+}
+  
+```
+
+
+## Simulate Data
+
+```{r}
+
+## use simsurv package
+set.seed(215)
+nsim = 100
+Treat <- rbinom(n = nsim, size = 1, prob = 0.55)
+bp <- rnorm(n = nsim, mean = 120, sd = 2)
+dat <- data.frame(treat = Treat, bp = bp)
+betas = data.frame(lambda = rep(4, nsim), beta1 = rep(2, nsim), beta2 = rep(-3, nsim))
+hAzard <- function(t, x, betas) t ** betas[['lambda']] * exp(-betas['lambda'] * t ** betas[['lambda']] * (betas[['beta1']] * x[['treat']] + betas[['beta2']]*x[['bp']]))
+
+Time <- simsurv(hazard = hAzard, x = dat, betas = betas, maxt = 2, seed = 215)
+
+Data <- data.frame(id = Time$id, Event_time = Time$eventtime, Status = Time$status, 
+                    Group = dat$treat, bp = dat$bp)
+# save(Data, file = "Data.RData")
+# load("Data.RData")
+knitr :: kable(Data, caption = "Simulated Data", align = "c")
+```
+
+
+## estimate survival function with Kaplan Meier 
+```{r}
+y <- with(Data, {Surv(Event_time, Status)})
+Model1 <- survfit(y ~ 1, data = Data)
+Model2 <- coxph(y ~ 1, Data)
+
+
+P1 <- ggsurvplot(Model1, 
+conf.int = FALSE, 
+conf.int.style = "step",
+ggtheme = theme_bw(), 
+surv.median.line = "hv", 
+log.rank.weights = "1", 
+data = Data,
+colour = "darkblue") + 
+labs(title = "Kaplan-Meier Curve")
+
+
+P11 = ggsurvfit(Model1) + labs(title = "Kaplan-Meier Curve")
+
+
+P2 <- ggsurvplot(survfit(Model2), 
+conf.int = FALSE, 
+conf.int.style = "step",
+ggtheme = theme_bw(), 
+surv.median.line = "hv", 
+log.rank.weights = "1", 
+data = Data) 
+ggdraw(P11) + draw_label("stats9", colour = "#8557f180", size = 120, angle = 45, alpha = 0.3)
+print(P2 + labs(title = "Survival Curve with estimation by Cox Regression"))
+```
+
+```{r}
+sim.data <- crisk.sim(n=50, foltime=100, dist.ev=c("lnorm","lnorm"),
+anc.ev=c(1.479687, 0.5268302),beta0.ev=c(3.80342, 2.535374),dist.cens="lnorm",
+anc.cens=1.242733,beta0.cens=5.421748,z=list(c("unif", 0.8,1.2), c("unif", 0.9, 1.5)), 
+beta=list(c(0.1698695,0.0007010932),c(0.3735146,0.5591244)), 
+x=list(c("bern", 0.381), c("bern", 0.564)), nsit=2)
+sim.data
+
+
+set.seed(125)
+dat_sim <- crisk.sim(n = 100, foltime=50, dist.ev=c("lnorm","lnorm"),
+anc.ev=c(1.479687, 0.5268302), beta0.ev=c(3.80342, 2.535374), dist.cens = "lnorm",
+anc.cens = 0.1, beta0.cens = 3.2,  
+beta = list(c(0.1698695, 0.0007010932), c(0.02, 0.03)), 
+x=list(c("bern", 0.381), c("normal", 2, .5)), nsit = 2)
+Nc <- ncol(dat_sim)
+
+dat1 <- dat_sim %>% data.frame %>% .[, 1:9] %>%
+mutate(cause = case_when(is.na(cause) ~ 0, 
+.default = cause), start = NULL, stop = NULL, z = NULL) %>% 
+rename(x2 = x.1, x1 = x) %>%
+mutate(cause = as.factor(cause), status = as.factor(status)) 
+
+dat1
+
+
+
+
+
+
+
+```
+
+
+## competing risk 
+
+
+```{r}
+dat1 %>%
+cuminc(Surv(time, cause) ~ 1, data = .)  ## tidycmprsk
+
+Pcmp <- dat1 %>% 
+cuminc(Surv(time, status) ~ 1, data = .) %>% 
+  ggcuminc() + 
+  labs(
+    x = "Days"
+  ) + 
+  add_confidence_interval() +
+  add_risktable()
+
+ggdraw(Pcmp + labs(title = "CIF function")) + draw_label("stats9", colour = "#8557f180", size = 120, angle = 45, alpha = 0.3) 
+```
+
+
+
+
+## draw cif seperately for individual groups
+```{r}
+cuminc(Surv(time, cause) ~ 1, data = dat1) %>% 
+  ggcuminc(outcome = c("1", "2")) +
+  ylim(c(0, 1)) + 
+  labs(
+    x = "Days"
+  )
+
+cuminc(Surv(time, status) ~  x1, data = dat1) %>% 
+  tbl_cuminc(
+    times = 10.25, 
+    label_header = "**{time/365.25}-year cuminc**") %>% 
+  add_p()
+
+## draw cif based level of x1
+
+Pcmp2 <- cuminc(Surv(time, status) ~ x1, data = dat1) %>% 
+  ggcuminc(size = 1.5) + 
+  labs(
+    x = "Days")  +
+  add_risktable() 
+Pcmp2
+ggdraw(Pcmp2 + labs(title = "CIF function")) + draw_label("stats9", colour = "black", size = 120, angle = 45, alpha = 0.15) 
+
+## cause-specific regression 
+
+crr(Surv(time, cause) ~ x1 + x2, data = dat1, failcode = 1)
+crr(Surv(time, cause) ~ x1 + x2, data = dat1, failcode = 2)
+
+
+## coxph regression
+
+coxph(
+  Surv(time, as.numeric(status)) ~ x1 + x2, 
+  data = dat1
+  ) %>% 
+  tbl_regression(exp = TRUE)
+```
