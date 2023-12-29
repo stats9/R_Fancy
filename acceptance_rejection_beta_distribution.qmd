@@ -17,7 +17,7 @@ $$
 #| fig-height: 16
 #| fig-width: 12
 #| message: false
-#| warning: false
+#| warning: 
 
 
 a <- 2.7
