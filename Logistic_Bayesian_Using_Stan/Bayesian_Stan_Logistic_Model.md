@@ -138,7 +138,7 @@ if (!require(corrplot)) {
 
 corrplot(corr_mat, type = "full", hclust.method = "ward", method = "number", 
 p.mat = corr_mat, insig = 'p-value', , sig.level = 1, col = c("blue", 
-"red", "black"), cl.cex = 0.1, number.digits = 2, number.cex = 0.25)
+"red", "black"))
 ```
 
 ![](Bayesian_Stan_Logistic_Model_files/figure-commonmark/unnamed-chunk-3-1.png)
