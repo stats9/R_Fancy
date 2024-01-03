@@ -1,0 +1,2 @@
+this is a test. 
+To swap out hard drive as external storage you need use 
