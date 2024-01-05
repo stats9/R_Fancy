@@ -213,3 +213,6 @@ prob <- mean(ress > a)
 prob
 
 hist(ress, freq = FALSE, col = "orange")
+
+cat("Mean sim: ", mean(ress), "\n", 
+    "Standard Deviation of sim: ", sd(ress), "\n", sep = "")
