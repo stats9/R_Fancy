@@ -102,6 +102,16 @@ cat("Mean simulation: ", M, "\n",
 ## Condidate Distribution is Exponential Distribution
 
 
+$$
+\begin{aligned}
+& Dist:1.~~~ Y \sim \mathcal{N}(\mu = 0, \sigma^2 = 1), \\
+& Dist:2. ~~ Y \sim \mathcal{N}(\mu = -3.5, \sigma^2 = 9), \\
+& \text{Candidate Distribution:} ~~ U \sim \mathcal{E}\text{xp}(\lambda = 1). 
+\end{aligned}
+$$
+
+
+<br><br>
 
 ```{r}
 #| warning: false

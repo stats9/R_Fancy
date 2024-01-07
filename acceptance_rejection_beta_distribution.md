@@ -55,9 +55,9 @@ cat("Mean simulation: ", M, "\n",
     sep = "")
 ```
 
-    Mean simulation: 0.3018123
+    Mean simulation: 0.2995478
     Mean real: 0.3
-    Variance simulation: 0.02143388
+    Variance simulation: 0.02096389
     variance Real: 0.021
 
 ``` r
@@ -82,9 +82,9 @@ cat("Mean simulation: ", M, "\n",
     sep = "")
 ```
 
-    Mean simulation: 0.2993234
+    Mean simulation: 0.3001431
     Mean real: 0.3
-    Variance simulation: 0.02090866
+    Variance simulation: 0.02082865
     variance Real: 0.021
 
 <br><br>
@@ -100,6 +100,16 @@ cat("Mean simulation: ", M, "\n",
 ## Generate Normal Standard Using Acceptance-Rejection Method
 
 ## Condidate Distribution is Exponential Distribution
+
+$$
+\begin{aligned}
+& Dist:1.~~~ Y \sim \mathcal{N}(\mu = 0, \sigma^2 = 1), \\
+& Dist:2. ~~ Y \sim \mathcal{N}(\mu = -3.5, \sigma^2 = 9), \\
+& \text{Candidate Distribution:} ~~ U \sim \mathcal{E}\text{xp}(\lambda = 1). 
+\end{aligned}
+$$
+
+<br><br>
 
 ``` r
 ratio <- function(x) dnorm(x) / dexp(x)
@@ -143,13 +153,13 @@ sim_data <- sim_normal$Norm_sim
 mean(sim_data)
 ```
 
-    [1] -0.002180785
+    [1] 0.001689799
 
 ``` r
 sd(sim_data)
 ```
 
-    [1] 0.9980412
+    [1] 1.0019
 
 ``` r
 hist(sim_data, freq = FALSE)
@@ -167,13 +177,13 @@ sim_data <- sim_normal$Norm_sim
 mean(sim_data)
 ```
 
-    [1] -3.497725
+    [1] -3.500053
 
 ``` r
 sd(sim_data)
 ```
 
-    [1] 3.000471
+    [1] 2.999365
 
 ``` r
 hist(sim_data, freq = FALSE)
