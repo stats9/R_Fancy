@@ -6,7 +6,7 @@ editor: visual
 
 
 
-## $\mathcal{E}$xponential Distribution ----------------
+## $\mathcal{E}$ xponential Distribution ----------------
 
 
 ```{r}

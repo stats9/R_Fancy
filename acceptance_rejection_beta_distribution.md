@@ -55,9 +55,9 @@ cat("Mean simulation: ", M, "\n",
     sep = "")
 ```
 
-    Mean simulation: 0.2987756
+    Mean simulation: 0.3018123
     Mean real: 0.3
-    Variance simulation: 0.02070279
+    Variance simulation: 0.02143388
     variance Real: 0.021
 
 ``` r
@@ -82,7 +82,103 @@ cat("Mean simulation: ", M, "\n",
     sep = "")
 ```
 
-    Mean simulation: 0.3006579
+    Mean simulation: 0.2993234
     Mean real: 0.3
-    Variance simulation: 0.0210233
+    Variance simulation: 0.02090866
     variance Real: 0.021
+
+<br><br>
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+<br><br>
+
+## Generate Normal Standard Using Acceptance-Rejection Method
+
+## Condidate Distribution is Exponential Distribution
+
+``` r
+ratio <- function(x) dnorm(x) / dexp(x)
+Max <- optimize(ratio, interval = c(0, 10), maximum = TRUE)
+Max
+```
+
+    $maximum
+    [1] 0.9999956
+
+    $objective
+    [1] 0.6577446
+
+``` r
+curve(ratio, 0, 10, lwd = 2, col = "red")
+abline(h = Max$objective, lwd = 2, col = "darkblue", lty = 3)
+```
+
+![](acceptance_rejection_beta_distribution_files/figure-commonmark/unnamed-chunk-2-1.png)
+
+``` r
+sim_norm_fun <- function(n, mu = 0, sigg = 1) {
+    i <- 0
+    norm_sim <- numeric(n)
+    while(i < n) {
+        u <- runif(3)
+        temp <- dnorm(-log(u[1])) / (dexp(-log(u[1])) * Max$objective)
+        if (u[2] < temp){
+            i <- i + 1
+            a <- ifelse(u[3] < 0.5, -1, 1)
+            temp2 <- - a * log(u[1])
+            norm_sim[i] <- temp2
+        }
+    }
+    return(list(Norm_sim = sigg * norm_sim + mu))
+}
+
+sim_normal <- sim_norm_fun(n = 1e+5)
+
+sim_data <- sim_normal$Norm_sim
+mean(sim_data)
+```
+
+    [1] -0.002180785
+
+``` r
+sd(sim_data)
+```
+
+    [1] 0.9980412
+
+``` r
+hist(sim_data, freq = FALSE)
+curve(dnorm(x), -4, 4, lwd = 2, col = "red", add = TRUE)
+```
+
+![](acceptance_rejection_beta_distribution_files/figure-commonmark/unnamed-chunk-2-2.png)
+
+``` r
+### Generate Normal With Mu = -3.5, Variance = 9
+
+sim_normal <- sim_norm_fun(n = 1e+6, mu = -3.5, sigg = sqrt(9))
+
+sim_data <- sim_normal$Norm_sim
+mean(sim_data)
+```
+
+    [1] -3.497725
+
+``` r
+sd(sim_data)
+```
+
+    [1] 3.000471
+
+``` r
+hist(sim_data, freq = FALSE)
+curve(dnorm(x, mean = -3.5, sd = sqrt(9)), -3.5 - 3 * sqrt(9), 
+                -3.5 + 3 * sqrt(9), lwd = 2, col = "red", add = TRUE)
+```
+
+![](acceptance_rejection_beta_distribution_files/figure-commonmark/unnamed-chunk-2-3.png)

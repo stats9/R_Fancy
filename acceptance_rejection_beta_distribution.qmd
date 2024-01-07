@@ -17,7 +17,7 @@ $$
 #| fig-height: 16
 #| fig-width: 12
 #| message: false
-#| warning: 
+#| warning: false
 
 
 a <- 2.7
@@ -82,4 +82,75 @@ cat("Mean simulation: ", M, "\n",
 
 
 
+```
+
+
+
+
+<br><br>
+
+
+***
+***
+***
+
+
+<br><br>
+
+
+## Generate Normal Standard Using Acceptance-Rejection Method
+## Condidate Distribution is Exponential Distribution
+
+
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-width: 9
+#| fig-height: 9
+
+ratio <- function(x) dnorm(x) / dexp(x)
+Max <- optimize(ratio, interval = c(0, 10), maximum = TRUE)
+Max
+
+
+
+curve(ratio, 0, 10, lwd = 2, col = "red")
+abline(h = Max$objective, lwd = 2, col = "darkblue", lty = 3)
+
+sim_norm_fun <- function(n, mu = 0, sigg = 1) {
+    i <- 0
+    norm_sim <- numeric(n)
+    while(i < n) {
+        u <- runif(3)
+        temp <- dnorm(-log(u[1])) / (dexp(-log(u[1])) * Max$objective)
+        if (u[2] < temp){
+            i <- i + 1
+            a <- ifelse(u[3] < 0.5, -1, 1)
+            temp2 <- - a * log(u[1])
+            norm_sim[i] <- temp2
+        }
+    }
+    return(list(Norm_sim = sigg * norm_sim + mu))
+}
+
+sim_normal <- sim_norm_fun(n = 1e+5)
+
+sim_data <- sim_normal$Norm_sim
+mean(sim_data)
+sd(sim_data)
+hist(sim_data, freq = FALSE)
+curve(dnorm(x), -4, 4, lwd = 2, col = "red", add = TRUE)
+
+
+### Generate Normal With Mu = -3.5, Variance = 9
+
+sim_normal <- sim_norm_fun(n = 1e+6, mu = -3.5, sigg = sqrt(9))
+
+sim_data <- sim_normal$Norm_sim
+mean(sim_data)
+sd(sim_data)
+hist(sim_data, freq = FALSE)
+curve(dnorm(x, mean = -3.5, sd = sqrt(9)), -3.5 - 3 * sqrt(9), 
+                -3.5 + 3 * sqrt(9), lwd = 2, col = "red", add = TRUE)
 ```
