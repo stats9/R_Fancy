@@ -151,7 +151,7 @@ $$
 ```{r}
 #| warning: false
 #| fig-height: 9
-#| fig-width:9
+#| fig-width: 9
 
 fv <- function(x) dbeta(x, shape1 = 3, shape2 = 1)
 fy <- function(x) dbeta(x, shape1 = 3.5, shape2 = 9.5)
