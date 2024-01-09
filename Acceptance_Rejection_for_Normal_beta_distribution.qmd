@@ -131,9 +131,9 @@ c(Time_1 = time_1, Time_2 = time_2)
 
 
 ## Problem ii 
-From the beta distribution with the parameter of shape__1__ equal to 5.3 and the parameter of shape__2__ equal to 5.9
-simulate The candidate density is beta distribution with parameter shape__1__ equal to 3 and parameter
-shape__2__ is equal to one. Consider the number of data to be 100,000 and
+From the beta distribution with the parameter of shape~(1)~ equal to 3.5 and the parameter of shape~(2)~ equal to 9.5
+simulate The candidate density is beta distribution with parameter shape~(1)~ equal to 3 and parameter
+shape~(2)~ is equal to one. Consider the number of data to be 100,000 and
 Plot the histogram of the data and plot the target density on the histogram
 Fit the data.
 

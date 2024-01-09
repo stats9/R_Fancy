@@ -55,13 +55,13 @@ time_1 <- difftime(End_time_1, start_time_1, unit = "sec")
 ress_1 |> mean()
 ```
 
-    [1] 4.016329
+    [1] 3.996448
 
 ``` r
 ress_1 |> sd()
 ```
 
-    [1] 1.997417
+    [1] 2.003924
 
 ``` r
 hist(ress_1, probability = TRUE, col = "red")
@@ -118,13 +118,13 @@ time_2 <- difftime(End_time_2, start_time_2, unit = "sec")
 ress_2 |> mean()
 ```
 
-    [1] 3.990489
+    [1] 3.985589
 
 ``` r
 ress_2 |> sd()
 ```
 
-    [1] 2.005394
+    [1] 1.994618
 
 ``` r
 hist(ress_2, probability = TRUE, col = "red")
@@ -146,7 +146,7 @@ c(Time_1 = time_1, Time_2 = time_2)
 
     Time differences in secs
        Time_1    Time_2 
-    0.1763980 0.1246622 
+    0.3294094 0.2256730 
 
 ------------------------------------------------------------------------
 
@@ -154,12 +154,13 @@ c(Time_1 = time_1, Time_2 = time_2)
 
 ## Problem ii
 
-From the beta distribution with the parameter of shape\_\_1\_\_ equal to
-5.3 and the parameter of shape\_\_2\_\_ equal to 5.9 simulate The
-candidate density is beta distribution with parameter shape\_\_1\_\_
-equal to 3 and parameter shape\_\_2\_\_ is equal to one. Consider the
-number of data to be 100,000 and Plot the histogram of the data and plot
-the target density on the histogram Fit the data.
+From the beta distribution with the parameter of shape<sub>(1)</sub>
+equal to 3.5 and the parameter of shape<sub>(2)</sub> equal to 9.5
+simulate The candidate density is beta distribution with parameter
+shape<sub>(1)</sub> equal to 3 and parameter shape<sub>(2)</sub> is
+equal to one. Consider the number of data to be 100,000 and Plot the
+histogram of the data and plot the target density on the histogram Fit
+the data.
 
 $$
 \begin{aligned}
@@ -214,13 +215,13 @@ time_3 <- difftime(End_time_3, start_time_3, unit = "sec")
 ress_3 |> mean()
 ```
 
-    [1] 0.2689874
+    [1] 0.2689237
 
 ``` r
 ress_3 |> sd()
 ```
 
-    [1] 0.1184902
+    [1] 0.1183504
 
 ``` r
 hist(ress_3, probability = TRUE, col = "red")
@@ -277,13 +278,13 @@ time_4 <- difftime(End_time_4, start_time_4, unit = "sec")
 ress_4 |> mean()
 ```
 
-    [1] 0.2701497
+    [1] 0.2691341
 
 ``` r
 ress_4 |> sd()
 ```
 
-    [1] 0.1185794
+    [1] 0.1186765
 
 ``` r
 hist(ress_4, probability = TRUE, col = "red")
@@ -304,5 +305,5 @@ c(Time_3 = time_3, Time_4 = time_4)
 ```
 
     Time differences in secs
-        Time_3     Time_4 
-    22.7158310  0.9127531 
+       Time_3    Time_4 
+    42.074507  2.007042 
