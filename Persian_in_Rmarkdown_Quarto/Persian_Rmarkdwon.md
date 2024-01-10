@@ -46,11 +46,11 @@
 <div dir = "rtl", style = "color: black; font-size: 25px; font-family: B Nazanin">
 سلام. این فرمول تابع توزیع نمایی با میانگین 
 \(\lambda\) می‌باشد:‌ 
-&#10;$$
+</div>
+
+$$
 X \sim \mathcal{E}(\lambda) \implies f_X(x) = \frac{1}{\lambda} \times \exp(-\frac{1}{\lambda}x)
 $$
-&#10;
-</div>
 
 ``` r
 x <- rnorm(10); y <- rnorm(10);
