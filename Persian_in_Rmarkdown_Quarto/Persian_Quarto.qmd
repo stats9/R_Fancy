@@ -1,6 +1,6 @@
 ---
 title: ""
-output: pdf_document
+format: gfm
 ---
 <div dir = "rtl", style = "font-family: B Nazanin;"> 
 <address> 
