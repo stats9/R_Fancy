@@ -1,0 +1,126 @@
+---
+title: Create Table of Normal Standard Using R (without Using pnorm function!)
+format: gfm
+---
+
+
+
+## For Positive Values 
+
+```{r}
+#| warning: false
+ 
+
+## First for positive Values --------------------
+
+x_temp1 <- seq(0, 3.7, by = 0.1)
+y_temp1 <- seq(0, 0.1, by = 0.01)
+fun <- function(x) 1/sqrt(2 * pi) * exp( - 1/2 * x^2)
+Noraml_Standard_table <- matrix(NA, length(x_temp1), 
+                            length(y_temp1), 
+                            dimnames = list(x_temp1, y_temp1))
+
+i <- 0
+j <- 0
+for (d in x_temp1) {
+    i <- i + 1
+    j <- 0
+    for (v in y_temp1) {
+        j <- j + 1
+        tempp <- x_temp1[i] + y_temp1[j]
+        res <- integrate(fun, 
+        lower = -Inf, upper = tempp)$value 
+        Noraml_Standard_table[i, j] <- round(res, 4)
+    }
+}
+
+
+
+
+```
+
+
+```{r}
+#| eval: false
+
+
+print(Noraml_Standard_table)
+
+```
+
+
+
+\clearpage 
+
+
+```{r}
+#| echo: false
+
+Noraml_Standard_table |> 
+                        knitr :: kable(align = "c", 
+                        caption = "Table of Normal Standard for Positive Values")
+```
+
+
+
+
+
+***
+***
+
+\clearpage 
+
+## For Negative Values: 
+
+```{r}
+#| warning: false
+
+
+## Second for Negative Values --------------------
+
+x_temp2 <- seq(0, -3.7, by = -0.1)
+y_temp2 <- seq(0, -0.1, by = -0.01)
+
+Noraml_Standard_table2 <- matrix(NA, length(x_temp2), 
+                            length(y_temp2), 
+                            dimnames = list(x_temp1, y_temp1))
+
+i <- 0
+j <- 0
+for (d in x_temp2) {
+    i <- i + 1
+    j <- 0
+    for (v in y_temp2) {
+        j <- j + 1
+        tempp <- x_temp2[i] + y_temp2[j]
+        res <- integrate(fun, 
+                lower = -Inf, upper = tempp)$value 
+        Noraml_Standard_table2[i, j] <- round(res, 4)
+    }
+}
+
+
+
+
+```
+
+
+```{r}
+#| eval: false
+
+print(Noraml_Standard_table2)
+
+```
+
+
+\clearpage
+
+```{r}
+#| echo: false
+
+
+Noraml_Standard_table2 |> 
+                        knitr :: kable(align = "c", 
+                        caption = "Table of Normal Standard for Negative Values")
+```
+
