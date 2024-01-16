@@ -151,28 +151,13 @@ apply(xScale, 2, sd)
                        1                    1                    1 
 
 ``` r
-xTrain <- X |> 
-            slice(train |> unlist())
-```
+xTrain <- xScale |> _[train, ]
+xTest <- xScale |> _[-train, ] 
 
-    Warning: Slicing with a 1-column matrix was deprecated in dplyr 1.1.0.
 
-``` r
-xTest <- X |> 
-            slice(- (train |> unlist()))
+xTrain <- xTrain  |> as.data.frame()
+xTest <- xTest |> as.data.frame()
 
-xTrain |> dim()
-```
-
-    [1] 2400   21
-
-``` r
-xTest |> dim()
-```
-
-    [1] 600  21
-
-``` r
 xTrain_mat <- model.matrix(~ ., data = xTrain)[, -1]
 xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
 ```
@@ -242,7 +227,7 @@ ext_fit <- rstan :: extract(stanFit1)
 mean(apply(ext_fit$y_test, 2, median) == yTest)
 ```
 
-    [1] 0.74
+    [1] 0.755
 
 ------------------------------------------------------------------------
 
@@ -255,6 +240,7 @@ mean(apply(ext_fit$y_test, 2, median) == yTest)
 ## Using brms
 
 ``` r
+set.seed(1234)
 if (!require(brms)) {
     chooseCRANmirror(graphics = FALSE, ind = 1)
     install.packages("brms")
@@ -268,7 +254,9 @@ if (!require(bayesplot)) {
 }
 
 
-names(new_dat)
+new_dat2 <- cbind(yTrain, xTrain) |> 
+                setNames(new_dat |> names())
+names(new_dat2)
 ```
 
      [1] "Diabetes_binary"      "HighBP"               "HighChol"            
@@ -281,14 +269,20 @@ names(new_dat)
     [22] "Income"              
 
 ``` r
-temp1 <- names(new_dat)[-1]
+temp1 <- names(new_dat2)[-1]
+
 
 temp2 <- paste(temp1, collapse = " + ")
-form <- paste(names(new_dat)[1], temp2, sep = " ~ ")
+form <- paste(names(new_dat2)[1], temp2, sep = " ~ ")
+
+## define Priors 
+
 
 Model4 <- brm(as.formula(form), family = bernoulli, 
-            data = new_dat)
+            data = new_dat2)
 
+saveRDS(Model4, "brms_Model4")
+Model4 <- readRDS("brms_Model4")
 prior_summary(Model4)
 ```
 
@@ -349,18 +343,48 @@ conf_mat
 
            yTest
               0   1
-      FALSE 235  57
-      TRUE   85 223
+      FALSE 228  58
+      TRUE   92 222
 
 ``` r
 acc <- sum(diag(conf_mat)) / sum(conf_mat)
 acc
 ```
 
-    [1] 0.7633333
+    [1] 0.75
 
 ``` r
 pp_check(Model4)
 ```
 
 ![](Bayesian_Stan_Logistic_Model_edit_2_files/figure-commonmark/unnamed-chunk-6-1.png)
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+#### Model 5
+
+``` r
+## define Priors 
+# priors <- priors <- c(
+#     prior_string("normal(mu, sigma)", class = "b", coef = names(new_dat)[-1]), 
+
+#   prior_string("normal(0, 1.5)", class = "b", coef = paste("actor", 2:7, sep="")),
+#   prior_string("normal(0, 0.5)", class = "b", coef = paste("treatment", 2:4, sep=""))
+# )
+
+# Model4 <- brm(as.formula(form), family = bernoulli, 
+#             data = new_dat)
+
+# prior_summary(Model4)
+
+# prob <- predict(Model4, xTest)[, 1]
+# conf_mat <- table((prob > 0.5), yTest)
+# conf_mat
+# acc <- sum(diag(conf_mat)) / sum(conf_mat)
+# acc
+
+
+# pp_check(Model4)
+```
