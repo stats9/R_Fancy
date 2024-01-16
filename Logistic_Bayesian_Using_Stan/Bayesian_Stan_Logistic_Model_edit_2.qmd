@@ -1,0 +1,217 @@
+---
+title: Using stan | bayesian Model for Logistic regression 
+format: gfm
+editor: visual
+---
+
+## load libraries ----------------
+
+```{r}
+#| warning: false
+
+## for load rstan package
+if (!require(rstan)) {
+    install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+    library(rstan)
+}
+
+## for check package that good installed or not
+# example(stan_model, package = "rstan", run.dontrun = TRUE)
+
+## for parallel calculation 
+options(mc.cores = parallel :: detectCores())
+
+## for adjust run programming
+rstan_options(auto_write = TRUE)
+
+
+
+
+## for load tidyverse packages, (manipulate data and use ggplot objects)
+if (!require(tidyverse)) {
+    chooseCRANmirror(graphics = FALSE, ind = 1)
+    install.packages("tidyverse")
+    library(tidyverse)
+}
+
+
+## for feature selection 
+
+if(!require(mlbench)) {
+    chooseCRANmirror(graphics = FALSE, ind = 1)
+    install.packages("mlbench")
+    library(mlbench)
+}
+
+if(!require(caret)) {
+    chooseCRANmirror(graphics = FALSE, ind = 1)
+    install.packages("caret")
+    library(caret)
+}
+
+```
+
+
+***
+***
+
+
+#### load data -------------------
+
+
+```{r}
+set.seed(132)
+
+dat <- read.csv(file = "diabetes_binary_5050split_health_indicators_BRFSS2015.csv", header = TRUE)
+
+names(dat)
+n <- 3e+3
+ind <- sample(nrow(dat), size = n, replace = FALSE)
+new_dat <- dat |> 
+                slice(ind)
+y <- new_dat$Diabetes_binary |> unlist()
+p <- 0.8
+train <- createDataPartition(y, p, 
+            list = FALSE, times = 1)
+name_cols <- new_dat |> names()
+name_cols
+X <- new_dat |> 
+       dplyr :: select(name_cols[-1])
+
+X |> names()
+yTrain <- y[train]
+yTest <- y[-train]
+
+
+xScale <- apply(X, 2, function(x) {
+    temp <- (x - mean(x)) / sd(x)
+    return(temp)
+})
+colMeans(xScale)
+apply(xScale, 2, sd)
+
+xTrain <- X |> 
+            slice(train |> unlist())
+xTest <- X |> 
+            slice(- (train |> unlist()))
+
+xTrain |> dim()
+xTest |> dim()
+
+xTrain_mat <- model.matrix(~ ., data = xTrain)[, -1]
+xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
+
+```
+
+
+***
+***
+
+
+#### fit stan models 
+
+
+```{r}
+#| warning: false
+
+stanFit1 <- stan(file = "model_1.stan", 
+data = list(N = nrow(xTrain), L = nrow(xTest), X_test = xTest_mat,
+        k = ncol(xTrain), y = yTrain,  X_train = xTrain_mat), iter = 500, chains = 3)
+
+# saveRDS(stanFit1, "Model3.RDS")
+
+# plot(stanFit1)
+# plot(stanFit1, pars = c("alpha", "beta"))
+# traceplot(stanFit1, pars = c("alpha", "beta"))
+# ext_fit <- rstan :: extract(stanFit1)
+
+
+# # Accuracy
+# mean(apply(ext_fit$y_test, 2, median) == yTest)
+
+```
+
+
+***
+***
+
+
+```{r}
+#| warning: false
+
+# stanFit1 <- readRDS("Model3.RDS")
+
+
+```
+
+
+***
+***
+
+
+```{r}
+
+#| warning: false
+#| message: false
+#| fig-height: 9
+#| fig-width: 9
+
+
+plot(stanFit1, pars = c("alpha", "beta"))
+traceplot(stanFit1, pars = c("alpha", "beta"))
+ext_fit <- rstan :: extract(stanFit1)
+
+
+# Accuracy
+mean(apply(ext_fit$y_test, 2, median) == yTest)
+
+```
+
+
+***
+***
+***
+***
+
+
+## Using brms 
+
+
+```{r}
+#| warning: false
+#| fig-height: 9
+#| fig-width: 9
+
+if (!require(brms)) {
+    chooseCRANmirror(graphics = FALSE, ind = 1)
+    install.packages("brms")
+    library(tidyverse)
+}
+
+if (!require(bayesplot)) {
+    chooseCRANmirror(graphics = FALSE, ind = 1)
+    install.packages("bayesplot")
+    library(bayesplot)
+}
+
+
+names(new_dat)
+temp1 <- names(new_dat)[-1]
+
+temp2 <- paste(temp1, collapse = " + ")
+form <- paste(names(new_dat)[1], temp2, sep = " ~ ")
+
+Model4 <- brm(as.formula(form), family = bernoulli, 
+            data = new_dat)
+
+prior_summary(Model4)
+
+prob <- predict(Model4, xTest)[, 1]
+conf_mat <- table((prob > 0.5), yTest)
+conf_mat
+acc <- sum(diag(conf_mat)) / sum(conf_mat)
+acc
+
+
+pp_check(Model4)
+```
