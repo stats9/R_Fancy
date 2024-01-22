@@ -8,10 +8,10 @@ data {
 }
 
 parameters {
-    real mu;
+    real mu; 
     real sigma;
     real alpha; // intercept
-    vector[k] beta; // coefficients for predictors 
+    vector[k] beta; // coefficients for predictors
 }
 
 model {

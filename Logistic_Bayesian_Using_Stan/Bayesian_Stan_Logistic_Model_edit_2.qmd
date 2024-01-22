@@ -15,8 +15,8 @@ if (!require(rstan)) {
     library(rstan)
 }
 
-## for check package that good installed or not
-# example(stan_model, package = "rstan", run.dontrun = TRUE)
+
+
 
 ## for parallel calculation 
 options(mc.cores = parallel :: detectCores())
@@ -100,6 +100,8 @@ xTest <- xTest |> as.data.frame()
 xTrain_mat <- model.matrix(~ ., data = xTrain)[, -1]
 xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
 
+
+# xTrain_mat |> dim()
 ```
 
 
@@ -113,15 +115,15 @@ xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
 ```{r}
 #| warning: false
 
-stanFit1 <- stan(file = "model_1.stan", 
+stanFit1 <- stan(file = "model_3_update.stan", 
 data = list(N = nrow(xTrain), L = nrow(xTest), X_test = xTest_mat,
         k = ncol(xTrain), y = yTrain,  X_train = xTrain_mat), iter = 500, chains = 3)
 
 # saveRDS(stanFit1, "Model3.RDS")
 
-# plot(stanFit1)
-# plot(stanFit1, pars = c("alpha", "beta"))
-# traceplot(stanFit1, pars = c("alpha", "beta"))
+plot(stanFit1)
+plot(stanFit1, pars = c("alpha", "beta"))
+traceplot(stanFit1, pars = c("alpha", "beta"))
 # ext_fit <- rstan :: extract(stanFit1)
 
 
@@ -152,8 +154,8 @@ data = list(N = nrow(xTrain), L = nrow(xTest), X_test = xTest_mat,
 
 #| warning: false
 #| message: false
-#| fig-height: 9
-#| fig-width: 9
+#| fig-height: 12
+#| fig-width: 12
 
 
 plot(stanFit1, pars = c("alpha", "beta"))
@@ -178,15 +180,15 @@ mean(apply(ext_fit$y_test, 2, median) == yTest)
 
 ```{r}
 #| warning: false
-#| fig-height: 9
-#| fig-width: 9
+#| fig-height: 12
+#| fig-width: 12
 
 
 set.seed(1234)
 if (!require(brms)) {
     chooseCRANmirror(graphics = FALSE, ind = 1)
     install.packages("brms")
-    library(tidyverse)
+    library(brms)
 }
 
 if (!require(bayesplot)) {
@@ -228,36 +230,277 @@ pp_check(Model4)
 
 ***
 ***
+***
 
-#### Model 5
+
+
+#### Model 5 With Normal Prior
 
 
 ```{r}
 #| warning: false
-#| fig-height: 9
-#| fig-width: 9
+#| fig-height: 12
+#| fig-width: 12
+
 
 
 ## define Priors 
-# priors <- priors <- c(
-#     prior_string("normal(mu, sigma)", class = "b", coef = names(new_dat)[-1]), 
+priors <- c(
+    prior_string("normal(0, 15)", class = "b"), 
+    prior_string("normal(0, 20)", class = "Intercept") 
+)
 
-#   prior_string("normal(0, 1.5)", class = "b", coef = paste("actor", 2:7, sep="")),
-#   prior_string("normal(0, 0.5)", class = "b", coef = paste("treatment", 2:4, sep=""))
-# )
+# set_prior(priors)
 
-# Model4 <- brm(as.formula(form), family = bernoulli, 
-#             data = new_dat)
+Model5 <- brm(as.formula(form),  data = new_dat2, 
+            family = bernoulli, 
+            prior = priors)
 
-# prior_summary(Model4)
+prior_summary(Model5)
 
-# prob <- predict(Model4, xTest)[, 1]
-# conf_mat <- table((prob > 0.5), yTest)
-# conf_mat
-# acc <- sum(diag(conf_mat)) / sum(conf_mat)
-# acc
+prob2 <- predict(Model5, xTest)[, 1]
+conf_mat2 <- table((prob2 > 0.5), yTest)
+conf_mat2
+acc2 <- sum(diag(conf_mat2)) / sum(conf_mat2)
+acc2
 
 
-# pp_check(Model4)
+mcmc_plot(Model5, type = "trace")
+mcmc_plot(Model5, type = "dens")
+bayesplot :: pp_check(Model5, type = "error_hist")
+bayesplot :: pp_check(Model5, type = "loo_pit")
+bayesplot :: pp_check(Model5, type = "loo_pit_overlay")
+bayesplot :: pp_check(Model5, type = "bars")
+bayesplot :: pp_check(Model5, type = "dens_overlay")
+waic(Model4)
+waic(Model5)
+
+```
+
+
+
+***
+***
+***
+
+
+
+#### Model 6 With Cauchy  Prior
+
+```{r}
+#| warning: false
+#| fig-height: 12
+#| fig-width: 12
+
+
+
+
+
+## define Priors 
+priors2 <- c(
+    prior_string("cauchy(0, 3)", class = "b"),
+    prior_string("normal(0, 5)", class = "Intercept") 
+)
+
+# set_prior(priors)
+
+Model6 <- brm(as.formula(form),  data = new_dat2, 
+            family = bernoulli, 
+            prior = priors2)
+
+prior_summary(Model6)
+
+prob3 <- predict(Model6, xTest)[, 1]
+conf_mat3 <- table((prob3 > 0.5), yTest)
+conf_mat3
+acc3 <- sum(diag(conf_mat3)) / sum(conf_mat3)
+acc3
+
+
+mcmc_plot(Model6, type = "trace")
+mcmc_plot(Model6, type = "dens")
+bayesplot :: pp_check(Model6, type = "error_hist")
+bayesplot :: pp_check(Model6, type = "loo_pit")
+bayesplot :: pp_check(Model6, type = "loo_pit_overlay")
+bayesplot :: pp_check(Model6, type = "bars")
+bayesplot :: pp_check(Model6, type = "dens_overlay")
+waic(Model6)
+
+```
+
+
+***
+***
+***
+
+
+#### Model 7 With t studnet  Prior
+
+```{r}
+#| warning: false
+#| fig-height: 12
+#| fig-width: 12
+
+
+
+
+
+## define Priors 
+priors3 <- c(
+    prior_string("student_t(10, 0, 4)", class = "b"),
+    prior_string("cauchy(0, 5)", class = "Intercept") 
+)
+
+# set_prior(priors)
+
+Model7 <- brm(as.formula(form),  data = new_dat2, 
+            family = bernoulli, 
+            prior = priors3)
+
+prior_summary(Model7)
+
+prob4 <- predict(Model7, xTest)[, 1]
+conf_mat4 <- table((prob4 > 0.5), yTest)
+conf_mat4
+acc4 <- sum(diag(conf_mat4)) / sum(conf_mat4)
+acc4
+
+
+mcmc_plot(Model7, type = "trace")
+mcmc_plot(Model7, type = "dens")
+bayesplot :: pp_check(Model7, type = "error_hist")
+bayesplot :: pp_check(Model7, type = "loo_pit")
+bayesplot :: pp_check(Model7, type = "loo_pit_overlay")
+bayesplot :: pp_check(Model7, type = "bars")
+bayesplot :: pp_check(Model7, type = "dens_overlay")
+waic(Model7)
+
+```
+
+
+
+***
+***
+***
+
+
+#### Model 8 Using Logistic For Prior
+
+
+```{r}
+#| warning: false
+#| fig-height: 12
+#| fig-width: 12
+
+
+
+## define Priors 
+priors4 <- c(
+    prior_string("logistic(0, 3)", class = "b"),
+    prior_string("normal(0, 5)", class = "Intercept") 
+)
+
+# set_prior(priors)
+
+Model8 <- brm(as.formula(form),  data = new_dat2, 
+            family = bernoulli, 
+            prior = priors4)
+
+prior_summary(Model8)
+
+prob5 <- predict(Model8, xTest)[, 1]
+conf_mat5 <- table((prob5 > 0.5), yTest)
+conf_mat5
+acc5 <- sum(diag(conf_mat5)) / sum(conf_mat5)
+acc5
+
+
+mcmc_plot(Model8, type = "trace")
+mcmc_plot(Model8, type = "dens")
+bayesplot :: pp_check(Model8, type = "error_hist")
+bayesplot :: pp_check(Model8, type = "loo_pit")
+bayesplot :: pp_check(Model8, type = "loo_pit_overlay")
+bayesplot :: pp_check(Model8, type = "bars")
+bayesplot :: pp_check(Model8, type = "dens_overlay")
+waic(Model8)
+
+```
+
+
+
+
+***
+***
+***
+
+
+
+#### Model 
+
+```{r}
+#| warning: false
+#| fig-heigh: 12
+#| fig-width: 12
+
+
+
+
+## define Priors 
+priors5 <- c( 
+    prior_string("normal(0, 0.5)", class = "b"),
+    prior_string("normal(0, 5)", class = "Intercept") 
+)
+
+# set_prior(priors)
+
+Model9 <- brm(as.formula(form),  data = new_dat2, 
+            family = bernoulli, 
+            prior = priors5)
+
+prior_summary(Model9)
+
+prob6 <- predict(Model9, xTest)[, 1]
+conf_mat6 <- table((prob6 > 0.5), yTest)
+conf_mat6
+acc6 <- sum(diag(conf_mat6)) / sum(conf_mat6)
+acc6
+
+
+mcmc_plot(Model9, type = "trace")
+mcmc_plot(Model9, type = "dens")
+bayesplot :: pp_check(Model9, type = "error_hist")
+bayesplot :: pp_check(Model9, type = "loo_pit")
+bayesplot :: pp_check(Model9, type = "loo_pit_overlay")
+bayesplot :: pp_check(Model9, type = "bars")
+bayesplot :: pp_check(Model9, type = "dens_overlay")
+waic(Model9)
+
+
+```
+
+
+
+
+#### Simple Model 
+
+```{r}
+#| warning: false
+#| fig-height: 12
+#| fig-width: 12
+
+library(MASS)
+Model10 <- glm(as.formula(form), data = new_dat2, 
+                family = binomial(link = "logit"))
+summary(Model10)
+prob7 <- predict(Model10, xTest, type = "response") 
+conf_mat7 <- table((prob7 > 0.5), yTest)
+conf_mat7
+acc7 <- sum(diag(conf_mat7)) / sum(conf_mat7)
+acc7
+
+
+# install.packages("car")
+AIC(Model10)
+car :: vif(Model10)
 
 ```

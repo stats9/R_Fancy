@@ -166,7 +166,7 @@ plot(importance)
 
 dat1 <- train_dat %>%
     dplyr :: select(c("HighBP", "BMI", "GenHlth"))
-
+dat1 |> names()
 
 X_train <- model.matrix(~., data = dat1)[, -1] 
 
@@ -181,7 +181,7 @@ X_test <- model.matrix(~., data = dat2)[, -1]
 y <- train_dat$Diabetes_binary
 stanFit1 <- stan(file = "model_1.stan", 
 data = list(N = nrow(train_dat), L = nrow(dat2), X_test = X_test,
-        k = ncol(dat1), y = y,  X_train = X), iter = 500, chains = 3)
+        k = ncol(dat1), y = y,  X_train = X_train), iter = 500, chains = 3)
 
 # saveRDS(stanFit1, "mod2.RDS")
 
