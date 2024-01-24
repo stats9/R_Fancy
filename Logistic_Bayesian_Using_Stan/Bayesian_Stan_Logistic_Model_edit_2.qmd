@@ -8,8 +8,11 @@ editor: visual
 
 ```{r}
 #| warning: false
-#| fig-height: 9
-#| fig-width: 9
+#| fig-height: 12
+#| fig-width: 12
+
+
+
 ## for load rstan package
 if (!require(rstan)) {
     install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
@@ -74,8 +77,8 @@ names(dat)
 
 ```{r}
 #| warning: false
-#| fig-height: 9
-#| fig-height: 9
+#| fig-height: 12
+#| fig-width: 12
 
 
 glimpse(dat)
@@ -283,7 +286,7 @@ dat |> _$Sex |> table()
 
 
 
-Sex# Age
+# Age
 dat |> 
     transmute(Age = factor(Age)) |> 
     ggplot(aes(y = Age, fill = Age)) + 
@@ -320,7 +323,7 @@ dat |>
     with(table(Sex, Smoker)) 
 
 dat |> 
-    select(c("Sex", "Smoker")) |> 
+    dplyr :: select(c("Sex", "Smoker")) |> 
     mutate(Sex = factor(Sex),  
             Smoker = factor(Smoker)) |> 
     ggplot(aes(x = Sex, fill = Smoker)) +
@@ -332,10 +335,10 @@ dat |>
     with(table(Diabetes_binary, Smoker)) 
 
 dat |> 
-    select(c("Diabetes_binary", "Smoker")) |> 
+    dplyr :: select(c("Diabetes_binary", "Smoker")) |> 
     mutate(Smoker = factor(Smoker), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
-    ggplot(aes(x = Sex, fill = Smoker |> as.factor())) +
+    ggplot(aes(x = Diabetes_binary, fill = Smoker)) +
     geom_bar(position = "dodge")
 
 
@@ -344,7 +347,7 @@ dat |>
     with(table(Diabetes_binary, Sex)) 
 
 dat |> 
-    select(c("Diabetes_binary", "Sex")) |> 
+    dplyr :: select(c("Diabetes_binary", "Sex")) |> 
     mutate(Sex = factor(Sex), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = Sex)) +
@@ -356,7 +359,7 @@ dat |>
     with(table(Diabetes_binary, HeartDiseaseorAttack)) 
 
 dat |> 
-    select(c("Diabetes_binary", "HeartDiseaseorAttack")) |> 
+    dplyr :: select(c("Diabetes_binary", "HeartDiseaseorAttack")) |> 
     mutate(HeartDiseaseorAttack = factor(HeartDiseaseorAttack), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = HeartDiseaseorAttack)) +
@@ -369,7 +372,7 @@ dat |>
     with(table(Diabetes_binary, PhysActivity)) 
 
 dat |> 
-    select(c("Diabetes_binary", "PhysActivity")) |> 
+    dplyr :: select(c("Diabetes_binary", "PhysActivity")) |> 
     mutate(PhysActivity = factor(PhysActivity), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = PhysActivity)) +
@@ -382,7 +385,7 @@ dat |>
     with(table(Diabetes_binary, Fruits)) 
 
 dat |> 
-    select(c("Diabetes_binary", "Fruits")) |> 
+    dplyr :: select(c("Diabetes_binary", "Fruits")) |> 
     mutate(Fruits = factor(Fruits), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = Fruits)) +
@@ -395,7 +398,7 @@ dat |>
     with(table(Diabetes_binary, HvyAlcoholConsump)) 
 
 dat |> 
-    select(c("Diabetes_binary", "HvyAlcoholConsump")) |> 
+    dplyr :: select(c("Diabetes_binary", "HvyAlcoholConsump")) |> 
     mutate(HvyAlcoholConsump = factor(HvyAlcoholConsump), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = HvyAlcoholConsump)) +
@@ -408,7 +411,7 @@ dat |>
     with(table(Diabetes_binary, NoDocbcCost)) 
 
 dat |> 
-    select(c("Diabetes_binary", "NoDocbcCost")) |> 
+    dplyr :: select(c("Diabetes_binary", "NoDocbcCost")) |> 
     mutate(NoDocbcCost = factor(NoDocbcCost), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = NoDocbcCost)) +
@@ -421,7 +424,7 @@ dat |>
     with(table(Diabetes_binary, MentHlth)) 
 
 dat |> 
-    select(c("Diabetes_binary", "MentHlth")) |> 
+    dplyr :: select(c("Diabetes_binary", "MentHlth")) |> 
     mutate(MentHlth = factor(MentHlth), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = MentHlth)) +
@@ -434,7 +437,7 @@ dat |>
     with(table(Diabetes_binary, DiffWalk)) 
 
 dat |> 
-    select(c("Diabetes_binary", "DiffWalk")) |> 
+    dplyr :: select(c("Diabetes_binary", "DiffWalk")) |> 
     mutate(DiffWalk = factor(DiffWalk), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = DiffWalk)) +
@@ -447,7 +450,7 @@ dat |>
     with(table(Diabetes_binary, Education)) 
 
 dat |> 
-    select(c("Diabetes_binary", "Education")) |> 
+    dplyr :: select(c("Diabetes_binary", "Education")) |> 
     mutate(Education = factor(Education), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = Education)) +
@@ -461,7 +464,7 @@ dat |>
     with(table(Diabetes_binary, Income)) 
 
 dat |> 
-    select(c("Diabetes_binary", "Income")) |> 
+    dplyr :: select(c("Diabetes_binary", "Income")) |> 
     mutate(Income = factor(Income), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = Income)) +
@@ -474,7 +477,7 @@ dat |>
     with(table(Diabetes_binary, Age)) 
 
 dat |> 
-    select(c("Diabetes_binary", "Age")) |> 
+    dplyr :: select(c("Diabetes_binary", "Age")) |> 
     mutate(Age = factor(Age), 
             Diabetes_binary = factor(Diabetes_binary)) |> 
     ggplot(aes(x = Diabetes_binary, fill = Age)) +
@@ -486,9 +489,9 @@ dat |>
     setNames(c("Diabetes_binary", "BMI_Mean"))
 
 dat |> 
-    select(c("Diabetes_binary", "BMI")) |> 
+    dplyr :: select(c("Diabetes_binary", "BMI")) |> 
     mutate(Diabetes_binary = factor(Diabetes_binary)) |>
-    ggplot(aes(y =BMI, fill = Diabetes_binary |> as.factor())) +
+    ggplot(aes(y =BMI, fill = Diabetes_binary)) +
     geom_boxplot() + 
     theme_bw()
 ```
@@ -551,8 +554,9 @@ corrplot(corr_mat, method = "color", type = "full",
 
 ```{r}
 #| warning: false
-#| fig-height: 9
-#| fig-width: 9
+#| fig-height: 12
+#| fig-width: 12
+
 
 
 
@@ -582,6 +586,8 @@ for (i in num_var) {
     xScale[[i]] <- scale(xScale[[i]], center = mean(xScale[[i]]), 
                     scale = sd(xScale[[i]]))
 }
+
+
 
 yTrain <- y[train]
 yTest <- y[-train]
@@ -614,7 +620,9 @@ xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
 
 ```{r}
 #| warning: false
-#| 
+#| fig-height: 12
+#| fig-width: 12
+
 stanFit1 <- stan(file = "model_3_update.stan", 
 data = list(N = nrow(xTrain), L = nrow(xTest), X_test = xTest_mat,
         k = ncol(xTrain), y = yTrain,  X_train = xTrain_mat), iter = 500, chains = 3)
@@ -793,14 +801,20 @@ acc2
 
 mcmc_plot(Model5, type = "trace")
 mcmc_plot(Model5, type = "dens")
-bayesplot :: pp_check(Model5, type = "error_hist")
-bayesplot :: pp_check(Model5, type = "loo_pit")
-bayesplot :: pp_check(Model5, type = "loo_pit_overlay")
-bayesplot :: pp_check(Model5, type = "bars")
+bayesplot :: pp_check(Model5, type = "error_hist") + 
+                labs(y = "Count of Simulation")
+bayesplot :: pp_check(Model5, type = "loo_pit_overlay") + 
+                labs(y = "Cumulative Probability of LOO Points")
+bayesplot :: pp_check(Model5, type = "bars") + 
+                labs(y = "Count of Events (0, 1)")
 bayesplot :: pp_check(Model5, type = "dens_overlay")
+
+# Get WAIC
 waic(Model4)
 waic(Model5)
 
+# Compare Models
+loo(Model4, Model5)
 ```
 
 
@@ -817,8 +831,6 @@ waic(Model5)
 #| warning: false
 #| fig-height: 12
 #| fig-width: 12
-
-
 
 
 
@@ -853,12 +865,20 @@ acc3
 
 mcmc_plot(Model6, type = "trace")
 mcmc_plot(Model6, type = "dens")
-bayesplot :: pp_check(Model6, type = "error_hist")
-bayesplot :: pp_check(Model6, type = "loo_pit")
-bayesplot :: pp_check(Model6, type = "loo_pit_overlay")
-bayesplot :: pp_check(Model6, type = "bars")
+
+bayesplot :: pp_check(Model6, type = "error_hist") + 
+                labs(y = "Count of Simulation")
+bayesplot :: pp_check(Model6, type = "loo_pit_overlay") + 
+                labs(y = "Cumulative Probability of LOO Points")
+bayesplot :: pp_check(Model6, type = "bars") + 
+                labs(y = "Count of Events (0, 1)")
 bayesplot :: pp_check(Model6, type = "dens_overlay")
+
+# Get WAIC
 waic(Model6)
+
+# Compare Models
+loo(Model5, Model6)
 
 ```
 
@@ -910,13 +930,20 @@ acc4
 
 mcmc_plot(Model7, type = "trace")
 mcmc_plot(Model7, type = "dens")
-bayesplot :: pp_check(Model7, type = "error_hist")
-bayesplot :: pp_check(Model7, type = "loo_pit")
-bayesplot :: pp_check(Model7, type = "loo_pit_overlay")
-bayesplot :: pp_check(Model7, type = "bars")
+
+bayesplot :: pp_check(Model7, type = "error_hist") + 
+                labs(y = "Count of Simulation")
+bayesplot :: pp_check(Model7, type = "loo_pit_overlay") + 
+                labs(y = "Cumulative Probability of LOO Points")
+bayesplot :: pp_check(Model7, type = "bars") + 
+                labs(y = "Count of Events (0, 1)")
 bayesplot :: pp_check(Model7, type = "dens_overlay")
+
+# Get WAIC 
 waic(Model7)
 
+# Compare Models
+loo(Model6, Model7)
 ```
 
 
@@ -967,13 +994,20 @@ acc5
 
 mcmc_plot(Model8, type = "trace")
 mcmc_plot(Model8, type = "dens")
-bayesplot :: pp_check(Model8, type = "error_hist")
-bayesplot :: pp_check(Model8, type = "loo_pit")
-bayesplot :: pp_check(Model8, type = "loo_pit_overlay")
-bayesplot :: pp_check(Model8, type = "bars")
+
+bayesplot :: pp_check(Model8, type = "error_hist") + 
+                labs(y = "Count of Simulation")
+bayesplot :: pp_check(Model8, type = "loo_pit_overlay") + 
+                labs(y = "Cumulative Probability of LOO Points")
+bayesplot :: pp_check(Model8, type = "bars") + 
+                labs(y = "Count of Events (0, 1)")
 bayesplot :: pp_check(Model8, type = "dens_overlay")
+
+# Get WAIC
 waic(Model8)
 
+# Compare Models
+loo(Model7, Model8)
 ```
 
 
@@ -1027,13 +1061,20 @@ acc6
 
 mcmc_plot(Model9, type = "trace")
 mcmc_plot(Model9, type = "dens")
-bayesplot :: pp_check(Model9, type = "error_hist")
-bayesplot :: pp_check(Model9, type = "loo_pit")
-bayesplot :: pp_check(Model9, type = "loo_pit_overlay")
-bayesplot :: pp_check(Model9, type = "bars")
+
+bayesplot :: pp_check(Model9, type = "error_hist") + 
+                labs(y = "Count of Simulation")
+bayesplot :: pp_check(Model9, type = "loo_pit_overlay") + 
+                labs(y = "Cumulative Probability of LOO Points")
+bayesplot :: pp_check(Model9, type = "bars") + 
+                labs(y = "Count of Events (0, 1)")
 bayesplot :: pp_check(Model9, type = "dens_overlay")
+
+# Get WAIC
 waic(Model9)
 
+# Compare Models
+loo(Model8, Model9)
 
 ```
 
