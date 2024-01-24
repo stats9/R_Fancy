@@ -8,7 +8,8 @@ editor: visual
 
 ```{r}
 #| warning: false
-
+#| fig-height: 9
+#| fig-width: 9
 ## for load rstan package
 if (!require(rstan)) {
     install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
@@ -65,6 +66,496 @@ set.seed(132)
 dat <- read.csv(file = "diabetes_binary_5050split_health_indicators_BRFSS2015.csv", header = TRUE)
 
 names(dat)
+
+```
+
+
+
+
+```{r}
+#| warning: false
+#| fig-height: 9
+#| fig-height: 9
+
+
+glimpse(dat)
+
+# Diabetes_binary
+dat |> 
+    transmute(Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(y = Diabetes_binary, fill = Diabetes_binary)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Diabetes_binary |> table()
+
+
+## HighBP 
+dat |> 
+    transmute(HighBP = factor(HighBP)) |> 
+    ggplot(aes(y = HighBP, fill = HighBP)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$HighBP |> table()
+
+
+
+## HighChol
+dat |> 
+    transmute(HighChol = factor(HighChol)) |> 
+    ggplot(aes(y = HighChol, fill = HighChol)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$HighChol |> table()
+
+
+## CholCheck 
+dat |> 
+    transmute(CholCheck = factor(CholCheck)) |> 
+    ggplot(aes(y = CholCheck, fill = CholCheck)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$CholCheck |> table()
+
+
+
+## BMI 
+dat |> 
+    ggplot(aes(x = BMI)) + 
+    geom_histogram(col = "orange", fill = "darkblue", bins = 30) + 
+    theme_bw()
+
+# install.packages("psych")
+dat |> _$BMI |> psych :: describe()
+
+
+
+## Smoker
+dat |> 
+    transmute(Smoker = factor(Smoker)) |> 
+    ggplot(aes(y = Smoker, fill = Smoker)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Smoker |> table()
+
+
+## Stroke 
+dat |> 
+    transmute(Stroke = factor(Stroke)) |> 
+    ggplot(aes(y = Stroke, fill = Stroke)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Stroke |> table()
+
+
+
+# HeartDiseaseorAttack 
+dat |> 
+    transmute(HeartDiseaseorAttack = factor(HeartDiseaseorAttack)) |> 
+    ggplot(aes(y = HeartDiseaseorAttack, fill = HeartDiseaseorAttack)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$HeartDiseaseorAttack |> table()
+
+
+
+# # PhysActivity 
+dat |> 
+    transmute(PhysActivity = factor(PhysActivity)) |> 
+    ggplot(aes(y = PhysActivity, fill = PhysActivity)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$PhysActivity |> table()
+
+
+
+# Fruites
+dat |> 
+    transmute(Fruits = factor(Fruits)) |> 
+    ggplot(aes(y = Fruits, fill = Fruits)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Fruites |> table()
+
+
+# Veggies
+dat |> 
+    transmute(Veggies = factor(Veggies)) |> 
+    ggplot(aes(y = Veggies, fill = Veggies)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Veggies |> table()
+
+
+# HvyAlcoholConsump
+dat |> 
+    transmute(HvyAlcoholConsump = factor(HvyAlcoholConsump)) |> 
+    ggplot(aes(y = HvyAlcoholConsump, fill = HvyAlcoholConsump)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$HvyAlcoholConsump |> table()
+
+
+
+# AnyHealthcare
+dat |> 
+    transmute(AnyHealthcare = factor(AnyHealthcare)) |> 
+    ggplot(aes(y = AnyHealthcare, fill = AnyHealthcare)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$AnyHealthcare |> table()
+
+
+# NoDocbcCost
+dat |> 
+    transmute(NoDocbcCost = factor(NoDocbcCost)) |> 
+    ggplot(aes(y = NoDocbcCost, fill = NoDocbcCost)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$NoDocbcCost |> table()
+
+
+
+
+# GenHlth
+dat |> 
+    transmute(GenHlth = factor(GenHlth)) |> 
+    ggplot(aes(y = GenHlth, fill = GenHlth)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$GenHlth |> table()
+
+
+
+# MentHlth
+dat |> 
+    transmute(MentHlth = factor(MentHlth)) |>
+    ggplot(aes(y = MentHlth, fill = MentHlth)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$MentHlth |> table()
+
+dat[["PhysHlth"]] |> table()
+
+# PhysHlth
+dat |> 
+    transmute(PhysHlth = factor(PhysHlth)) |> 
+    ggplot(aes(y = PhysHlth, fill = PhysHlth)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$PhysHlth |> table()
+
+
+
+# DiffWalk
+dat |> 
+    transmute(DiffWalk = factor(DiffWalk)) |> 
+    ggplot(aes(y = DiffWalk, fill = DiffWalk)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$DiffWalk |> table()
+
+
+# Sex
+dat |> 
+    transmute(Sex = factor(Sex)) |> 
+    ggplot(aes(y = Sex, fill = Sex)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Sex |> table()
+
+
+
+Sex# Age
+dat |> 
+    transmute(Age = factor(Age)) |> 
+    ggplot(aes(y = Age, fill = Age)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Age |> table()
+
+
+
+# Education
+dat |> 
+    transmute(Education = factor(Education)) |> 
+    ggplot(aes(y = Education, fill = Education)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Education |> table()
+
+
+
+# Income
+dat |> 
+    transmute(Income = factor(Income)) |> 
+    ggplot(aes(y = Income, fill = Income)) + 
+    geom_bar() + 
+    theme_bw()
+
+dat |> _$Income |> table()
+
+
+##### joint relation  (Sex, Smoker)
+dat |> 
+    with(table(Sex, Smoker)) 
+
+dat |> 
+    select(c("Sex", "Smoker")) |> 
+    mutate(Sex = factor(Sex),  
+            Smoker = factor(Smoker)) |> 
+    ggplot(aes(x = Sex, fill = Smoker)) +
+    geom_bar(position = "dodge")
+
+
+##### joint relation  (Diabetes_binary, Smoker)
+dat |> 
+    with(table(Diabetes_binary, Smoker)) 
+
+dat |> 
+    select(c("Diabetes_binary", "Smoker")) |> 
+    mutate(Smoker = factor(Smoker), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Sex, fill = Smoker |> as.factor())) +
+    geom_bar(position = "dodge")
+
+
+##### joint relation  (Diabetes_binary, Sex)
+dat |> 
+    with(table(Diabetes_binary, Sex)) 
+
+dat |> 
+    select(c("Diabetes_binary", "Sex")) |> 
+    mutate(Sex = factor(Sex), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = Sex)) +
+    geom_bar(position = "dodge")
+
+
+#### Joint Relation (Diabetes_binary, HeartDiseaseorAttack)
+dat |> 
+    with(table(Diabetes_binary, HeartDiseaseorAttack)) 
+
+dat |> 
+    select(c("Diabetes_binary", "HeartDiseaseorAttack")) |> 
+    mutate(HeartDiseaseorAttack = factor(HeartDiseaseorAttack), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = HeartDiseaseorAttack)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, PhysActivity)
+dat |> 
+    with(table(Diabetes_binary, PhysActivity)) 
+
+dat |> 
+    select(c("Diabetes_binary", "PhysActivity")) |> 
+    mutate(PhysActivity = factor(PhysActivity), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = PhysActivity)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, Fruits)
+dat |> 
+    with(table(Diabetes_binary, Fruits)) 
+
+dat |> 
+    select(c("Diabetes_binary", "Fruits")) |> 
+    mutate(Fruits = factor(Fruits), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = Fruits)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, HvyAlcoholConsump)
+dat |> 
+    with(table(Diabetes_binary, HvyAlcoholConsump)) 
+
+dat |> 
+    select(c("Diabetes_binary", "HvyAlcoholConsump")) |> 
+    mutate(HvyAlcoholConsump = factor(HvyAlcoholConsump), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = HvyAlcoholConsump)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, NoDocbcCost)
+dat |> 
+    with(table(Diabetes_binary, NoDocbcCost)) 
+
+dat |> 
+    select(c("Diabetes_binary", "NoDocbcCost")) |> 
+    mutate(NoDocbcCost = factor(NoDocbcCost), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = NoDocbcCost)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, MentHlth)
+dat |> 
+    with(table(Diabetes_binary, MentHlth)) 
+
+dat |> 
+    select(c("Diabetes_binary", "MentHlth")) |> 
+    mutate(MentHlth = factor(MentHlth), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = MentHlth)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, DiffWalk)
+dat |> 
+    with(table(Diabetes_binary, DiffWalk)) 
+
+dat |> 
+    select(c("Diabetes_binary", "DiffWalk")) |> 
+    mutate(DiffWalk = factor(DiffWalk), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = DiffWalk)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, Education)
+dat |> 
+    with(table(Diabetes_binary, Education)) 
+
+dat |> 
+    select(c("Diabetes_binary", "Education")) |> 
+    mutate(Education = factor(Education), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = Education)) +
+    geom_bar(position = "dodge")
+
+
+
+
+#### Joint Relation (Diabetes_binary, Income)
+dat |> 
+    with(table(Diabetes_binary, Income)) 
+
+dat |> 
+    select(c("Diabetes_binary", "Income")) |> 
+    mutate(Income = factor(Income), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = Income)) +
+    geom_bar(position = "dodge")
+
+
+
+#### Joint Relation (Diabetes_binary, Age)
+dat |> 
+    with(table(Diabetes_binary, Age)) 
+
+dat |> 
+    select(c("Diabetes_binary", "Age")) |> 
+    mutate(Age = factor(Age), 
+            Diabetes_binary = factor(Diabetes_binary)) |> 
+    ggplot(aes(x = Diabetes_binary, fill = Age)) +
+    geom_bar(position = "dodge")
+
+#### Joint Relation (Diabetes_binary, BMI)
+dat |> 
+    with(aggregate(BMI, list(Diabetes_binary), FUN = mean)) |> 
+    setNames(c("Diabetes_binary", "BMI_Mean"))
+
+dat |> 
+    select(c("Diabetes_binary", "BMI")) |> 
+    mutate(Diabetes_binary = factor(Diabetes_binary)) |>
+    ggplot(aes(y =BMI, fill = Diabetes_binary |> as.factor())) +
+    geom_boxplot() + 
+    theme_bw()
+```
+
+
+
+
+
+***
+***
+***
+
+
+
+## Get Correlation Matrix between variables 
+
+
+```{r}
+#| warning: false
+#| fig-height: 12
+#| fig-width: 12
+
+# install.packages("sjstats")
+library(sjstats)
+
+corr_mat <- matrix(NA, ncol(dat), ncol(dat))
+col_count = 0
+for (i in names(dat)) {
+    col_count = col_count + 1
+    row_count = 0
+    for (j in names(dat)) {
+        row_count = row_count + 1
+        temp1 <- dat[[i]] 
+        temp2 <- dat[[j]]
+        temp3 <- any(c(i, j) %in% c("BMI", "PhysHlth", "GenHlth", "MentHlth", 
+                                    "Age", "Education", "Income"))
+        if (temp3) { 
+            corr_mat[col_count, row_count] <- cor(temp1, 
+                                    temp2, method = "spearman")
+        } else corr_mat[col_count, row_count] <- cramer(table(temp1, temp2))
+    }
+}
+
+corr_mat <- corr_mat |> round(4)
+dimnames(corr_mat) <- list(names(dat), names(dat))
+
+# install.packages("corrplot")
+library(corrplot)
+# Create a heatmap with correlation values
+corrplot(corr_mat, method = "color", type = "full", 
+         order = "hclust", 
+         addCoef.col = "black", 
+         tl.col = "black", tl.srt = 45) 
+
+
+```
+
+#### Preparation data 
+
+
+```{r}
+#| warning: false
+#| fig-height: 9
+#| fig-width: 9
+
+
+
 n <- 3e+3
 ind <- sample(nrow(dat), size = n, replace = FALSE)
 new_dat <- dat |> 
@@ -78,15 +569,25 @@ name_cols
 X <- new_dat |> 
        dplyr :: select(name_cols[-1])
 
-X |> names()
+cat_var <- X |> names() |> setdiff(c( "BMI", "PhysHlth", 
+                            "GenHlth", "MentHlth", 
+                            "Age", "Education", "Income"))
+
+num_var <- c("BMI", "PhysHlth", "GenHlth", "MentHlth", 
+                                    "Age", "Education", "Income")
+
+xScale <- X 
+
+for (i in num_var) {
+    xScale[[i]] <- scale(xScale[[i]], center = mean(xScale[[i]]), 
+                    scale = sd(xScale[[i]]))
+}
+
 yTrain <- y[train]
 yTest <- y[-train]
 
+dat |> names()
 
-xScale <- apply(X, 2, function(x) {
-    temp <- (x - mean(x)) / sd(x)
-    return(temp)
-})
 colMeans(xScale)
 apply(xScale, 2, sd)
 
@@ -102,11 +603,10 @@ xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
 
 
 # xTrain_mat |> dim()
+
+
+
 ```
-
-
-***
-***
 
 
 #### fit stan models 
@@ -114,7 +614,7 @@ xTest_mat <- model.matrix(~ ., data = xTest)[, -1]
 
 ```{r}
 #| warning: false
-
+#| 
 stanFit1 <- stan(file = "model_3_update.stan", 
 data = list(N = nrow(xTrain), L = nrow(xTest), X_test = xTest_mat,
         k = ncol(xTrain), y = yTrain,  X_train = xTrain_mat), iter = 500, chains = 3)
@@ -135,6 +635,11 @@ traceplot(stanFit1, pars = c("alpha", "beta"))
 
 ***
 ***
+
+
+
+
+
 
 
 ```{r}
@@ -198,8 +703,10 @@ if (!require(bayesplot)) {
 }
 
 
+
 new_dat2 <- cbind(yTrain, xTrain) |> 
-                setNames(new_dat |> names())
+                setNames(new_dat |> names()) |> 
+                mutate()
 names(new_dat2)
 temp1 <- names(new_dat2)[-1]
 
@@ -207,11 +714,21 @@ temp1 <- names(new_dat2)[-1]
 temp2 <- paste(temp1, collapse = " + ")
 form <- paste(names(new_dat2)[1], temp2, sep = " ~ ")
 
+
+
+
 ## define Priors 
 
 
 Model4 <- brm(as.formula(form), family = bernoulli, 
             data = new_dat2)
+
+# Get Summary of Model 
+M4 <- summary(Model4)
+M4
+
+# Get Rhat 
+M4$fixed$Rhat
 
 saveRDS(Model4, "brms_Model4")
 Model4 <- readRDS("brms_Model4")
@@ -255,6 +772,15 @@ priors <- c(
 Model5 <- brm(as.formula(form),  data = new_dat2, 
             family = bernoulli, 
             prior = priors)
+
+
+# Get summary Of Model
+M5 <- summary(Model5)
+M5
+
+# Get Rhat
+M5$fixed$Rhat
+
 
 prior_summary(Model5)
 
@@ -308,6 +834,14 @@ Model6 <- brm(as.formula(form),  data = new_dat2,
             family = bernoulli, 
             prior = priors2)
 
+
+# Get Summary of Model 
+M6 <- summary(Model6)
+M6 
+
+# Get Rhat
+M6$fixed$Rhat
+
 prior_summary(Model6)
 
 prob3 <- predict(Model6, xTest)[, 1]
@@ -356,6 +890,14 @@ priors3 <- c(
 Model7 <- brm(as.formula(form),  data = new_dat2, 
             family = bernoulli, 
             prior = priors3)
+
+
+# Get summary of model 
+M7 <- summary(Model7)
+M7 
+
+# Get Rhat
+M7$fixed$Rhat
 
 prior_summary(Model7)
 
@@ -406,6 +948,14 @@ Model8 <- brm(as.formula(form),  data = new_dat2,
             family = bernoulli, 
             prior = priors4)
 
+
+# Get summary of Model 
+M8 <- summary(Model8)
+M8
+
+# get Rhat
+M8$fixed$Rhat
+
 prior_summary(Model8)
 
 prob5 <- predict(Model8, xTest)[, 1]
@@ -439,7 +989,7 @@ waic(Model8)
 
 ```{r}
 #| warning: false
-#| fig-heigh: 12
+#| fig-height: 12
 #| fig-width: 12
 
 
@@ -456,6 +1006,15 @@ priors5 <- c(
 Model9 <- brm(as.formula(form),  data = new_dat2, 
             family = bernoulli, 
             prior = priors5)
+
+
+# Get summary of Model 
+M9 <- summary(Model9)
+M9 
+
+
+# get Rhat
+M9$fixed$Rhat
 
 prior_summary(Model9)
 
@@ -489,9 +1048,11 @@ waic(Model9)
 #| fig-width: 12
 
 library(MASS)
+
 Model10 <- glm(as.formula(form), data = new_dat2, 
                 family = binomial(link = "logit"))
 summary(Model10)
+
 prob7 <- predict(Model10, xTest, type = "response") 
 conf_mat7 <- table((prob7 > 0.5), yTest)
 conf_mat7

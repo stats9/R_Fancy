@@ -361,15 +361,15 @@ conf_mat
 
            yTest
               0   1
-      FALSE 229  59
-      TRUE   91 221
+      FALSE 231  57
+      TRUE   89 223
 
 ``` r
 acc <- sum(diag(conf_mat)) / sum(conf_mat)
 acc
 ```
 
-    [1] 0.75
+    [1] 0.7566667
 
 ``` r
 pp_check(Model4)
@@ -458,15 +458,15 @@ conf_mat2
 
            yTest
               0   1
-      FALSE 230  57
-      TRUE   90 223
+      FALSE 230  60
+      TRUE   90 220
 
 ``` r
 acc2 <- sum(diag(conf_mat2)) / sum(conf_mat2)
 acc2
 ```
 
-    [1] 0.755
+    [1] 0.75
 
 ``` r
 mcmc_plot(Model5, type = "trace")
@@ -518,9 +518,9 @@ waic(Model4)
     Computed from 4000 by 2400 log-likelihood matrix
 
               Estimate   SE
-    elpd_waic  -1264.0 24.7
-    p_waic        22.7  0.8
-    waic        2528.0 49.4
+    elpd_waic  -1263.8 24.7
+    p_waic        22.5  0.8
+    waic        2527.6 49.4
 
 ``` r
 waic(Model5)
@@ -530,9 +530,9 @@ waic(Model5)
     Computed from 4000 by 2400 log-likelihood matrix
 
               Estimate   SE
-    elpd_waic  -1263.9 24.7
-    p_waic        22.6  0.8
-    waic        2527.8 49.4
+    elpd_waic  -1264.1 24.7
+    p_waic        22.8  0.8
+    waic        2528.2 49.4
 
 ------------------------------------------------------------------------
 
@@ -615,15 +615,15 @@ conf_mat3
 
            yTest
               0   1
-      FALSE 232  56
-      TRUE   88 224
+      FALSE 230  58
+      TRUE   90 222
 
 ``` r
 acc3 <- sum(diag(conf_mat3)) / sum(conf_mat3)
 acc3
 ```
 
-    [1] 0.76
+    [1] 0.7533333
 
 ``` r
 mcmc_plot(Model6, type = "trace")
@@ -675,9 +675,9 @@ waic(Model6)
     Computed from 4000 by 2400 log-likelihood matrix
 
               Estimate   SE
-    elpd_waic  -1264.0 24.7
-    p_waic        22.6  0.8
-    waic        2527.9 49.3
+    elpd_waic  -1263.8 24.7
+    p_waic        22.5  0.8
+    waic        2527.6 49.3
 
 ------------------------------------------------------------------------
 
@@ -760,15 +760,15 @@ conf_mat4
 
            yTest
               0   1
-      FALSE 231  58
-      TRUE   89 222
+      FALSE 231  56
+      TRUE   89 224
 
 ``` r
 acc4 <- sum(diag(conf_mat4)) / sum(conf_mat4)
 acc4
 ```
 
-    [1] 0.755
+    [1] 0.7583333
 
 ``` r
 mcmc_plot(Model7, type = "trace")
@@ -821,7 +821,7 @@ waic(Model7)
 
               Estimate   SE
     elpd_waic  -1264.0 24.7
-    p_waic        22.6  0.8
+    p_waic        22.7  0.8
     waic        2527.9 49.4
 
 ------------------------------------------------------------------------
@@ -905,15 +905,15 @@ conf_mat5
 
            yTest
               0   1
-      FALSE 228  58
-      TRUE   92 222
+      FALSE 231  58
+      TRUE   89 222
 
 ``` r
 acc5 <- sum(diag(conf_mat5)) / sum(conf_mat5)
 acc5
 ```
 
-    [1] 0.75
+    [1] 0.755
 
 ``` r
 mcmc_plot(Model8, type = "trace")
@@ -965,9 +965,9 @@ waic(Model8)
     Computed from 4000 by 2400 log-likelihood matrix
 
               Estimate   SE
-    elpd_waic  -1264.1 24.7
-    p_waic        22.8  0.8
-    waic        2528.2 49.4
+    elpd_waic  -1264.3 24.7
+    p_waic        22.9  0.8
+    waic        2528.5 49.4
 
 ------------------------------------------------------------------------
 
@@ -1050,15 +1050,15 @@ conf_mat6
 
            yTest
               0   1
-      FALSE 233  57
-      TRUE   87 223
+      FALSE 228  58
+      TRUE   92 222
 
 ``` r
 acc6 <- sum(diag(conf_mat6)) / sum(conf_mat6)
 acc6
 ```
 
-    [1] 0.76
+    [1] 0.75
 
 ``` r
 mcmc_plot(Model9, type = "trace")
@@ -1110,9 +1110,9 @@ waic(Model9)
     Computed from 4000 by 2400 log-likelihood matrix
 
               Estimate   SE
-    elpd_waic  -1263.6 24.5
-    p_waic        22.3  0.8
-    waic        2527.3 49.0
+    elpd_waic  -1264.0 24.5
+    p_waic        22.7  0.8
+    waic        2528.1 49.0
 
 #### Simple Model
 
