@@ -1,0 +1,33 @@
+---
+title: Word Cloud in R
+format: gfm
+---
+
+## define  a data
+
+
+```{r}
+dat <- "habib reza @ ? 
+        negin raziye mohammad Stat mehdi nazanin habib"
+library(tm)
+library(wordcloud)
+library(tidyverse)
+
+coo <- Corpus(VectorSource(dat))
+coo <- tm_map(coo, content_transformer(tolower))
+coo <- coo |> 
+        tm_map(removePunctuation)
+
+coo <- coo |> 
+        tm_map(removeNumbers)
+coo <- coo |> 
+        tm_map(removeWords, stopwords("english"))
+
+tdm <- TermDocumentMatrix(coo)
+m <- as.matrix(tdm)
+word_freqs <- sort(rowSums(m), decreasing = T)
+df <- data.frame(word = names(word_freqs), freq = word_freqs)
+wordcloud(words = df$word, freq = df$freq, min.freq = 1, 
+            max.words = 200, random.order = F, 
+            rot.per = 0.35, colors = brewer.pal(8, "Dark2"))  
+```
