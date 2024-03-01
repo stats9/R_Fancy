@@ -1,5 +1,6 @@
 ---
 title: "distance-similarity index"
+
 format:
     gfm: 
         columns: 2
@@ -8,6 +9,8 @@ format:
         toc-title: "Contents"
 ---
 
+<hr><hr>
+<br><br>
 
 
 #### preparation for using R and python 
@@ -20,12 +23,12 @@ use_python(path)
 
 ```
 
-
+<hr><hr>
 <br><br>
 
 
 #### Eculidean Distance Using R
-<br>
+<hr>
 
 ```{r}
 

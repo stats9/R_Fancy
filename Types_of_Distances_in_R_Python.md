@@ -1,6 +1,11 @@
 # distance-similarity
 index
 
+<hr>
+<hr>
+
+<br><br>
+
 #### preparation for using R and python
 
 ``` r
@@ -10,11 +15,14 @@ path <- gsub("\\", "//", path, fixed = TRUE)
 use_python(path)
 ```
 
+<hr>
+<hr>
+
 <br><br>
 
 #### Eculidean Distance Using R
 
-<br>
+<hr>
 
 ``` r
 set.seed(123)
