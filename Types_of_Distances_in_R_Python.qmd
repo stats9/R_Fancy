@@ -1,5 +1,5 @@
 ---
-title: 8 widely used distance-similarity index
+title: "distance-similarity index"
 format:
     gfm: 
         columns: 2

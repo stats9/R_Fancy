@@ -1,7 +1,4 @@
-# 8
-widely
-used
-distance-similarity
+# distance-similarity
 index
 
 #### preparation for using R and python
