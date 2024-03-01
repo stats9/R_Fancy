@@ -1,20 +1,8 @@
-# In
-this
-presentation
-we
-want
-to
-introduce
-8
-types
-of
-Distance
-or
-Similarity
-that
-Using
-in
-Clustering.
+# 8
+widely
+used
+distance-similarity
+index
 
 #### preparation for using R and python
 

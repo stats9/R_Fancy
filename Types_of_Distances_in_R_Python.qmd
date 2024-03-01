@@ -1,6 +1,5 @@
 ---
-title: In this presentation we want to introduce 8 types of Distance or Similarity that Using in Clustering.
-
+title: 8 widely used distance-similarity index
 format:
     gfm: 
         columns: 2
