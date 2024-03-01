@@ -71,19 +71,23 @@ index
 - [Czekanowski-Sorensen
   Index
   Using
-  R](#czekanowski-sorensen-index-using-r)
+  R
+  (vii)](#czekanowski-sorensen-index-using-r-vii)
 - [Czekanowski-Sorensen
   Index
   Using
-  python](#czekanowski-sorensen-index-using-python)
+  python
+  (vii)](#czekanowski-sorensen-index-using-python-vii)
 - [Jaccard
   Index
   Using
-  R](#jaccard-index-using-r)
+  R
+  (viii)](#jaccard-index-using-r-viii)
 - [Jaccard
   Index
   Using
-  python](#jaccard-index-using-python)
+  python
+  (viii)](#jaccard-index-using-python-viii)
 
 <hr>
 <hr>
@@ -144,13 +148,15 @@ print(round(dist, 5))
 
     11.08097
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
+
+<br><br><br>
 
 ### Minkovski Distance Using R (ii)
 
-<br>
+<hr>
 
 ``` r
 k <- 5
@@ -172,13 +178,15 @@ distance.minkowski(r.Mat[0, :], r.Mat[1, :], r.k)
 
     6.161604866392561
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
+
+<br><br><br>
 
 ### Manhattan Distance Using R (iii)
 
-<br>
+<hr>
 
 ``` r
 dist(Mat, method = "manhattan")
@@ -199,13 +207,15 @@ distance.cityblock(r.Mat[0, :], r.Mat[1, :])
 
     38.68999999999999
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
+
+<br><br><br>
 
 ### hamming Distance Using R (iv)
 
-<br>
+<hr>
 
 ``` r
 x <- c(1, -1, 1, 1, -1, 1, 1)
@@ -228,13 +238,15 @@ distance.hamming(r.x, r.y) * len(r.x)
 
     3.0
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
+
+<br><br><br>
 
 ### Cosine Distance Using R (v)
 
-<br>
+<hr>
 
 ``` r
 if(!require(stylo)) {
@@ -277,13 +289,15 @@ distance.cosine(r.x, r.y)
 
     0.10566834923363022
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
+
+<br><br><br>
 
 ### gower Index Using R (vi)
 
-<br>
+<hr>
 
 ``` r
 if(!require(cluster)) {
@@ -341,11 +355,15 @@ distt.Gower_Similarity_Matrix(r.df, p1 = 1, p2 = 0, p3 = 1)
            [0.66666667, 0.33333333, 1.        , 0.33333333],
            [0.        , 0.66666667, 0.33333333, 1.        ]])
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
 
-### Czekanowski-Sorensen Index Using R
+<br><br><br>
+
+### Czekanowski-Sorensen Index Using R (vii)
+
+<hr>
 
 ``` r
 x <- c('a', 'a', 'b', 'c', 'b', 'b', 'a')
@@ -358,9 +376,15 @@ dist_sorensen
 
     [1] 0.8571429
 
+<hr>
+<hr>
+<hr>
+
 <br><br><br>
 
-### Czekanowski-Sorensen Index Using python
+### Czekanowski-Sorensen Index Using python (vii)
+
+<hr>
 
 ``` python
 2 * len(set(r.x).intersection(set(r.y))) / (len(set(r.x)) + len(set(r.y)))
@@ -368,11 +392,15 @@ dist_sorensen
 
     0.8571428571428571
 
-<br>
-<br>
-<br>
+<hr>
+<hr>
+<hr>
 
-### Jaccard Index Using R
+<br><br><br>
+
+### Jaccard Index Using R (viii)
+
+<hr>
 
 ``` r
 x <- c('a', 'a', 'b', 'c', 'b', 'b', 'a')
@@ -385,9 +413,11 @@ dist_Jaccard
 
     [1] 0.75
 
-<br><br><br>
+<br><br>
 
-### Jaccard Index Using python
+### Jaccard Index Using python (viii)
+
+<hr>
 
 ``` python
 len(set(r.x).intersection(set(r.y))) / (len(set(r.x).union(set(r.y))))
