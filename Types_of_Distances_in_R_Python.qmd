@@ -1,0 +1,42 @@
+---
+title: In this presentation we want to introduce 8 types of Distance or Similarity that Using in Clustering.
+
+format:
+    gfm: 
+        column: 2
+        toc: true
+        toc-title: "Contents"
+---
+
+
+
+#### preparation for using R and python 
+
+```{r}
+library (reticulate)
+path <- Sys.which("python")
+path <- gsub("\\", "//", path, fixed = TRUE)
+use_python(path)
+
+```
+
+
+<br><br>
+
+
+#### Eculidean Distance Using R
+<br>
+
+```{r}
+
+set.seed(123)
+Mat <- matrix(rnorm(40, 2, 2) |> round(2), 2, 20)
+head(Mat)
+
+euclidean <- function(a, b) sum((a - b)^2)
+
+euclidean(Mat[1, ], Mat[2, ])
+
+```
+
+
