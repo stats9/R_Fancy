@@ -3,7 +3,8 @@ title: In this presentation we want to introduce 8 types of Distance or Similari
 
 format:
     gfm: 
-        column: 2
+        columns: 2
+        papersize: a3
         toc: true
         toc-title: "Contents"
 ---

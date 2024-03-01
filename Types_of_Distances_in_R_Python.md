@@ -1,5 +1,20 @@
-# In this presentation we want to introduce 8 types of Distance or
-Similarity that Using in Clustering.
+# In
+this
+presentation
+we
+want
+to
+introduce
+8
+types
+of
+Distance
+or
+Similarity
+that
+Using
+in
+Clustering.
 
 #### preparation for using R and python
 
