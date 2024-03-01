@@ -57,9 +57,9 @@ print(round(dist, 5))
 ```
 
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 
@@ -84,9 +84,9 @@ distance.minkowski(r.Mat[0, :], r.Mat[1, :], r.k)
 
 
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 
@@ -111,9 +111,9 @@ distance.cityblock(r.Mat[0, :], r.Mat[1, :])
 
 
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 
@@ -140,9 +140,9 @@ distance.hamming(r.x, r.y) * len(r.x)
 
 
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 
@@ -173,9 +173,9 @@ distance.cosine(r.x, r.y)
 ```
 
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 
@@ -216,9 +216,9 @@ distt.Gower_Similarity_Matrix(r.df, p1 = 1, p2 = 0, p3 = 1)
 ```
 
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 ### Czekanowski-Sorensen Index Using R 
@@ -244,9 +244,9 @@ dist_sorensen
 
 ```
 
-***
-***
-***
+<br>
+<br>
+<br>
 
 
 ### Jaccard Index Using R 

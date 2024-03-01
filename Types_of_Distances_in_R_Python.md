@@ -144,11 +144,9 @@ print(round(dist, 5))
 
     11.08097
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### Minkovski Distance Using R (ii)
 
@@ -174,11 +172,9 @@ distance.minkowski(r.Mat[0, :], r.Mat[1, :], r.k)
 
     6.161604866392561
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### Manhattan Distance Using R (iii)
 
@@ -203,11 +199,9 @@ distance.cityblock(r.Mat[0, :], r.Mat[1, :])
 
     38.68999999999999
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### hamming Distance Using R (iv)
 
@@ -234,11 +228,9 @@ distance.hamming(r.x, r.y) * len(r.x)
 
     3.0
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### Cosine Distance Using R (v)
 
@@ -285,11 +277,9 @@ distance.cosine(r.x, r.y)
 
     0.10566834923363022
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### gower Index Using R (vi)
 
@@ -351,11 +341,9 @@ distt.Gower_Similarity_Matrix(r.df, p1 = 1, p2 = 0, p3 = 1)
            [0.66666667, 0.33333333, 1.        , 0.33333333],
            [0.        , 0.66666667, 0.33333333, 1.        ]])
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### Czekanowski-Sorensen Index Using R
 
@@ -380,11 +368,9 @@ dist_sorensen
 
     0.8571428571428571
 
---
-
---
-
---
+<br>
+<br>
+<br>
 
 ### Jaccard Index Using R
 
