@@ -1,0 +1,73 @@
+---
+title: "survival_fasl_2"
+author: "Shima Azadian"
+date: "2024-03-07"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+library(survival)
+#install.packages("survminer")
+library(survminer)
+library(gridtext)
+rm(list=ls())#clean all variables
+library(foreign)
+df=read.table("data_transplant.txt")
+names(df) =c("ID","group","time","event","age","sex","CMV","FAB","center")
+attach(df)
+#df
+summary(df)
+head(df)
+s1=Surv(time=df$time,event=df$event)
+s1
+
+skm=survfit(s1~group,data=df)
+ggsurvplot(skm)+labs( x = "Days", y = "Overall survival probability")
+print(skm)
+#--------test
+survdiff(s1~group,data=df)
+```
+
+
+```{r}
+
+
+library(survival)
+#install.packages("survminer")
+library(survminer)
+library(gridtext)
+rm(list=ls())#clean all variables
+library(foreign)
+df=read.table("data_transplant.txt")
+names(df) =c("ID","group","time","event","age","sex","CMV","FAB","center")
+attach(df)
+#df
+
+time=time
+event=event
+x=cbind(group,age,sex,CMV,FAB,center)
+sex=sex
+group=group
+summary(time)
+summary(event)
+summary(x)
+summary(group)
+
+#--------non parametric analysis
+skm=survfit(Surv(time,event)~1,data=df)
+summary(skm)
+plot(skm, xlab="Days", ylab ="Overall survival probability")
+#--------non parametric analysis by group
+skm=survfit(Surv(time,event)~group,data=df)
+summary(skm)
+plot(skm, xlab="Days", ylab ="Overall survival probability")
+#--------tests
+weibull=survreg(Surv(time,event)~sex,dist("weibull"))
+summary(weibull)
+
+logrank=survreg(Surv(time,event)~sex,dist("loglogistic"))
+summary(logrank)
+```
+
