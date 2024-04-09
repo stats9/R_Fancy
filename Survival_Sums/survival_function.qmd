@@ -1,0 +1,46 @@
+---
+title: "survival function"
+format: gfm
+---
+
+```{r}
+library(survival)
+library(survminer)
+library(gridtext)
+rm(list=ls())#clean all variables
+library(foreign)
+df <- haven :: read_spss("data_transplant.sav")
+names(df) =c("ID","group","time","event","age","sex","CMV","FAB","center")
+
+summary(df)
+head(df)
+s1 <- survdiff(Surv(time, event) ~ group, data = df)
+s1
+
+```
+
+
+```{r}
+library(survival)
+library(survminer)
+library(gridtext)
+rm(list=ls())#clean all variables
+library(haven)
+df <- read_spss("data_transplant.sav")
+names(df) <- c("ID","group","time","event","age","sex","CMV","FAB","center")
+
+
+
+df |> with(table(group))
+df |> with(table(event))
+df |> with(summary(time))
+df |> with(table(sex))
+
+#--------non parametric analysis
+skm <- survfit(Surv(time,event)~1,data=df)
+summary(skm, time = c(365, 730))
+
+```
+
+
+```
