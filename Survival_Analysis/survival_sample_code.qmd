@@ -1,0 +1,184 @@
+---
+title: sample code for survival analysis
+format: gfm
+warning: false
+fig-height: 8
+fig-width: 8
+message: false
+---
+
+```{r}
+library(tidyverse) # for manipulate data 
+library(survival) # for survival analysis
+library(survminer) # for survival analysis and plot survival function
+library(survMisc) # for suvival analysis
+library(rstatix) # for manipulate dataframe
+library(readstata13) # for read stata data
+library(summarytools) # for get summary for more details
+library(gtsummary)
+```
+
+```{r}
+## define data
+censor1 <- rep(FALSE, 25)
+censor2 <- rep(FALSE, 25)
+censor1[c(1, 4, 12)] <- TRUE
+group1 <- c(12.3, 5.4, 8.2, 12.2, 11.7, 10.0, 5.7, 
+9.8, 2.6, 11.0, 9.2, 12.1, 6.6, 2.2, 1.8, 
+10.2, 10.7, 11.1, 5.3, 3.5, 9.2, 2.5, 8.7, 3.8, 3.0)
+
+group2 <- c(5.8, 2.9, 8.4, 8.3, 9.1, 4.2, 4.1, 
+1.8, 3.1, 11.4, 2.4, 1.4, 5.9, 
+1.6, 2.8, 4.9, 3.5, 6.5, 9.9, 3.6, 5.2, 
+8.8, 7.8, 4.7, 3.9)
+
+get_table_suvival <- function(group_time = group1, censor = censor1, 
+nsubject = 25){
+    tbar <- mean(group_time)
+    hbar <- sum(!censor)/sum(group_time)
+    dat <- cbind(group_time, censor) %>% as.data.frame %>%
+    mutate(tf = group_time, group_time = NULL, 
+    mf = 1*(!censor), qf = censor) %>%
+    add_row(tf = 0, mf = 0, qf = 0) %>%
+    arrange(tf) %>%
+    mutate(Rtf = nsubject - cumsum(mf)-cumsum(qf), censor = NULL) 
+    get_fun_col_var <- function(x = dat, var = 'tf'){
+        new_dat = data.frame(tf = NA, 
+        mf = NA, qf = NA, Rtf = NA)
+        n <- nrow(x)
+        col_subject = x[var]
+        unique_col = unique(col_subject) %>% unlist
+        for(ind in unique_col){
+            #ind = unique_col[1]
+            temp = x %>%
+                # dplyr :: filter(x[var] == ind)
+                base :: subset(x[var] == ind)
+            temp2 <- temp %>%
+                mutate(tf = tf, mf = sum(mf), qf = sum(qf), 
+                Rtf = Rtf) %>%
+                .[nrow(.), ]
+            new_dat = rbind(new_dat, temp2)
+        }
+        new_dat <- na.omit(new_dat)
+        return(new_dat)
+    }
+    dat2 <- get_fun_col_var(dat, 'tf')
+    fun_tidy_censor <- function(x = dat2){
+        x <- x %>% mutate(ind_censor = (qf == 0 | mf > 0))
+        n <- nrow(x)
+        for(i in 1:(n-1)){
+            if(x[(i+1), 'mf'] == 0){
+                temp1 = 0
+                for(j in (i + 1):n){
+                    if(x[j, 'mf'] == 0){
+                        x[i, 'qf'] = x[i, 'qf'] + x[j, 'qf']
+                        }else{
+                            break
+                    }
+                }
+            }
+        }
+        Rtf <- x[, 'Rtf']
+        newRtf = c(Rtf[1], Rtf[1:n-1])
+        x = x %>% mutate(Rtf = newRtf)
+        x <- x[x$ind_censor, ] %>% mutate(ind_censor = NULL)
+        row.names(x) <- NULL
+        return(x)
+    }
+    dat3 <- fun_tidy_censor(dat2)
+    return(list(Table_Survival_time = dat3, Tbar = tbar, hbar = hbar))
+}
+
+get_table_suvival(group_time = group1, censor = censor1, nsubject = 25)
+get_table_suvival(group_time = group2, censor = censor2, nsubject = 25)
+
+
+###################################
+# load data:
+mydata <- read.dta13(file = './data/data_transplant.dta')
+mydata %>%
+convert_as_factor(sex, FAB, CMV, group) -> dat
+dfSummary(dat)
+
+mymodel <- survfit(Surv(time, event) ~ group, data = dat)
+summary(mymodel) -> M
+print(M)
+
+ggsurvplot(mymodel,
+conf.int = TRUE,
+ggtheme = theme_bw(), # Change ggplot2 theme
+palette = c("darkblue", "red", "gray70"),
+surv.median.line = "hv", # add the median survival pointer.
+break.time.by = 365 # break X axis in time intervals by 365.
+)
+
+
+ggsurvplot(mymodel,
+risk.table.col = "strata",
+ggtheme = theme_bw(),
+palette = c("darkblue", "red", "gray70"),      
+break.time.by = 365, pval = TRUE, pval.method = TRUE,
+log.rank.weights = "1",
+pval.method.size = 4)
+
+
+surv_diff <- survdiff(Surv(time, event) ~ group, data = dat)
+surv_diff
+
+
+ggsurvplot(mymodel, data = dat, pval = TRUE, pval.method = TRUE,
+log.rank.weights = "n",
+pval.method.size = 4)
+
+
+ggsurvplot(mymodel, data = dat, pval = TRUE, pval.method = TRUE,
+log.rank.weights = "sqrtN",
+pval.method.size = 4)
+
+
+ggsurvplot(mymodel, data = dat, pval = TRUE, pval.method = TRUE,
+log.rank.weights = "S1", pval.method.size = 3)
+
+
+ggsurvplot(mymodel, data = dat, pval = TRUE, pval.method = TRUE,
+log.rank.weights = "FH_p=1_q=1", pval.method.size = 4)
+
+Model <- ten(Surv(time, event) ~ group, data = dat)
+comp(Model)
+chi2_statistics <- attributes(Model)$lrt
+ 
+
+test_scores <- chi2_statistics$chiSq[-5]
+test_df <- chi2_statistics$df[-5]
+test_name <- c("Log-rank", "Wilcoxon", "Tarone-Ware",
+"Peto", "Flemington-Harington")
+
+P_val <- pchisq(test_scores, df = test_df, lower.tail = FALSE)
+
+Final_result <- tibble(Test = test_name,
+Test_Statistic = test_scores,
+Degree_freedom = test_df,
+P_value = P_val)
+print(Final_result)
+
+summary(mymodel, times=seq(365, 3*365, by = 365))
+
+
+##########################################################################
+
+
+# load data:
+mydata <- read.dta13(file = './data/data_transplant.dta')
+mydata %>%
+convert_as_factor(sex, FAB, CMV, group) -> dat
+
+## problem I
+
+y <- with(dat, Surv(time, event))
+Model1 <- coxph(y ~ group + CMV + FAB, data = dat) 
+tbl_regression(Model1)
+summary(Model1)
+Model2 <- coxph(y ~ group + CMV + FAB + age + sex, data = dat)
+tbl_regression(Model2)
+
+```
