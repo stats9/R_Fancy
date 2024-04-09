@@ -1,6 +1,6 @@
 ---
 title: ""
-format: gfm
+format: pdf
 ---
 <div dir = "rtl", style = "font-family: B Nazanin;"> 
 <address> 
