@@ -112,7 +112,7 @@ coef_funn <- function(x, train_dat) {
     return(coef(temp_m)) 
 }
 
-res2 <- bootstrap(1:N, 2e+3, coef_funn, train_dat)
+res2 <- bootstrap(1:N, 1e+4, coef_funn, train_dat)
 (bootstrap_coef <- res2$thetastar  |> rowMeans())
 endd2 <- Sys.time()
 (bootstrap_time <- difftime(endd2, startt2, unit = 'sec'))
@@ -135,7 +135,7 @@ bootstrap_pred_test <- bootstrap_coef %*%
 
 startt3 <- Sys.time()
 
-bootstraps <- bootstraps(train_dat, times = 2e+3)
+bootstraps <- bootstraps(train_dat, times = 1e+4)
 
 temp_model_3 <- function(split) {
     analysis <- analysis(split)
@@ -185,7 +185,7 @@ startt4 = time.process_time()
 ## implement regression model 
 py_model = LinearRegression()
 
-n_iterations = int(2e+3)
+n_iterations = int(1e+4)
 python_coef = pd.DataFrame()
 
 for i in range(n_iterations):

@@ -71,7 +71,7 @@ endd <- Sys.time()
 (boot_time <- difftime(endd, startt, unit = 'sec'))
 ```
 
-    Time difference of 4.250515 secs
+    Time difference of 4.23011 secs
 
 ``` r
 y_test <- test_dat['y'] |> unlist()
@@ -97,7 +97,7 @@ coef_funn <- function(x, train_dat) {
     return(coef(temp_m)) 
 }
 
-res2 <- bootstrap(1:N, 2e+3, coef_funn, train_dat)
+res2 <- bootstrap(1:N, 1e+4, coef_funn, train_dat)
 (bootstrap_coef <- res2$thetastar  |> rowMeans())
 ```
 
@@ -109,7 +109,7 @@ endd2 <- Sys.time()
 (bootstrap_time <- difftime(endd2, startt2, unit = 'sec'))
 ```
 
-    Time difference of 0.7687891 secs
+    Time difference of 3.726042 secs
 
 ``` r
 bootstrap_pred_test <- bootstrap_coef %*% 
@@ -129,7 +129,7 @@ bootstrap_pred_test <- bootstrap_coef %*%
 ``` r
 startt3 <- Sys.time()
 
-bootstraps <- bootstraps(train_dat, times = 2e+3)
+bootstraps <- bootstraps(train_dat, times = 1e+4)
 
 temp_model_3 <- function(split) {
     analysis <- analysis(split)
@@ -144,14 +144,14 @@ model_coefficients <- bootstraps$splits |>
 ```
 
            x1        x2        x3 
-     1.829659  3.087803 -1.017043 
+     1.821007  3.090123 -1.017255 
 
 ``` r
 endd3 <- Sys.time()
 (rsample_time <- difftime(endd3, startt3, unit = 'sec'))
 ```
 
-    Time difference of 1.059008 secs
+    Time difference of 4.860429 secs
 
 ``` r
 rsample_pred_test <- rsample_coef %*% 
@@ -160,7 +160,7 @@ rsample_pred_test <- rsample_coef %*%
 (RMSE_rsample <- sqrt(mean((y_test - rsample_pred_test)^2)))
 ```
 
-    [1] 1.041255
+    [1] 1.040529
 
 ------------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ startt4 = time.process_time()
 ## implement regression model 
 py_model = LinearRegression()
 
-n_iterations = int(2e+3)
+n_iterations = int(1e+4)
 python_coef = pd.DataFrame()
 
 for i in range(n_iterations):
@@ -234,11 +234,11 @@ tibble(package = c("boot", "bootstrap", "rsample", "python_bootstrap"),
 knitr :: kable(align = "c", caption = "Table of Results")
 ```
 
-|     package      |  Elapsed_Time  |  x1_bias   |  x2_bias   |  x3_bias   | RMSE_test |
-|:----------------:|:--------------:|:----------:|:----------:|:----------:|:---------:|
-|       boot       | 4.2505150 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
-|    bootstrap     | 0.7687891 secs | -0.1100593 | 0.0611315  | -0.0013482 | 1.020347  |
-|     rsample      | 1.0590081 secs | -0.1703405 | 0.0878035  | -0.0170429 | 1.041255  |
-| python_bootstrap | 1.8125000 secs | -0.3468287 | -0.0691724 | -0.0946491 | 1.787331  |
+|     package      | Elapsed_Time  |  x1_bias   |  x2_bias   |  x3_bias   | RMSE_test |
+|:----------------:|:-------------:|:----------:|:----------:|:----------:|:---------:|
+|       boot       | 4.230110 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
+|    bootstrap     | 3.726042 secs | -0.1100593 | 0.0611315  | -0.0013482 | 1.020347  |
+|     rsample      | 4.860429 secs | -0.1789929 | 0.0901226  | -0.0172552 | 1.040529  |
+| python_bootstrap | 8.828125 secs | -0.3355897 | -0.0659692 | -0.0948205 | 1.771823  |
 
 Table of Results
