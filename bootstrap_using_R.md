@@ -53,25 +53,34 @@ test_dat <- testing(data_split)
 startt <- Sys.time()
 coef_fun <- function(dat, Ind) {
     d_temp <- dat[Ind, ]
-    m_temp <- lm(y ~ ., data = d_temp)
+    m_temp <- lm(y ~ . - 1, data = d_temp)
     return(coef(m_temp))
 }
 res1 <- boot :: boot(data = train_dat, statistic = coef_fun, 
 R = 1e+4)
 (boot_coef <- res1$t  |> colMeans() |> setNames(
-    c("Intercept", paste0("x", 1:3)))
+                paste0("x", 1:3))
 )
 ```
 
-    Intercept        x1        x2        x3 
-     0.978266  1.655473  2.930032 -1.092260 
+           x1        x2        x3 
+     1.821370  3.087255 -1.015949 
 
 ``` r
 endd <- Sys.time()
 (boot_time <- difftime(endd, startt, unit = 'sec'))
 ```
 
-    Time difference of 4.190735 secs
+    Time difference of 4.250515 secs
+
+``` r
+y_test <- test_dat['y'] |> unlist()
+x_test = test_dat[, -4]
+boot_pred_test <- boot_coef %*% (x_test |> as.data.frame() |> data.matrix() |> t()) |> as.numeric()
+(RMSE_boot <- sqrt(mean((y_test - boot_pred_test)^2)))
+```
+
+    [1] 1.041219
 
 ------------------------------------------------------------------------
 
@@ -84,7 +93,7 @@ startt2 <- Sys.time()
 N <- nrow(train_dat)
 coef_funn <- function(x, train_dat) { 
     temp_dat <- train_dat
-    temp_m <- lm(y ~ ., data = temp_dat)
+    temp_m <- lm(y ~ . -1, data = temp_dat)
     return(coef(temp_m)) 
 }
 
@@ -92,15 +101,24 @@ res2 <- bootstrap(1:N, 2e+3, coef_funn, train_dat)
 (bootstrap_coef <- res2$thetastar  |> rowMeans())
 ```
 
-    (Intercept)          x1          x2          x3 
-      0.7461783   1.8393976   2.9338510  -1.0632986 
+           x1        x2        x3 
+     1.889941  3.061131 -1.001348 
 
 ``` r
 endd2 <- Sys.time()
 (bootstrap_time <- difftime(endd2, startt2, unit = 'sec'))
 ```
 
-    Time difference of 0.7262728 secs
+    Time difference of 0.7687891 secs
+
+``` r
+bootstrap_pred_test <- bootstrap_coef %*% 
+                    (x_test |> as.data.frame() |> data.matrix() |> t()) |> 
+                    as.numeric()
+(RMSE_bootstrap <- sqrt(mean((y_test - bootstrap_pred_test)^2)))
+```
+
+    [1] 1.020347
 
 ------------------------------------------------------------------------
 
@@ -115,7 +133,7 @@ bootstraps <- bootstraps(train_dat, times = 2e+3)
 
 temp_model_3 <- function(split) {
     analysis <- analysis(split)
-    model <- lm(y ~ ., data = analysis)
+    model <- lm(y ~ . -1, data = analysis)
     return(coef(model))
 }
 
@@ -125,33 +143,102 @@ model_coefficients <- bootstraps$splits |>
 (rsample_coef <- model_coefficients |> _[, -1] |> colMeans())
 ```
 
-    (Intercept)          x1          x2          x3 
-      0.9755329   1.6721255   2.9303827  -1.0935066 
+           x1        x2        x3 
+     1.829659  3.087803 -1.017043 
 
 ``` r
 endd3 <- Sys.time()
 (rsample_time <- difftime(endd3, startt3, unit = 'sec'))
 ```
 
-    Time difference of 1.047765 secs
+    Time difference of 1.059008 secs
+
+``` r
+rsample_pred_test <- rsample_coef %*% 
+                    (x_test |> as.data.frame() |> data.matrix() |> t()) |> 
+                    as.numeric()
+(RMSE_rsample <- sqrt(mean((y_test - rsample_pred_test)^2)))
+```
+
+    [1] 1.041255
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## Using python
+
+``` python
+import pandas as pd
+import numpy as np
+from sklearn.utils import resample
+from sklearn.linear_model import LinearRegression
+import time
+
+py_dat = r.train_dat
+
+
+
+
+startt4 = time.process_time()
+## implement regression model 
+py_model = LinearRegression()
+
+n_iterations = int(2e+3)
+python_coef = pd.DataFrame()
+
+for i in range(n_iterations):
+    X_train = resample(py_dat.drop('y', axis=1), replace=True, n_samples=len(py_dat))
+    y_train = py_dat.loc[X_train.index, 'y']
+    # Fit model
+    py_model.fit(X_train, y_train)
+    # Store coefficients
+    coefs = pd.DataFrame([py_model.coef_], columns=X_train.columns)
+    python_coef = pd.concat([python_coef, coefs])
+```
+
+``` python
+
+# Now, bootstrap_coefs contains the coefficients from each bootstrap sample
+
+python_coef_boot = python_coef.mean().values
+endd4 = time.process_time()
+python_time = endd4 - startt4
+
+real_coef = np.array([2, 3, -1])
+python_bias = python_coef_boot - real_coef
+
+
+py_test_dat = r.test_dat 
+x_test = py_test_dat.drop(columns = 'y')
+py_pred_test = python_coef_boot @ x_test.T
+y_test = py_test_dat['y'].values
+py_err_test = (py_pred_test.values - y_test)**2
+RMSE_py = np.sqrt(py_err_test.mean())
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 
 ## report result
 
 ``` r
-tibble(package = c("boot", "bootstrap", "rsample"), 
-        Elapsed_Time = c(boot_time, bootstrap_time, rsample_time), 
-        Intercept_bias = c(boot_coef[1], bootstrap_coef[1], rsample_coef[1]), 
-        x1_bias = c(boot_coef[2] - 2, bootstrap_coef[2] - 2, rsample_coef[2] - 2),
-        x2_bias =  c(boot_coef[3] - 3, bootstrap_coef[3] - 3, rsample_coef[3] - 3),
-        x3_bias = c(boot_coef[4] + 1, bootstrap_coef[4] + 1, rsample_coef[4] + 1)
+tibble(package = c("boot", "bootstrap", "rsample", "python_bootstrap"), 
+        Elapsed_Time = c(boot_time, bootstrap_time, rsample_time, py$python_time), 
+        x1_bias = c(boot_coef[1] - 2, bootstrap_coef[1] - 2, rsample_coef[1] - 2, py$python_bias[1]),
+        x2_bias =  c(boot_coef[2] - 3, bootstrap_coef[2] - 3, rsample_coef[2] - 3, py$python_bias[2]),
+        x3_bias = c(boot_coef[3] + 1, bootstrap_coef[3] + 1, rsample_coef[3] + 1, py$python_bias[3]), 
+        RMSE_test = c(RMSE_boot, RMSE_bootstrap, RMSE_rsample, py$RMSE_py)
 ) |> 
 knitr :: kable(align = "c", caption = "Table of Results")
 ```
 
-|  package  |  Elapsed_Time  | Intercept_bias |  x1_bias   |  x2_bias   |  x3_bias   |
-|:---------:|:--------------:|:--------------:|:----------:|:----------:|:----------:|
-|   boot    | 4.1907351 secs |   0.9782660    | -0.3445268 | -0.0699677 | -0.0922602 |
-| bootstrap | 0.7262728 secs |   0.7461783    | -0.1606024 | -0.0661490 | -0.0632986 |
-|  rsample  | 1.0477648 secs |   0.9755329    | -0.3278745 | -0.0696173 | -0.0935066 |
+|     package      |  Elapsed_Time  |  x1_bias   |  x2_bias   |  x3_bias   | RMSE_test |
+|:----------------:|:--------------:|:----------:|:----------:|:----------:|:---------:|
+|       boot       | 4.2505150 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
+|    bootstrap     | 0.7687891 secs | -0.1100593 | 0.0611315  | -0.0013482 | 1.020347  |
+|     rsample      | 1.0590081 secs | -0.1703405 | 0.0878035  | -0.0170429 | 1.041255  |
+| python_bootstrap | 1.8125000 secs | -0.3468287 | -0.0691724 | -0.0946491 | 1.787331  |
 
 Table of Results
