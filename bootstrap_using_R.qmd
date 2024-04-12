@@ -107,7 +107,7 @@ boot_pred_test <- boot_coef %*% (x_test |> as.data.frame() |> data.matrix() |> t
 startt2 <- Sys.time()
 N <- nrow(train_dat)
 coef_funn <- function(x, train_dat) { 
-    temp_dat <- train_dat
+    temp_dat <- train_dat[x, ]
     temp_m <- lm(y ~ . -1, data = temp_dat)
     return(coef(temp_m)) 
 }

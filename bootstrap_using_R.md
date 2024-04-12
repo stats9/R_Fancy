@@ -71,7 +71,7 @@ endd <- Sys.time()
 (boot_time <- difftime(endd, startt, unit = 'sec'))
 ```
 
-    Time difference of 4.23011 secs
+    Time difference of 4.239685 secs
 
 ``` r
 y_test <- test_dat['y'] |> unlist()
@@ -109,7 +109,7 @@ endd2 <- Sys.time()
 (bootstrap_time <- difftime(endd2, startt2, unit = 'sec'))
 ```
 
-    Time difference of 3.726042 secs
+    Time difference of 3.729928 secs
 
 ``` r
 bootstrap_pred_test <- bootstrap_coef %*% 
@@ -151,7 +151,7 @@ endd3 <- Sys.time()
 (rsample_time <- difftime(endd3, startt3, unit = 'sec'))
 ```
 
-    Time difference of 4.860429 secs
+    Time difference of 4.882012 secs
 
 ``` r
 rsample_pred_test <- rsample_coef %*% 
@@ -236,9 +236,9 @@ knitr :: kable(align = "c", caption = "Table of Results")
 
 |     package      | Elapsed_Time  |  x1_bias   |  x2_bias   |  x3_bias   | RMSE_test |
 |:----------------:|:-------------:|:----------:|:----------:|:----------:|:---------:|
-|       boot       | 4.230110 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
-|    bootstrap     | 3.726042 secs | -0.1100593 | 0.0611315  | -0.0013482 | 1.020347  |
-|     rsample      | 4.860429 secs | -0.1789929 | 0.0901226  | -0.0172552 | 1.040529  |
-| python_bootstrap | 8.828125 secs | -0.3355897 | -0.0659692 | -0.0948205 | 1.771823  |
+|       boot       | 4.239685 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
+|    bootstrap     | 3.729928 secs | -0.1100593 | 0.0611315  | -0.0013482 | 1.020347  |
+|     rsample      | 4.882012 secs | -0.1789929 | 0.0901226  | -0.0172552 | 1.040529  |
+| python_bootstrap | 4.531250 secs | -0.3364834 | -0.0679489 | -0.0953505 | 1.779707  |
 
 Table of Results
