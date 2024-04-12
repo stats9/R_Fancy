@@ -71,7 +71,7 @@ endd <- Sys.time()
 (boot_time <- difftime(endd, startt, unit = 'sec'))
 ```
 
-    Time difference of 4.239685 secs
+    Time difference of 4.127518 secs
 
 ``` r
 y_test <- test_dat['y'] |> unlist()
@@ -92,7 +92,7 @@ boot_pred_test <- boot_coef %*% (x_test |> as.data.frame() |> data.matrix() |> t
 startt2 <- Sys.time()
 N <- nrow(train_dat)
 coef_funn <- function(x, train_dat) { 
-    temp_dat <- train_dat
+    temp_dat <- train_dat[x, ]
     temp_m <- lm(y ~ . -1, data = temp_dat)
     return(coef(temp_m)) 
 }
@@ -102,14 +102,14 @@ res2 <- bootstrap(1:N, 1e+4, coef_funn, train_dat)
 ```
 
            x1        x2        x3 
-     1.889941  3.061131 -1.001348 
+     1.823545  3.088103 -1.017617 
 
 ``` r
 endd2 <- Sys.time()
 (bootstrap_time <- difftime(endd2, startt2, unit = 'sec'))
 ```
 
-    Time difference of 3.729928 secs
+    Time difference of 4.129818 secs
 
 ``` r
 bootstrap_pred_test <- bootstrap_coef %*% 
@@ -118,7 +118,7 @@ bootstrap_pred_test <- bootstrap_coef %*%
 (RMSE_bootstrap <- sqrt(mean((y_test - bootstrap_pred_test)^2)))
 ```
 
-    [1] 1.020347
+    [1] 1.044444
 
 ------------------------------------------------------------------------
 
@@ -151,7 +151,7 @@ endd3 <- Sys.time()
 (rsample_time <- difftime(endd3, startt3, unit = 'sec'))
 ```
 
-    Time difference of 4.882012 secs
+    Time difference of 4.704723 secs
 
 ``` r
 rsample_pred_test <- rsample_coef %*% 
@@ -236,9 +236,9 @@ knitr :: kable(align = "c", caption = "Table of Results")
 
 |     package      | Elapsed_Time  |  x1_bias   |  x2_bias   |  x3_bias   | RMSE_test |
 |:----------------:|:-------------:|:----------:|:----------:|:----------:|:---------:|
-|       boot       | 4.239685 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
-|    bootstrap     | 3.729928 secs | -0.1100593 | 0.0611315  | -0.0013482 | 1.020347  |
-|     rsample      | 4.882012 secs | -0.1789929 | 0.0901226  | -0.0172552 | 1.040529  |
-| python_bootstrap | 4.531250 secs | -0.3364834 | -0.0679489 | -0.0953505 | 1.779707  |
+|       boot       | 4.127518 secs | -0.1786297 | 0.0872549  | -0.0159486 | 1.041219  |
+|    bootstrap     | 4.129818 secs | -0.1764553 | 0.0881029  | -0.0176172 | 1.044444  |
+|     rsample      | 4.704723 secs | -0.1789929 | 0.0901226  | -0.0172552 | 1.040529  |
+| python_bootstrap | 9.875000 secs | -0.3385282 | -0.0661995 | -0.0937691 | 1.770228  |
 
 Table of Results
