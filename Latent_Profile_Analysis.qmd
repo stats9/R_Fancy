@@ -1,0 +1,138 @@
+---
+title: Latent Profile Analysis
+format: 
+    gfm:
+        toc: true
+warning: false
+fig-align: center
+fig-cap-location: bottom
+fig-width: 9
+fig-height: 9
+---
+
+
+
+```{r}
+#| include: false
+
+library (reticulate)
+path <- Sys.which("python")
+path <- gsub("\\", "//", path, fixed = TRUE)
+use_python(path)
+
+
+```
+
+
+
+## Using R (mclust package)
+
+
+```{r}
+
+# install.packages("mclust")
+library(mclust)
+library(tidyverse)
+
+dat <- USArrests
+dat |> dim()
+dat |> head()
+dat_scale <- dat |> scale() |> as.data.frame()
+lpa_Model <- dat_scale |>  
+                Mclust(G = 1:5)
+
+lpa_Model |> summary()
+
+lpa_assignments <- lpa_Model$classification
+
+# Summarize the latent profiles
+dat |> 
+    scale() |> 
+        as.data.frame() |> 
+            mutate(Profile = lpa_assignments) |> 
+                group_by(Profile) |> 
+                    summarize_all(mean)
+plot(lpa_Model)
+pred_Model_1 <- lpa_Model$classification 
+
+```
+
+
+***
+***
+
+## Using R (tidyLPA package)
+
+
+```{r}
+
+# install.packages("tidyLPA")
+n_profiles <- 3 # Specify the number of profiles
+
+# Perform the LPA
+lpa_Model2 <- dat |> 
+                scale() |> 
+                    as.data.frame() |> 
+                    dplyr :: select(Murder, Assault, UrbanPop, Rape) |> 
+                        tidyLPA :: estimate_profiles(n_profiles, variances = "equal")
+
+# Print the results
+print(lpa_Model2)
+
+
+```
+
+
+
+***
+***
+***
+***
+
+
+## Using python (scikit-learn)
+
+
+```{python}
+# first in terminal: 
+# pip install -U scikit-learn
+
+
+# Import the necessary libraries
+import pandas as pd
+import numpy as np
+from sklearn.mixture import GaussianMixture
+
+# Load the USArrests data
+df = r.dat_scale
+df.head()
+
+
+# Perform the LPA using GaussianMixture
+gmm = GaussianMixture(n_components=3)
+gmm.fit(df)
+
+# Print the results
+print('Converged:',gmm.converged_) # Check if the model has converged
+print('Means of each component:', gmm.means_)
+print('Covariances of each component:', gmm.covariances_)
+
+# Predict the labels for the data samples in df_scaled using gmm model
+python_labels = gmm.predict(df)
+py_labels = np.array(python_labels) + 1
+R_labels = r.pred_Model_1
+pd.DataFrame({"R_Labels": list(map(lambda x: int(x), R_labels)), "Python_Labels": py_labels})
+```
+
+
+
+***
+***
+
+
+## compare results
+
+
+```{r}
+adjustedRandIndex(py$R_labels, py$python_labels)
+```
