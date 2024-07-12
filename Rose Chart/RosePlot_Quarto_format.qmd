@@ -1,0 +1,189 @@
+---
+title: Rose Chart
+format: gfm
+toc: true 
+toc-depth: 3
+toc-title: "list of contents"
+warning: false
+fig-height: 9
+fig-width: 9
+fig-location: center
+fig-cap-location: bottom
+---
+
+
+```{r}
+#| include: false
+#| eval: false
+
+library(httpgd); hgd(); hgd_browse()
+
+```
+
+
+
+
+\newpage 
+
+
+# Make connection between R and python 
+
+```{r}
+library(reticulate)
+path <- Sys.which("python")
+path <- gsub("\\", "//", path, fixed = TRUE)
+use_python(path)
+```
+
+
+
+\newpage 
+
+## Using R programming 
+
+## load data and require libraries 
+
+```{r}
+
+if(! require(HistData)) {
+    chooseCRANmirror(ind = 1, graphics = FALSE)
+    install.packages("HistData")
+    library(HistData)
+}
+
+if(! require(tidyverse)) {
+    chooseCRANmirror(ind = 1, graphics = FALSE)
+    install.packages("tidyverse")
+    library(tidyverse)
+}
+
+data(Nightingale)
+
+```
+
+
+\newpage 
+
+## edit data and convert to long data
+
+```{r}
+Nightingale |> head()
+Nightingale |> _$Year |> table()
+
+Nightingale |>
+  select(Date, Month, Year, contains("rate")) |>
+  pivot_longer(cols = 4:6, names_to = "Cause", values_to = "Rate") |>
+  mutate(Cause = gsub(".rate", "", Cause),
+         period = ifelse(Date <= as.Date("1855-03-01"), 
+            "April 1854 to March 1855", "April 1855 to March 1856"),
+         Month = fct_relevel(Month, "Jul", "Aug", "Sep", 
+         "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun")) -> dat
+dat |> head()
+```
+
+
+
+\newpage 
+
+
+## create a Rose Plot 
+
+
+```{r}
+#| fig-cap: Rose Chart
+
+
+
+dat |> 
+    ggplot(aes(Month, Rate)) +
+    geom_col(aes(fill = Cause), width = 1, position = "identity") +
+    coord_polar() +
+    facet_wrap(~period) +
+    scale_fill_manual(values = c("skyblue3", "grey30", "firebrick")) +  
+    scale_y_sqrt() +
+    theme_void() +
+    theme(axis.text.x = element_text(size = 9),
+        strip.text = element_text(size = 11),
+        legend.position = "bottom",
+        plot.background = element_rect(fill = alpha("cornsilk", 0.5)),
+        plot.margin = unit(c(30, 30, 30, 30), "pt"),
+        plot.title = element_text(vjust = 10)
+        ) +
+    labs(title = "Diagram of the Causes of Mortality in the Army in the East", 
+        caption = "Tel: @Stats9") + 
+    theme(plot.caption = element_text(size = 10, 
+        color = alpha('darkblue', 0.5), 
+            face = 'bold')) 
+
+```
+
+
+
+\newpage 
+
+
+# Using Python
+
+## load require libraries 
+
+
+```{python}
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt
+dat = r.dat
+dat.head()
+
+```
+
+
+\newpage 
+
+
+## create plot 
+
+
+```{python}
+dat['period'].value_counts()
+
+dat1 = dat[dat['period'] == 'April 1854 to March 1855']
+dat2 = dat[dat['period'] == 'April 1855 to March 1856']
+dat1.head()
+dat2.head()
+Levels = ['Disease', 'Wounds', 'Other']
+Time = ['April 1854 to March 1855', 'April 1855 to March 1856']
+widths = np.radians(360/12)
+directions = np.linspace(7.5, 350, num = 12)
+Labels = list(dat['Month'].unique())
+Labels
+colors = ['darkblue', 'gold', 'red']
+
+
+fig, ax = plt.subplots(1, 2, figsize = (8, 8), subplot_kw = dict(polar = True))
+count = -1
+for k in Time: 
+    # k = Time[0]
+    count += 1
+    temp1 = dat[dat['period'] == k]
+    Disease = temp1[temp1['Cause'] == Levels[0]]['Rate'].values
+    Wounds = temp1[temp1['Cause'] == Levels[1]]['Rate'].values
+    Other = temp1[temp1['Cause'] == Levels[2]]['Rate'].values
+    ax[count].set_yticklabels([])
+    ax[count].bar(np.radians(directions), Other, 
+                color = colors[2], width = widths, 
+                label = 'Other')
+    ax[count].bar(np.radians(directions), Wounds, 
+                color = colors[1], width = widths, 
+                bottom = Other, label = 'Wounds')
+    ax[count].bar(np.radians(directions), Disease, 
+               color = colors[0], width = widths, 
+                bottom = Wounds + Other,
+                label = 'Disease')
+    ax[count].set_xticks(np.radians(directions))
+    ax[count].set_xticklabels(Labels)
+    ax[count].set_rlabel_position(0) 
+    ax[count].set_title(k)
+    ax[count].legend() 
+plt.show()
+
+```
