@@ -138,6 +138,7 @@ Chart](RosePlot_Quarto_format_files/figure-commonmark/unnamed-chunk-5-1.png)
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 dat = r.dat
 dat.head()
 ```
@@ -226,6 +227,16 @@ for k in Time:
     ax[count].set_rlabel_position(0) 
     ax[count].set_title(k)
     ax[count].legend() 
+
+img = mpimg.imread('my_arm.png')
+ax_img = fig.add_axes([0.2, 0.85, 0.6, 0.05], zorder = 10) 
+ax_img.imshow(img)
+ax_img.axis('off')
+```
+
+    (-0.5, 122.5, 31.5, -0.5)
+
+``` python
 plt.show()
 ```
 

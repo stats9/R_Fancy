@@ -1,7 +1,7 @@
 import numpy as np 
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import matplotlib.image as mpimg
 dat = pd.read_excel('Dat.xlsx')
 dat
 
@@ -46,8 +46,9 @@ for k in Time:
     ax[count].set_rlabel_position(0) 
     ax[count].set_title(k)
     ax[count].legend() 
-plt.show()
-# dat
 
-dat[dat['Cause'] == 'Other']['Rate'].values
-dat[dat['Cause'] == 'Disease']['Rate'].values
+img = mpimg.imread('my_arm.png')
+ax_img = fig.add_axes([0.2, 0.85, 0.6, 0.05], zorder = 10) 
+ax_img.imshow(img)
+ax_img.axis('off')
+plt.show()
