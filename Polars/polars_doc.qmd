@@ -113,7 +113,8 @@ datt <- pl$DataFrame(
     x6 = rnorm(5e+7, -20, 2), 
     x7 = rgamma(5e+7, 5, 3), 
     x8 = rexp(5e+7, rate = 1/4), 
-    x9 = rnorm(5e+7, -7, 2)
+    x9 = rnorm(5e+7, -7, 2), 
+    x10 = rnorm(5e+7, 25, 2)
 )
 
 
@@ -127,6 +128,7 @@ datt$write_csv("Data_samp.csv")
 
 ```{r}
 rm(list = ls())
+gc()
 
 ## data.table section get elapsed time for read and run function along columns
 library(data.table)
@@ -138,7 +140,7 @@ end_time1 <- Sys.time();
 (Diff_time_data_table <- difftime(end_time1, 
             start_time1, units = "secs"))
 
-
+(Memory_used_data_table <- object.size(dat1))
 
 ```
 
@@ -148,6 +150,8 @@ end_time1 <- Sys.time();
 
 ```{r}
 rm(list = ls())
+gc()
+
 ## polars section get elapsed time for read and run function along columns
 start_time2 <- Sys.time();
 dat2 <- pl$read_csv('Data_samp.csv');
@@ -155,4 +159,5 @@ dat2$mean()
 end_time2 <- Sys.time();
 (Diff_time_polars <- difftime(end_time2, 
             start_time2, units = "secs"))
+(Memory_used_polars <- object.size(dat2))
 ```
