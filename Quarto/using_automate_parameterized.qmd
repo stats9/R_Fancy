@@ -39,4 +39,15 @@ purrr :: pwalk(
     input = "quarto_Paremerized.qmd", ## qmd template 
     .progress = TRUE
 )
+
+```
+
+
+
+```{r}
+
+
+f <- \(x, y) x + y
+f(2, 3)
+
 ```
