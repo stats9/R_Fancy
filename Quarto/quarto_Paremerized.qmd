@@ -1,0 +1,100 @@
+---
+title: How to create parameterized report 
+format: gfm
+fig-height: 7
+fig-width: 7
+toc: true
+warning: false
+message: false
+params: 
+    color: red
+    year: 2023 
+    chunk_label: one
+---
+
+
+
+# read data 
+```{r}
+library(tidyverse)
+dat <- readxl :: read_xlsx("sim_dat.xlsx")
+
+dat |> head()
+```
+
+# extract year from datatime column 
+
+```{r}
+
+dat_update <- dat |> 
+        mutate(col_year = lubridate :: year(year)) |> 
+        relocate('col_year', .before = 'year') 
+dat_update |> head()
+
+```
+
+
+# filter data by year in params
+
+```{r}
+
+filtered_data <- dat_update |> 
+                dplyr :: filter (col_year == params$year) 
+
+filtered_data |> head()
+```
+
+
+# visualize data by color in params
+
+```{r}
+#| label: figure chunk
+
+P <- filtered_data |> 
+        ggplot(aes(x = temperature, y = rainFall)) + 
+        geom_point(color = params$color, size = 3, shape = 16) + 
+        ggtitle(paste0("year: ", params$year)) + 
+        theme_bw() 
+
+```
+
+
+# save figures
+
+```{r}
+temp1 <- paste(paste(params$year, params$color, sep = "-"), "png", sep = ".")
+temp2 <- paste("Figures", temp1, sep = "//")
+png(filename = temp2, 
+    width = 7, height = 7, units = "in", , res = 300)
+    P 
+dev.off()
+```
+
+
+***
+***
+
+```{r}
+#| include: false
+
+capp <- sprintf("scatter of Temperature Vs RainFall in year: %d with color: %s", params$year, params$color)
+```
+
+
+***
+
+<!-- ![](`r temp2`) -->
+
+
+***
+
+<figure> 
+<img src = `r temp2` align = "center"> 
+<figcaption> 
+<b> 
+<p style = "text-align: center;"> 
+`r capp` 
+</b>
+</p>
+</figcaption>
+</figure> 
