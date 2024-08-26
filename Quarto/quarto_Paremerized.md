@@ -96,16 +96,5 @@ dev.off()
 
 ------------------------------------------------------------------------
 
-<!-- ![](Figures//2023-red.png) -->
-
-------------------------------------------------------------------------
-
-<figure>
-<img src = Figures//2023-red.png align = "center">
-<figcaption>
-<b>
-<p style="text-align: center;">
-scatter of Temperature Vs RainFall in year: 2023 with color: red </b>
-</p>
-</figcaption>
-</figure>
+![](Figures//2023-red.png) scatter of Temperature Vs RainFall in year:
+2023 with color: red

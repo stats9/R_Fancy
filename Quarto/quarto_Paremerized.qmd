@@ -83,18 +83,8 @@ capp <- sprintf("scatter of Temperature Vs RainFall in year: %d with color: %s",
 
 ***
 
-<!-- ![](`r temp2`) -->
+
+![](`r temp2`)
+`r capp`
 
 
-***
-
-<figure> 
-<img src = `r temp2` align = "center"> 
-<figcaption> 
-<b> 
-<p style = "text-align: center;"> 
-`r capp` 
-</b>
-</p>
-</figcaption>
-</figure> 
