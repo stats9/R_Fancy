@@ -1,0 +1,79 @@
+---
+title: Parameterized Quarto in python language
+format: gfm 
+toc: true
+---
+
+
+
+```{python}
+#| include: false
+
+import papermill
+
+```
+
+
+# add cell parameter 
+
+```{python}
+#| tags: [parameters]
+
+year = 2000
+color = 'darkblue'
+
+```
+
+***
+
+
+# load requiare libraries 
+
+```{python}
+import pandas as pd 
+import matplotlib.pyplot as plt 
+
+```
+
+
+# call data 
+
+```{python}
+
+dat = pd.read_excel("sim_dat.xlsx")
+dat.head()
+```
+
+
+
+# filter data using parameters
+
+```{python}
+
+dat['year2'] = pd.to_datetime(dat['year']).dt.year
+
+dat2 = dat.reindex(columns = ['year', 'year2', 'temperature', 'rainFall'])
+dat2.head()
+
+
+
+```
+
+
+
+```{python} 
+
+filter_dat = dat2[dat2['year2'] == year]
+```
+
+
+# visualize 
+
+```{python}
+
+fig, ax = plt.subplots(1, 1, figsize = (12, 12))
+ax.scatter(filter_dat['temperature'], 
+    filter_dat['rainFall'], color = color, s = 50)
+ax.set_title("year: " + str(year))
+plt.show() 
+```
