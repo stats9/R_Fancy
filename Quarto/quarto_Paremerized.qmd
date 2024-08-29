@@ -9,7 +9,6 @@ message: false
 params: 
     color: red
     year: 2023 
-    chunk_label: one
 ---
 
 
