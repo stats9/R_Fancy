@@ -6,13 +6,6 @@ toc: true
 
 
 
-```{python}
-#| include: false
-
-import papermill
-
-```
-
 
 # add cell parameter 
 

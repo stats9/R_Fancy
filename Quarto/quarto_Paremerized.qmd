@@ -47,7 +47,6 @@ filtered_data |> head()
 # visualize data by color in params
 
 ```{r}
-#| label: figure chunk
 
 P <- filtered_data |> 
         ggplot(aes(x = temperature, y = rainFall)) + 
