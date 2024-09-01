@@ -1,0 +1,58 @@
+---
+title: template code 
+format: gfm 
+fig-height: 7
+fig-width: 7
+toc: true 
+warning: false 
+params: 
+    year: 2012
+    color: violet
+---
+
+
+# read data 
+```{r}
+library(tidyverse)
+dat <- readxl :: read_xlsx("sim_dat.xlsx")
+
+dat |> head()
+```
+
+# extract year from datatime column 
+
+```{r}
+
+dat_update <- dat |> 
+        mutate(col_year = lubridate :: year(year)) |> 
+        relocate('col_year', .before = 'year') 
+dat_update |> head()
+
+```
+
+
+
+
+
+# filter data 
+
+```{r}
+filter_data <- dat_update |> 
+    dplyr :: filter (col_year == params$year)
+
+filter_data |> head() 
+
+```
+
+year: `{r} params$year`
+
+
+# visualize 
+
+```{r}
+filter_data |> 
+ggplot(aes(x = temperature, y = rainFall)) + 
+    geom_point(color = params$color, size = 4, shape = 19) + 
+    ggtitle(paste0("year: ", params$year)) + 
+    theme_bw() 
+```
