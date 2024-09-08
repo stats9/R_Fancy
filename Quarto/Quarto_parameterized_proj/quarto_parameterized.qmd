@@ -50,6 +50,8 @@ year: `{r} params$year`
 # visualize 
 
 ```{r}
+
+
 filter_data |> 
 ggplot(aes(x = temperature, y = rainFall)) + 
     geom_point(color = params$color, size = 4, shape = 19) + 
