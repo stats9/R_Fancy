@@ -1,0 +1,90 @@
+---
+format: gfm 
+title: Survival Analysis and censor data 
+fig-height: 7
+fig-width: 7 
+toc: true
+aurhor: habib Ezzatabadi 
+---
+
+
+# Survival Analysis 
+
+In survival or even reliability studies, we usually define an event as the objective and main event of the study [[1]](#1).
+for example, in the discussion of survival, a trial study is conducted on patients with high blood pressure and based on the type of treatment that is offered to them. 
+If two groups are divided, determine the main outcome of patients' recovery, or in a study related to the treatment of uterine cancer 
+patients to investigate a new drug and compare its effect with a standard drug, define the death of patients as the main event. 
+In fact, censors are one of the main concepts in survival studies, and the advantage of using methods specific to such studies, 
+such as Cox regression or the Kaplan-Meier estimator, is one of the reasons for considering censors. 
+Survival analysis is used to analyze data from patients who are followed for 
+different periods of time and in whom the outcome of interest, a dichotomous event, may or may not have occurred 
+at the time the study is halted; data from all patients (cases) are used in the analysis, including data from 
+patients who dropped out, regardless of the duration of follow-up [[2]](#2). 
+Imagine that I have a cohort of bipolar patients. In this cohort, 
+I identify patients who are receiving either lithium or valproate in monotherapy. 
+I follow these patients in order to determine which drug is better at preventing relapse into a 
+mood episode. I add new patients to the cohort, if they fulfill my study selection criteria, 
+as and when they present to my center. Eighteen months later, I end the study and examine 
+the proportion of lithium and valproate patients who have relapsed. 
+Can I use a chi-square test to determine whether or not the relapse rate differs significantly 
+between the lithium and valproate groups?
+The answer is “No” because of the possibility that, regardless of whether or not the relapse 
+rates are similar, relapse may have occurred substantially earlier in one group than in the other. 
+So, can I use an independent sample t test to compare the mean time to relapse in the two groups?
+The answer is again “No”, and for two reasons. First, different patients entered the cohort at 
+different times, but the study ended on the same date for everybody; so, 
+many patients may not have relapsed by the study endpoint only because 
+they were followed for less time than others. Second, some patients 
+who had not relapsed may have dropped out because, as examples, they shifted houses or 
+withdrew consent; others may have been lost to follow-up. Data from these patients should not be 
+discarded because their medication clearly protected them from relapse, at least until the 
+time of dropout or loss to follow-up [[2]](#2). 
+
+
+# Censor data 
+
+Now that we have mentioned the survival studies and the reason for using methods other than conventional 
+statistical methods in survival data analysis, it is better to describe the censors more.
+Censors are actually participants in the study that we have information about in the study, but we are unaware of their actual survival time.
+According to what was said at the beginning of the note, we (usually) define a main goal for each survival study, 
+so a person who participated in the study but did not know whether the main goal happened to the person in question or not. 
+Let's say, so to speak, that person has become a censor, 
+now this censor may be due to the fact that the study has ended and the main event 
+desired by the researcher in the study did not happen to the person until the end of the course, 
+or for example in the middle. study, this person has been excluded from the study, or an event other 
+than the main event intended by the researcher has happened to the person during the study, for example, 
+if the main event in the study is death based on lung cancer, but during the study, the person died due to an 
+accident in be past Now that we have found a relative view of censors, it is better to have a look at the types of censors in survival studies;
+censors in the study of survival can be divided into three categories, following the book "Survival Analysis, Third Edition" by Klenbaum and Mitchell Klein.
+
+1. censor from the right: It happens when the desired event does not happen to the person until the end of the study, which may be because the person does not experience the     desired event until the end of the follow-up period, or because the desired person is in the middle of the study. He has been excluded from the study for any reason, which can be due to the occurrence of an event other than the event intended by the researcher, or he has been excluded from the study for any reason, either individual or non-individual.
+
+2. censor from the left: It happens when the person in question has experienced the event during the follow-up or even before the follow-up period of the event in question, but no definite survival has been recorded for the person since any time. For example, a person may have participated in a study, but before the start of the follow-up, the person experienced the desired event, or from the time the follow-up started to the first time of checking the status of the person, the person experienced the event, but the time of the event It refers to a time before the time of investigation, the exact time of which is not known.
+
+3. Interval censor: Interval censor occurs when the person has experienced the desired event again, but this experience of the event happened between two specific times, that is, until a certain time, for example t1, it was clear that the person was studying and did not experience the event, but at time t2, when the condition of the person was re-examined, it was found that the person experienced the desired event at a time between t1 and t2, but the exact time is not known.
+
+[[3]](#3). 
+
+If you look at the picture below, we have shown these three types of censors.
+
+![type of censors](Censors.png) 
+
+Type of Censors. 
+
+
+
+censors can also be classified based on the type of study design.
+
+  1. censors of the first type: studies that are conducted based on a specific follow-up time, from a start time to a specific end time, regardless of the number of desired events or the number of censors.
+  2. censors of the second type: studies in which follow-up is carried out until the occurrence of a certain number of desired events.
+
+
+# Reffrences 
+<a id="1">[1]</a> 
+Kleinbaum, D. G., & Klein, M. (1996). Survival analysis a self-learning text. pages:4. Springer.
+
+<a id="2">[2]</a> 
+Andrade C. Survival Analysis, Kaplan-Meier Curves, and Cox Regression: Basic Concepts. Indian J Psychol Med. 2023 Jul;45(4):434-435. doi: 10.1177/02537176231176986. Epub 2023 Jun 11. PMID: 37483572; PMCID: PMC10357905.
+
+<a id="3">[3]</a> 
+Kleinbaum, D. G., & Klein, M. (1996). Survival analysis a self-learning text. pages:5:9. Springer.
