@@ -6,6 +6,8 @@
   column](#extract-year-from-datatime-column)
 - [filter data](#filter-data)
 - [visualize](#visualize)
+- [save figures](#save-figures)
+- [define caption](#define-caption)
 
 # read data
 
@@ -69,11 +71,32 @@ year: 2022
 # visualize
 
 ``` r
-filter_data |> 
-ggplot(aes(x = temperature, y = rainFall)) + 
-    geom_point(color = params$color, size = 4, shape = 19) + 
-    ggtitle(paste0("year: ", params$year)) + 
-    theme_bw() 
+P <- filter_data |> 
+        ggplot(aes(x = temperature, y = rainFall)) + 
+        geom_point(color = params$color, size = 4, shape = 19) + 
+        ggtitle(paste0("year: ", params$year)) + 
+        theme_bw() 
 ```
 
-![](quarto_parameterized_files/figure-commonmark/unnamed-chunk-4-1.png)
+# save figures
+
+``` r
+temp1 <- paste(paste(params$year, params$color, sep = "-"), "png", sep = ".")
+temp2 <- paste("Figures", temp1, sep = "//")
+
+png(filename = temp2, width = 7, height = 7, units = "in", res = 300)
+    P 
+dev.off()
+```
+
+    png 
+      2 
+
+# define caption
+
+``` r
+capp <- sprintf("scatter of Temperature Vs RainFall in year: %d with color %s", params$year, params$color)
+```
+
+![](Figures//2022-darkblue.png) scatter of Temperature Vs RainFall in
+year: 2022 with color darkblue
