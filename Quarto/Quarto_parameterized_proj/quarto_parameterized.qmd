@@ -63,8 +63,11 @@ P <- filter_data |>
 # save figures 
 
 ```{r}
+#| output: false
+
 temp1 <- paste(paste(params$year, params$color, sep = "-"), "png", sep = ".")
 temp2 <- paste("Figures", temp1, sep = "//")
+
 
 png(filename = temp2, width = 7, height = 7, units = "in", res = 300)
     P 

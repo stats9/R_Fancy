@@ -1,0 +1,6 @@
+---
+title: parameterized for python file
+toc: true
+warning: false 
+format: gfm
+---

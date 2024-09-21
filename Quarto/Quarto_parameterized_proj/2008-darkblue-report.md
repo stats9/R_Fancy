@@ -84,13 +84,11 @@ P <- filter_data |>
 temp1 <- paste(paste(params$year, params$color, sep = "-"), "png", sep = ".")
 temp2 <- paste("Figures", temp1, sep = "//")
 
+
 png(filename = temp2, width = 7, height = 7, units = "in", res = 300)
     P 
 dev.off()
 ```
-
-    png 
-      2 
 
 # define caption
 
