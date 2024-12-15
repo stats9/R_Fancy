@@ -16,11 +16,11 @@ We want to show how to plot a Step function
 
 $$
 f(x) = \begin{cases}
-x < c_1 & \text{value}_1, \\
-c_1 \leq x < c_2 & \text{value}_2, \\
+x < c_1 & \text{value}_{(1)}, \\
+c_1 \leq x < c_2 & \text{value}_{(2)}, \\
 \vdots & \vdots \\
-c_{k-1} \leq x < c_{k} & \text{value}_{k}, \\
-x \geq c_k & \text{value}_{k + 1}
+c_{k-1} \leq x < c_{k} & \text{value}_{(k)}, \\
+x \geq c_k & \text{value}_{(k + 1)}
 \end{cases}
 $$
 
