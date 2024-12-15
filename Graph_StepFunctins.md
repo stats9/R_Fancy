@@ -8,6 +8,10 @@
     - [Example III (Heaviside
       function)](#example-iii-heaviside-function)
 
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
 
 
 # Details and Implements
@@ -18,6 +22,7 @@ $$
 f(x) = \begin{cases}
 x < c_1 & \text{value}_{(1)}, \\
 c_1 \leq x < c_2 & \text{value}_{(2)}, \\
+\vdots & \vdots \\
 c_{k-1} \leq x < c_{k} & \text{value}_{(k)}, \\
 x \geq c_k & \text{value}_{(k + 1)}
 \end{cases}
