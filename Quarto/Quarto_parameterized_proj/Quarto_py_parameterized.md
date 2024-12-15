@@ -17,8 +17,8 @@ year = 2020
 
 ``` python
 # Injected Parameters
-color = "tomato"
-year = 2016
+color = "red"
+year = 2007
 ```
 
 ------------------------------------------------------------------------
@@ -100,7 +100,7 @@ filter_data = dat2[dat2['year2'] == year]
 filter_data.shape
 ```
 
-    (52, 4)
+    (53, 4)
 
 # visualize filter data
 

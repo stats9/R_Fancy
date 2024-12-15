@@ -6,6 +6,8 @@
   column](#extract-year-from-datatime-column)
 - [filter data](#filter-data)
 - [visualize](#visualize)
+- [save figures](#save-figures)
+- [define caption](#define-caption)
 
 # read data
 
@@ -57,23 +59,42 @@ filter_data |> head()
     # A tibble: 6 × 4
       col_year year                temperature rainFall
          <dbl> <dttm>                    <dbl>    <dbl>
-    1     2014 2014-01-06 00:00:00          57       94
-    2     2014 2014-01-13 00:00:00          60       95
-    3     2014 2014-01-20 00:00:00          54      108
-    4     2014 2014-01-27 00:00:00          58      103
-    5     2014 2014-02-03 00:00:00          59       96
-    6     2014 2014-02-10 00:00:00          52      102
+    1     2019 2019-01-07 00:00:00          58      105
+    2     2019 2019-01-14 00:00:00          51      102
+    3     2019 2019-01-21 00:00:00          69      100
+    4     2019 2019-01-28 00:00:00          61      103
+    5     2019 2019-02-04 00:00:00          62       97
+    6     2019 2019-02-11 00:00:00          49      100
 
-year: 2014
+year: 2019
 
 # visualize
 
 ``` r
-filter_data |> 
-ggplot(aes(x = temperature, y = rainFall)) + 
-    geom_point(color = params$color, size = 4, shape = 19) + 
-    ggtitle(paste0("year: ", params$year)) + 
-    theme_bw() 
+P <- filter_data |> 
+        ggplot(aes(x = temperature, y = rainFall)) + 
+        geom_point(color = params$color, size = 4, shape = 19) + 
+        ggtitle(paste0("year: ", params$year)) + 
+        theme_bw() 
 ```
 
-![](quarto_parameterized_files/figure-commonmark/unnamed-chunk-4-1.png)
+# save figures
+
+``` r
+temp1 <- paste(paste(params$year, params$color, sep = "-"), "png", sep = ".")
+temp2 <- paste("Figures", temp1, sep = "//")
+
+
+png(filename = temp2, width = 7, height = 7, units = "in", res = 300)
+    P 
+dev.off()
+```
+
+# define caption
+
+``` r
+capp <- sprintf("scatter of Temperature Vs RainFall in year: %d with color %s", params$year, params$color)
+```
+
+![](Figures//2019-orange.png) scatter of Temperature Vs RainFall in
+year: 2019 with color orange

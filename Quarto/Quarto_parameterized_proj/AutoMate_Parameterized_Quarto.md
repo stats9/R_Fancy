@@ -11,8 +11,8 @@ dat <- expand.grid(color = c("darkblue", "darkgreen"),
 # dat 
 
 dat2 <- dat |> 
-        dplyr :: mutate(output_format = "gfm", 
-            output_file = paste(year, color, "report.md", sep = "-"), 
+        dplyr :: mutate(output_format = "html", 
+            output_file = paste(year, color, "report.html", sep = "-"),
             execute_params = purrr :: map2(color, year, 
             \(color, year) list(color = color, year = year))) |> 
             dplyr :: select(-c(color, year))
@@ -20,11 +20,11 @@ dat2 <- dat |>
 dat2
 ```
 
-      output_format              output_file  execute_params
-    1           gfm  2022-darkblue-report.md  darkblue, 2022
-    2           gfm 2022-darkgreen-report.md darkgreen, 2022
-    3           gfm  2008-darkblue-report.md  darkblue, 2008
-    4           gfm 2008-darkgreen-report.md darkgreen, 2008
+      output_format                output_file  execute_params
+    1          html  2022-darkblue-report.html  darkblue, 2022
+    2          html 2022-darkgreen-report.html darkgreen, 2022
+    3          html  2008-darkblue-report.html  darkblue, 2008
+    4          html 2008-darkgreen-report.html darkgreen, 2008
 
 ------------------------------------------------------------------------
 
@@ -40,123 +40,211 @@ purrr :: pwalk(
 
 
     processing file: quarto_parameterized.qmd
-    1/13                  
-    2/13 [unnamed-chunk-1]
-    3/13                  
-    4/13 [unnamed-chunk-2]
-    5/13                  
-    6/13 [unnamed-chunk-3]
-    7/13                  
-    8/13 [unnamed-chunk-4]
-    9/13                  
-    10/13 [unnamed-chunk-5]
-    11/13                  
-    12/13 [unnamed-chunk-6]
-    13/13                  
+
+      |                                                          
+      |                                                    |   0%
+      |                                                          
+      |....                                                |   8%                  
+      |                                                          
+      |........                                            |  15% [unnamed-chunk-1]
+      |                                                          
+      |............                                        |  23%                  
+      |                                                          
+      |................                                    |  31% [unnamed-chunk-2]
+      |                                                          
+      |....................                                |  38%                  
+      |                                                          
+      |........................                            |  46% [unnamed-chunk-3]
+      |                                                          
+      |............................                        |  54%                  
+      |                                                          
+      |................................                    |  62% [unnamed-chunk-4]
+      |                                                          
+      |....................................                |  69%                  
+      |                                                          
+      |........................................            |  77% [unnamed-chunk-5]
+      |                                                          
+      |............................................        |  85%                  
+      |                                                          
+      |................................................    |  92% [unnamed-chunk-6]
+      |                                                          
+      |....................................................| 100%                  
+                                                                                                                
     output file: quarto_parameterized.knit.md
 
-    pandoc --output 2022-darkblue-report.md
-      to: >-
-        commonmark+autolink_bare_uris+emoji+footnotes+gfm_auto_identifiers+pipe_tables+strikeout+task_lists+tex_math_dollars
-      from: markdown+gfm_auto_identifiers
+    pandoc --output 2022-darkblue-report.html
+      to: html
       standalone: true
+      section-divs: true
+      html-math-method: mathjax
+      wrap: none
       default-image-extension: png
       toc: true
       
     metadata
+      document-css: false
+      link-citations: true
+      date-format: long
+      lang: en
       title: template code
       
-    Output created: 2022-darkblue-report.md
+    Output created: 2022-darkblue-report.html
 
 
 
     processing file: quarto_parameterized.qmd
-    1/13                  
-    2/13 [unnamed-chunk-1]
-    3/13                  
-    4/13 [unnamed-chunk-2]
-    5/13                  
-    6/13 [unnamed-chunk-3]
-    7/13                  
-    8/13 [unnamed-chunk-4]
-    9/13                  
-    10/13 [unnamed-chunk-5]
-    11/13                  
-    12/13 [unnamed-chunk-6]
-    13/13                  
+
+      |                                                          
+      |                                                    |   0%
+      |                                                          
+      |....                                                |   8%                  
+      |                                                          
+      |........                                            |  15% [unnamed-chunk-1]
+      |                                                          
+      |............                                        |  23%                  
+      |                                                          
+      |................                                    |  31% [unnamed-chunk-2]
+      |                                                          
+      |....................                                |  38%                  
+      |                                                          
+      |........................                            |  46% [unnamed-chunk-3]
+      |                                                          
+      |............................                        |  54%                  
+      |                                                          
+      |................................                    |  62% [unnamed-chunk-4]
+      |                                                          
+      |....................................                |  69%                  
+      |                                                          
+      |........................................            |  77% [unnamed-chunk-5]
+      |                                                          
+      |............................................        |  85%                  
+      |                                                          
+      |................................................    |  92% [unnamed-chunk-6]
+      |                                                          
+      |....................................................| 100%                  
+                                                                                                                
     output file: quarto_parameterized.knit.md
 
-    pandoc --output 2022-darkgreen-report.md
-      to: >-
-        commonmark+autolink_bare_uris+emoji+footnotes+gfm_auto_identifiers+pipe_tables+strikeout+task_lists+tex_math_dollars
-      from: markdown+gfm_auto_identifiers
+    pandoc --output 2022-darkgreen-report.html
+      to: html
       standalone: true
+      section-divs: true
+      html-math-method: mathjax
+      wrap: none
       default-image-extension: png
       toc: true
       
     metadata
+      document-css: false
+      link-citations: true
+      date-format: long
+      lang: en
       title: template code
       
-    Output created: 2022-darkgreen-report.md
+    Output created: 2022-darkgreen-report.html
 
 
 
     processing file: quarto_parameterized.qmd
-    1/13                  
-    2/13 [unnamed-chunk-1]
-    3/13                  
-    4/13 [unnamed-chunk-2]
-    5/13                  
-    6/13 [unnamed-chunk-3]
-    7/13                  
-    8/13 [unnamed-chunk-4]
-    9/13                  
-    10/13 [unnamed-chunk-5]
-    11/13                  
-    12/13 [unnamed-chunk-6]
-    13/13                  
+
+      |                                                          
+      |                                                    |   0%
+      |                                                          
+      |....                                                |   8%                  
+      |                                                          
+      |........                                            |  15% [unnamed-chunk-1]
+      |                                                          
+      |............                                        |  23%                  
+      |                                                          
+      |................                                    |  31% [unnamed-chunk-2]
+      |                                                          
+      |....................                                |  38%                  
+      |                                                          
+      |........................                            |  46% [unnamed-chunk-3]
+      |                                                          
+      |............................                        |  54%                  
+      |                                                          
+      |................................                    |  62% [unnamed-chunk-4]
+      |                                                          
+      |....................................                |  69%                  
+      |                                                          
+      |........................................            |  77% [unnamed-chunk-5]
+      |                                                          
+      |............................................        |  85%                  
+      |                                                          
+      |................................................    |  92% [unnamed-chunk-6]
+      |                                                          
+      |....................................................| 100%                  
+                                                                                                                
     output file: quarto_parameterized.knit.md
 
-    pandoc --output 2008-darkblue-report.md
-      to: >-
-        commonmark+autolink_bare_uris+emoji+footnotes+gfm_auto_identifiers+pipe_tables+strikeout+task_lists+tex_math_dollars
-      from: markdown+gfm_auto_identifiers
+    pandoc --output 2008-darkblue-report.html
+      to: html
       standalone: true
+      section-divs: true
+      html-math-method: mathjax
+      wrap: none
       default-image-extension: png
       toc: true
       
     metadata
+      document-css: false
+      link-citations: true
+      date-format: long
+      lang: en
       title: template code
       
-    Output created: 2008-darkblue-report.md
+    Output created: 2008-darkblue-report.html
 
 
 
     processing file: quarto_parameterized.qmd
-    1/13                  
-    2/13 [unnamed-chunk-1]
-    3/13                  
-    4/13 [unnamed-chunk-2]
-    5/13                  
-    6/13 [unnamed-chunk-3]
-    7/13                  
-    8/13 [unnamed-chunk-4]
-    9/13                  
-    10/13 [unnamed-chunk-5]
-    11/13                  
-    12/13 [unnamed-chunk-6]
-    13/13                  
+
+      |                                                          
+      |                                                    |   0%
+      |                                                          
+      |....                                                |   8%                  
+      |                                                          
+      |........                                            |  15% [unnamed-chunk-1]
+      |                                                          
+      |............                                        |  23%                  
+      |                                                          
+      |................                                    |  31% [unnamed-chunk-2]
+      |                                                          
+      |....................                                |  38%                  
+      |                                                          
+      |........................                            |  46% [unnamed-chunk-3]
+      |                                                          
+      |............................                        |  54%                  
+      |                                                          
+      |................................                    |  62% [unnamed-chunk-4]
+      |                                                          
+      |....................................                |  69%                  
+      |                                                          
+      |........................................            |  77% [unnamed-chunk-5]
+      |                                                          
+      |............................................        |  85%                  
+      |                                                          
+      |................................................    |  92% [unnamed-chunk-6]
+      |                                                          
+      |....................................................| 100%                  
+                                                                                                                
     output file: quarto_parameterized.knit.md
 
-    pandoc --output 2008-darkgreen-report.md
-      to: >-
-        commonmark+autolink_bare_uris+emoji+footnotes+gfm_auto_identifiers+pipe_tables+strikeout+task_lists+tex_math_dollars
-      from: markdown+gfm_auto_identifiers
+    pandoc --output 2008-darkgreen-report.html
+      to: html
       standalone: true
+      section-divs: true
+      html-math-method: mathjax
+      wrap: none
       default-image-extension: png
       toc: true
       
     metadata
+      document-css: false
+      link-citations: true
+      date-format: long
+      lang: en
       title: template code
       
-    Output created: 2008-darkgreen-report.md
+    Output created: 2008-darkgreen-report.html
