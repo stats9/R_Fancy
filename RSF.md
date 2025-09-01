@@ -1,28 +1,21 @@
----
-title: RSF 
-format: gfm
-warning: false 
-toc: true
-toc-depth: 2
----
+# RSF
 
 
- 
+- [Python Section](#python-section)
+- [R section](#r-section)
+- [Random Survival Forest (RSF) in Python and
+  R](#random-survival-forest-rsf-in-python-and-r)
+  - [Python Implementation (using
+    `sksurv`)](#python-implementation-using-sksurv)
+  - [R Implementation (using
+    `randomForestSRC`)](#r-implementation-using-randomforestsrc)
+  - [Results Comparison](#results-comparison)
+  - [Interpretation and Comparison of
+    Results](#interpretation-and-comparison-of-results)
 
-```{r}
-#| include: false
-library(reticulate)
+# Python Section
 
-path <- Sys.which("python")
-path <- gsub("\\", "//", path, fixed = TRUE)
-use_python(path)
-
-```
-
-
-# Python Section 
-
-```{python}
+``` python
 # Install required packages
 # You can run this in a Jupyter cell or terminal
 
@@ -91,8 +84,25 @@ X_train, X_test, y_train, y_test = train_test_split(
 # ----------------------------------------------------------
 start_time = time.time()
 model.fit(X_train, y_train)
+```
+
+    Pipeline(steps=[('preprocessor',
+                     ColumnTransformer(transformers=[('cat', OneHotEncoder(),
+                                                      Index(['Celltype', 'Prior_therapy', 'Treatment'], dtype='object')),
+                                                     ('num', 'passthrough',
+                                                      Index(['Age_in_years', 'Karnofsky_score', 'Months_from_Diagnosis'], dtype='object'))])),
+                    ('model',
+                     RandomSurvivalForest(min_samples_leaf=15, min_samples_split=10,
+                                          n_jobs=-1, random_state=42))])
+
+``` python
 end_time = time.time()
 print(f"Python RSF execution time: {end_time - start_time:.3f} seconds")
+```
+
+    Python RSF execution time: 0.078 seconds
+
+``` python
 # ----------------------------------------------------------
 # 8. Evaluate model performance using concordance index (C-index)
 # ----------------------------------------------------------
@@ -100,15 +110,11 @@ score = model.score(X_test, y_test)
 print(f"C-index: {score:.3f}")
 ```
 
+    C-index: 0.674
 
+# R section
 
- 
-
-
-# R section 
-
-
-```{r}
+``` r
 # ----------------------------------------------------------
 # Load required packages
 # ----------------------------------------------------------
@@ -160,7 +166,11 @@ end_time <- Sys.time()
 exec_time <- as.numeric(difftime(end_time, start_time, units = "secs"))
 
 cat(sprintf("R RSF execution time: %.3f seconds\n", exec_time))
+```
 
+    R RSF execution time: 0.014 seconds
+
+``` r
 # ----------------------------------------------------------
 # 5. Predict risk scores on the test set
 # ----------------------------------------------------------
@@ -178,122 +188,114 @@ c_index <- concordance.index(
 )$c.index
 
 cat(sprintf("C-index: %.3f\n", c_index))
-
 ```
 
+    C-index: 0.362
 
-
- 
-
----
----
-
-
-> Explanatin 
+> Explanatin
 
 # Random Survival Forest (RSF) in Python and R
 
 ## Python Implementation (using `sksurv`)
 
 ### Steps
-1. **Load dataset**  
-   - The dataset `veterans_lung_cancer` is included in the `sksurv.datasets` module.  
-   - It contains survival times, event indicators, and patient covariates.
 
-2. **Preprocessing**  
-   - Categorical features are one-hot encoded using `OneHotEncoder`.  
-   - Numeric features are passed through unchanged.  
-   - A `ColumnTransformer` ensures both categorical and numeric variables are handled properly.  
-
-3. **Model specification**  
-   - A `RandomSurvivalForest` (RSF) is defined with:  
-     - `n_estimators=100`,  
-     - `min_samples_leaf=15`,  
-     - `min_samples_split=10`,  
-     - `max_features="sqrt"`.  
-
-4. **Pipeline construction**  
-   - The model pipeline combines preprocessing and RSF estimation.  
-
-5. **Train-test split**  
-   - Data is split into training (70%) and testing (30%).  
-
-6. **Model training**  
-   - Execution time is measured using `time.time()`.  
-
-7. **Evaluation**  
-   - Performance is measured using the **Concordance Index (C-index)**.  
-
+1.  **Load dataset**
+    - The dataset `veterans_lung_cancer` is included in the
+      `sksurv.datasets` module.  
+    - It contains survival times, event indicators, and patient
+      covariates.
+2.  **Preprocessing**
+    - Categorical features are one-hot encoded using `OneHotEncoder`.  
+    - Numeric features are passed through unchanged.  
+    - A `ColumnTransformer` ensures both categorical and numeric
+      variables are handled properly.
+3.  **Model specification**
+    - A `RandomSurvivalForest` (RSF) is defined with:
+      - `n_estimators=100`,  
+      - `min_samples_leaf=15`,  
+      - `min_samples_split=10`,  
+      - `max_features="sqrt"`.
+4.  **Pipeline construction**
+    - The model pipeline combines preprocessing and RSF estimation.
+5.  **Train-test split**
+    - Data is split into training (70%) and testing (30%).
+6.  **Model training**
+    - Execution time is measured using `time.time()`.
+7.  **Evaluation**
+    - Performance is measured using the **Concordance Index (C-index)**.
 
 ## R Implementation (using `randomForestSRC`)
 
 ### Steps
-1. **Load dataset**  
-   - The `veteran` dataset is included in the `survival` package.  
-   - Status variable is originally coded as `1 = censored, 2 = dead`.  
-   - It is recoded to `0 = censored, 1 = event`.  
 
-2. **Survival object**  
-   - `Surv(time, status)` is created to represent the outcome.  
-
-3. **Train-test split**  
-   - The dataset is randomly split into training (70%) and testing (30%).  
-
-4. **Model specification**  
-   - The RSF is trained with:  
-     - `ntree=100`,  
-     - `nodesize=15`,  
-     - `mtry = sqrt(p)`,  
-     - `nsplit=10`.  
-
-5. **Model training**  
-   - Execution time is measured with `Sys.time()`.  
-
-6. **Prediction**  
-   - Predictions are obtained for the test dataset using `predict()`.  
-
-7. **Evaluation**  
-   - The **C-index** is computed using `concordance.index()` from the `survcomp` package.  
-
+1.  **Load dataset**
+    - The `veteran` dataset is included in the `survival` package.  
+    - Status variable is originally coded as `1 = censored, 2 = dead`.  
+    - It is recoded to `0 = censored, 1 = event`.
+2.  **Survival object**
+    - `Surv(time, status)` is created to represent the outcome.
+3.  **Train-test split**
+    - The dataset is randomly split into training (70%) and testing
+      (30%).
+4.  **Model specification**
+    - The RSF is trained with:
+      - `ntree=100`,  
+      - `nodesize=15`,  
+      - `mtry = sqrt(p)`,  
+      - `nsplit=10`.
+5.  **Model training**
+    - Execution time is measured with `Sys.time()`.
+6.  **Prediction**
+    - Predictions are obtained for the test dataset using `predict()`.
+7.  **Evaluation**
+    - The **C-index** is computed using `concordance.index()` from the
+      `survcomp` package.
 
 ## Results Comparison
 
 | Implementation | Execution Time (seconds) | C-index |
-|----------------|---------------------------|---------|
-| Python RSF     | 0.117                     | 0.674   |
-| R RSF          | 0.017                     | 0.362   |
-
+|----------------|--------------------------|---------|
+| Python RSF     | 0.117                    | 0.674   |
+| R RSF          | 0.017                    | 0.362   |
 
 ## Interpretation and Comparison of Results
 
 ### Python Output
+
 - Execution time: about 0.117 seconds.  
-- C-index: 0.674, indicating moderate predictive discrimination.  
+- C-index: 0.674, indicating moderate predictive discrimination.
 
 ### R Output
+
 - Execution time: about 0.017 seconds (faster training).  
-- C-index: 0.362, indicating relatively poor discrimination compared to Python.  
+- C-index: 0.362, indicating relatively poor discrimination compared to
+  Python.
 
 ### Why the Results Differ
-1. **Different Implementations**  
-   - `sksurv` (Python) and `randomForestSRC` (R) are independent implementations of RSF with different default settings.  
 
-2. **C-index Calculation**  
-   - Python uses Harrell’s C-index directly via `model.score()`.  
-   - R uses `concordance.index()` which may handle ties differently.  
-
-3. **Preprocessing**  
-   - Python applies one-hot encoding to categorical variables, expanding the feature space.  
-   - R treats categorical variables as factors, which changes the splitting mechanism.  
-
-4. **Parameter Defaults**  
-   - Defaults for `mtry`, `splitrule`, and `nsplit` differ.  
-
-5. **Randomness**  
-   - RSF involves bootstrapping and random feature selection. Different seeds and implementations can yield different outcomes.  
+1.  **Different Implementations**
+    - `sksurv` (Python) and `randomForestSRC` (R) are independent
+      implementations of RSF with different default settings.
+2.  **C-index Calculation**
+    - Python uses Harrell’s C-index directly via `model.score()`.  
+    - R uses `concordance.index()` which may handle ties differently.
+3.  **Preprocessing**
+    - Python applies one-hot encoding to categorical variables,
+      expanding the feature space.  
+    - R treats categorical variables as factors, which changes the
+      splitting mechanism.
+4.  **Parameter Defaults**
+    - Defaults for `mtry`, `splitrule`, and `nsplit` differ.
+5.  **Randomness**
+    - RSF involves bootstrapping and random feature selection. Different
+      seeds and implementations can yield different outcomes.
 
 ### Final Remarks
+
 - Both implementations are valid but not numerically identical.  
-- Python’s RSF achieved a higher C-index but with slightly longer runtime.  
+- Python’s RSF achieved a higher C-index but with slightly longer
+  runtime.  
 - R’s RSF was faster but produced a weaker discrimination measure.  
-- Results should be interpreted qualitatively, not expected to match exactly across implementations.  
+- Results should be interpreted qualitatively, not expected to match
+  exactly across implementations.
