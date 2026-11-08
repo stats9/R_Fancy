@@ -1,4 +1,3 @@
-#!/usr/bin/env Rscript
 ## =============================================================================
 ## Simulation study for:
 ##   "Doubly robust calibration of lower predictive bounds for the time to a

@@ -1,4 +1,3 @@
-#!/usr/bin/env Rscript
 ## =============================================================================
 ## Simulation study for:
 ##   "Doubly robust calibration of lower predictive bounds for the time to a
@@ -7,12 +6,6 @@
 ## Target: L(X) such that P{T1* >= L(X)} >= 1 - alpha, where T1* = T if J = 1
 ##         and T1* = +Inf otherwise, with L(X) capped at a horizon tau.
 ##
-## Version 2 (2026-11-08): exact discrete compensator in prep_engine().
-## Version 3 (2026-11-08): Hajek-normalised IPCW coverage evaluator in the application.
-## Version 4 (2026-11-08): stage 'figs' (journal-style PDF figures in base R).
-## ONE FILE FOR EVERYTHING. Usage (R console / RStudio / VS Code):
-##   SIM_CORES <- 4; source("cr_all.R")
-## or from a terminal:  Rscript cr_all.R 4
 ## Optionally choose stages first, e.g. RUN_STAGES <- c("drcheck", "app")
 ##   stages: smoke, main, nsweep, rf, drcheck, app, figs   (default: all, in this order)
 ## Figures are written to out_cr/figs/ as PDF.
