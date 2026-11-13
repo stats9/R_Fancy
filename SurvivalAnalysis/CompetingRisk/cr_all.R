@@ -1,18 +1,33 @@
+#!/usr/bin/env Rscript
 ## =============================================================================
-## Simulation study for:
-##   "Doubly robust calibration of lower predictive bounds for the time to a
-##    cause-specific event under competing risks"
+##  Reproduction code for
+##    "Doubly robust calibration of lower predictive bounds for a cause-specific
+##     event time under competing risks"
+##    H. Ezzatabadipour and R. Delino
+##  Repository: https://github.com/stats9/R_Fancy
 ##
-## Target: L(X) such that P{T1* >= L(X)} >= 1 - alpha, where T1* = T if J = 1
-##         and T1* = +Inf otherwise, with L(X) capped at a horizon tau.
+##  Target: a bound L(X), capped at a horizon tau, such that
+##          P{T1* >= L(X)} >= 1 - alpha, where T1* = T if J = 1 and +Inf otherwise.
 ##
-## Optionally choose stages first, e.g. RUN_STAGES <- c("drcheck", "app")
-##   stages: smoke, main, nsweep, rf, drcheck, app, figs   (default: all, in this order)
-## Figures are written to out_cr/figs/ as PDF.
-## Code repository: https://github.com/stats9/R_Fancy
-## All output goes to the folder out_cr/. Send back the single file out_cr/ALL_RESULTS.txt
-## Approximate run time with 4 cores: about 1-1.5 hours in total.
-## Packages: survival (required), parallel (base R), randomForestSRC (only for stage 'rf').
+##  ONE COMMAND reproduces every number, table and figure in the paper:
+##      source("cr_all.R")                 # R console / RStudio / VS Code
+##      Rscript cr_all.R 4                 # terminal; 4 = number of cores
+##
+##  Requirements: R >= 4.2; packages survival, parallel (base R) and
+##  randomForestSRC (stage "rf" only). Run time with 4 cores: about 50 minutes.
+##
+##  ---------------------------------------------------------------------------
+##  OUTPUT (folder OUT_DIR, default "out_cr")           paper
+##  ---------------------------------------------------------------------------
+##  stage   files                                        result
+##  main    results_main.rds, summary_main.csv           Table 1, Figure 1
+##  nsweep  results_nsweep.rds, summary_nsweep.csv       Figure 2
+##  rf      results_rf.rds, summary_rf.csv               Scenario S6, Figure 4 / Web Fig. 1
+##  drcheck (printed in the log)                         Table A1 / Web Appendix C
+##  app     app_mgus2_alpha05.rds, app_mgus2_alpha10.rds Section 6, Figure 3
+##  figs    figs/Fig1-Fig4 (.pdf and .eps)               Figures 1-4
+##  all     ALL_RESULTS.txt: every summary table + sessionInfo()
+##  smoke   (optional, not run by default) 3 replications, a 10-second check
 ## =============================================================================
 
 suppressPackageStartupMessages({
@@ -20,6 +35,40 @@ suppressPackageStartupMessages({
   library(parallel)
 })
 
+## ============================================================================
+## SETTINGS
+## Each setting can be overridden by defining a variable of the same name
+## before calling source(), e.g.
+##     SIM_CORES <- 4; RUN_STAGES <- c("app", "figs"); source("cr_all.R")
+## ----------------------------------------------------------------------------
+##  SIM_CORES     number of cores (default 1; Rscript: first argument)
+##  RUN_STAGES    stages to run, any of "smoke", "main", "nsweep", "rf",
+##                "drcheck", "app", "figs" (default: all except "smoke")
+##  OUT_DIR       output folder (default "out_cr")
+##  FIG_DEVICE    "cairo" (default; fonts embedded; Helvetica drawn as Arial)
+##                or "base" (pdf()/postscript(); standard fonts not embedded)
+##  FIG_FAMILY    "Helvetica" (default), "Times", "Palatino", ...
+##  FIG_POINTSIZE base font size (default 9)
+##  FIG_FORMAT    "both" (default), "pdf" or "eps"
+##  FIG_NAMES     "springer" (default; Fig1-Fig4) or "descriptive"
+##                (fig_coverage, fig_nsweep, fig_app, fig_rf)
+##  FIG_SCALE     size multiplier (default 1)
+##  FIG_COLOR     TRUE (default) or FALSE for greyscale
+##  FIG_EMBED     TRUE to embed fonts with Ghostscript (only for FIG_DEVICE = "base")
+## ============================================================================
+setting <- function(name, default) {
+  if (exists(name, envir = globalenv(), inherits = FALSE)) get(name, envir = globalenv()) else default
+}
+ALL_STAGES <- c("smoke", "main", "nsweep", "rf", "drcheck", "app", "figs")
+args   <- commandArgs(trailingOnly = TRUE)
+cores  <- as.integer(setting("SIM_CORES", if (length(args) >= 1L) args[1] else 1L))
+stages <- setting("RUN_STAGES", setdiff(ALL_STAGES, "smoke"))
+OUT    <- setting("OUT_DIR", "out_cr")
+if (length(bad <- setdiff(stages, ALL_STAGES)))
+  stop("unknown stage(s): ", paste(bad, collapse = ", "),
+       ". Valid stages: ", paste(ALL_STAGES, collapse = ", "))
+
+## Simulation design (Section 5 of the paper). Changing these changes the results.
 CFG <- list(
   tau = 3,            # horizon: bounds are capped at tau
   G = 301,            # time-grid points on [0, tau]
@@ -28,11 +77,11 @@ CFG <- list(
   g_min = 0.05,       # truncation of estimated censoring survival (positivity)
   s_min = 0.02,       # truncation of estimated all-cause survival in eta
   n_test = 5000,      # test covariates; coverage is computed exactly from the true CIF
-  R = 500,            # replications per scenario (main)
+  R = 500,            # replications per scenario (stage "main")
   k1 = 1.5, b1 = 3.0, # cause 1: Weibull cause-specific hazard
   l2 = 0.15,          # cause 2: exponential cause-specific hazard
   lC = 0.80,          # censoring: exponential hazard (about 58% censored)
-  seed0 = 20261108L
+  seed0 = 20261108L   # base seed; every replication has its own fixed seed
 )
 
 ## ----------------------------------------------------------------------------
@@ -117,7 +166,7 @@ cox_grid <- function(Y, ev, X, spec, newX, tg) {
   })
 }
 
-## Random survival forests (scenario S6)
+## Random survival forests (scenario S6; needs package randomForestSRC)
 rf_grid <- function(d1, newX, tg, cfg) {
   if (!requireNamespace("randomForestSRC", quietly = TRUE))
     stop("Scenario S6 needs: install.packages('randomForestSRC')")
@@ -159,8 +208,8 @@ prep_engine <- function(A, B, Hcens, cfg) {
   B  <- pmax(B, cfg$s_min)
   ## Compensator weights w_k = 1/G(u_k) - 1/G(u_{k-1}) = dLambda*(u_k)/G(u_k), where
   ## dLambda* = -dG/G(u-) is the hazard of which G is the product integral. This keeps the
-  ## identity Delta/G(V) = 1 - int dM/G exact for step-function (Breslow) estimators.
-  ## (Using dLambda/G instead was the cause of AIPCW's excess variance in version 1.)
+  ## identity Delta/G(V) = 1 - int dM/G exact for step-function (Breslow) estimators
+  ## (Section 3.5 and Remark 3 of the paper).
   w  <- rowDiff(1 / Gm); w[, 1] <- 0
   list(A = A, B = B, Gm = Gm,
        CS1 = rowCumsum(w), CS2 = rowCumsum(w / B), CS3 = rowCumsum(w * A / B))
@@ -322,7 +371,7 @@ summarise_res <- function(df, alpha) {
 }
 
 ## ----------------------------------------------------------------------------
-## Population-level check of double robustness (Supplementary Material)
+## Population-level check of double robustness (Web Appendix C / Table A1)
 ## Constant cause-specific hazards, covariate-dependent censoring, true nuisances
 ## known in closed form; the integral is computed by the midpoint rule.
 ## ----------------------------------------------------------------------------
@@ -431,30 +480,75 @@ app_mgus2 <- function(cfg, n_split = 100L, alpha = 0.05, tau = 180, cores = 1L) 
 }
 
 ## ----------------------------------------------------------------------------
-## Figures (journal style: no titles, Times, vector PDF). Reads the saved results
-## in out_cr/, so it can be run on its own: RUN_STAGES <- "figs".
+## Figures (no titles, vector output, panel labels (a), (b), ...).
+## Built from the saved results in OUT_DIR, so stage "figs" can be run on its own.
+## Options: see FIG_* in the settings block at the top of this file.
 ## ----------------------------------------------------------------------------
-make_figures <- function(out_dir = "out_cr", alpha = 0.1) {
+fig_opts <- function() {
+  list(family = setting("FIG_FAMILY", "Helvetica"), pointsize = setting("FIG_POINTSIZE", 9),
+       format = setting("FIG_FORMAT", "both"), names = setting("FIG_NAMES", "springer"),
+       scale = setting("FIG_SCALE", 1), embed = setting("FIG_EMBED", FALSE),
+       color = setting("FIG_COLOR", TRUE), device = setting("FIG_DEVICE", "cairo"))
+}
+
+make_figures <- function(out_dir = "out_cr", alpha = 0.1, opt = fig_opts()) {
   fig_dir <- file.path(out_dir, "figs"); dir.create(fig_dir, showWarnings = FALSE)
+  stopifnot(opt$format %in% c("pdf", "eps", "both"), opt$names %in% c("descriptive", "springer"))
+  fmts <- if (opt$format == "both") c("pdf", "eps") else opt$format
+  stub <- function(desc, k) if (opt$names == "springer") paste0("Fig", k) else desc
   METH <- c("OR", "COR", "IPCW", "AIPCW", "Naive-IPCW", "Naive-AIPCW")
   LAB  <- c("OR", "COR", "IPCW", "AIPCW", "N-IPCW", "N-AIPCW")
-  COLS <- c("#4D4D4D", "#4D4D4D", "#4D4D4D", "#1F6FD1", "#E0622A", "#E0622A")
-  FILL <- adjustcolor(COLS, alpha.f = 0.15)
+  base_cols <- if (isTRUE(opt$color)) c("#4D4D4D", "#4D4D4D", "#4D4D4D", "#1F6FD1", "#E0622A", "#E0622A")
+               else c("#4D4D4D", "#4D4D4D", "#4D4D4D", "#000000", "#8C8C8C", "#8C8C8C")
+  COLS <- base_cols
+  ## solid tints instead of transparency, so that EPS output is identical to PDF
+  tint <- function(col, f = 0.85) { m <- grDevices::col2rgb(col) / 255
+    grDevices::rgb(m[1, ] + (1 - m[1, ]) * f, m[2, ] + (1 - m[2, ]) * f, m[3, ] + (1 - m[3, ]) * f) }
+  FILL <- tint(COLS)
   made <- character(0)
-  open_pdf <- function(f, w, h) pdf(file.path(fig_dir, f), width = w, height = h,
-                                    family = "Times", pointsize = 9, useDingbats = FALSE)
+  save_fig <- function(name, w, h, draw) {
+    for (fm in fmts) {
+      f <- file.path(fig_dir, paste0(name, ".", fm))
+      use_cairo <- identical(opt$device, "cairo") && isTRUE(capabilities("cairo"))
+      if (identical(opt$device, "cairo") && !use_cairo) message("cairo not available; using base devices")
+      if (use_cairo) {
+        fam <- switch(opt$family, Helvetica = "Arial", Times = "Times New Roman", opt$family)
+        if (fm == "pdf") {
+          grDevices::cairo_pdf(f, width = w * opt$scale, height = h * opt$scale, family = fam,
+                               pointsize = opt$pointsize)
+        } else {
+          grDevices::cairo_ps(f, width = w * opt$scale, height = h * opt$scale, family = fam,
+                              pointsize = opt$pointsize, onefile = FALSE, fallback_resolution = 600)
+        }
+      } else if (fm == "pdf") {
+        grDevices::pdf(f, width = w * opt$scale, height = h * opt$scale, family = opt$family,
+                       pointsize = opt$pointsize, useDingbats = FALSE)
+      } else {
+        grDevices::postscript(f, width = w * opt$scale, height = h * opt$scale, family = opt$family,
+                              pointsize = opt$pointsize, horizontal = FALSE, onefile = FALSE,
+                              paper = "special")
+      }
+      ok <- tryCatch({ draw(); TRUE }, finally = grDevices::dev.off())
+      if (isTRUE(opt$embed)) {
+        gs <- tools::find_gs_cmd()
+        if (nzchar(gs)) tryCatch(grDevices::embedFonts(f), error = function(e)
+          message("embedFonts failed for ", f, ": ", conditionMessage(e)))
+        else message("Ghostscript not found; fonts not embedded in ", f)
+      }
+      made <<- c(made, basename(f))
+    }
+  }
   tag <- function(i) mtext(sprintf("(%s)", letters[i]), side = 3, adj = 0, line = 0.25, font = 2, cex = 0.95)
   grid_h <- function(at) abline(h = at, col = "grey92", lwd = 0.6)
   rot_labels <- function(at, labs) {
     u <- par("usr")
     text(at, u[3] - 0.035 * diff(u[3:4]), labs, srt = 40, adj = c(1, 1), xpd = NA, cex = 0.9)
   }
-  ## ---- Figure 1: coverage across replications, main scenarios
-  box_panel <- function(d, ylim, i) {
+  box_panel <- function(d, ylim, i, target = 1 - alpha) {
     vals <- lapply(METH, function(m) d$cov[d$method == m])
     plot(NA, xlim = c(0.5, 6.5), ylim = ylim, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty = "n")
     yt <- pretty(ylim, 5); grid_h(yt)
-    abline(h = 1 - alpha, lty = 2, col = "grey40", lwd = 0.8)
+    abline(h = target, lty = 2, col = "grey40", lwd = 0.8)
     boxplot(vals, at = 1:6, add = TRUE, outline = FALSE, boxwex = 0.55, col = FILL, border = COLS,
             lwd = 0.8, medlwd = 1.4, whisklty = 1, staplewex = 0.35, xaxt = "n", yaxt = "n", frame.plot = FALSE)
     points(1:6, vapply(vals, mean, 0), pch = 21, bg = "white", col = COLS, cex = 0.85, lwd = 1.1)
@@ -462,18 +556,19 @@ make_figures <- function(out_dir = "out_cr", alpha = 0.1) {
     axis(1, at = 1:6, labels = FALSE, lwd = 0.6, tcl = -0.25)
     rot_labels(1:6, LAB); if (!is.null(i)) tag(i)
   }
+  whisk_range <- function(v, g) range(unlist(lapply(split(v, g), function(x) boxplot.stats(x)$stats[c(1, 5)]))) + c(-0.004, 0.004)
+
+  ## ---- Figure 1: coverage across replications, main scenarios
   f_main <- file.path(out_dir, "results_main.rds")
   if (file.exists(f_main)) {
     rm_ <- readRDS(f_main); rm_ <- rm_[rm_$method %in% METH, ]
     scs <- sort(unique(rm_$scenario))
-    ylim <- range(unlist(lapply(split(rm_$cov, interaction(rm_$scenario, rm_$method, drop = TRUE)),
-                                function(v) boxplot.stats(v)$stats[c(1, 5)])))
-    ylim <- ylim + c(-0.004, 0.004)
-    open_pdf("fig_coverage.pdf", 7.0, 4.9)
-    par(mfrow = c(2, 3), mar = c(3.7, 2.8, 1.3, 0.5), oma = c(0, 1.4, 0, 0), mgp = c(2, 0.45, 0))
-    for (k in seq_along(scs)) box_panel(rm_[rm_$scenario == scs[k], ], ylim, k)
-    mtext("Coverage", side = 2, outer = TRUE, line = 0.2, cex = 0.95)
-    dev.off(); made <- c(made, "fig_coverage.pdf")
+    ylim <- whisk_range(rm_$cov, interaction(rm_$scenario, rm_$method, drop = TRUE))
+    save_fig(stub("fig_coverage", 1), 7.0, 4.9, function() {
+      par(mfrow = c(2, 3), mar = c(3.7, 2.8, 1.3, 0.5), oma = c(0, 1.4, 0, 0), mgp = c(2, 0.45, 0))
+      for (k in seq_along(scs)) box_panel(rm_[rm_$scenario == scs[k], ], ylim, k)
+      mtext("Coverage", side = 2, outer = TRUE, line = 0.2, cex = 0.95)
+    })
   }
   ## ---- Figure 2: coverage against sample size (S1-S3; IPCW, AIPCW, COR)
   f_sw <- file.path(out_dir, "results_nsweep.rds")
@@ -485,81 +580,79 @@ make_figures <- function(out_dir = "out_cr", alpha = 0.1) {
                  m = mean(d$cov), se = sd(d$cov) / sqrt(nrow(d)))))
     ns <- sort(unique(agg$n)); scs <- sort(unique(agg$scenario))
     ylim <- range(c(agg$m - 2 * agg$se, agg$m + 2 * agg$se, 1 - alpha)) + c(-0.002, 0.002)
-    sty <- list(IPCW = list(col = "#4D4D4D", pch = 22, lty = 1, off = -0.07),
-                AIPCW = list(col = "#1F6FD1", pch = 21, lty = 1, off = 0),
-                COR = list(col = "#4D4D4D", pch = 24, lty = 3, off = 0.07))
-    open_pdf("fig_nsweep.pdf", 7.0, 2.6)
-    par(mfrow = c(1, 3), mar = c(3.2, 2.8, 1.3, 0.5), oma = c(0, 1.4, 0, 0), mgp = c(1.9, 0.45, 0))
-    for (k in seq_along(scs)) {
-      plot(NA, xlim = c(0.6, length(ns) + 0.4), ylim = ylim, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty = "n")
-      yt <- pretty(ylim, 5); grid_h(yt); abline(h = 1 - alpha, lty = 2, col = "grey40", lwd = 0.8)
-      for (m in names(sty)) {
-        a <- agg[agg$scenario == scs[k] & agg$method == m, ]; a <- a[order(a$n), ]
-        x <- match(a$n, ns) + sty[[m]]$off
-        arrows(x, a$m - 2 * a$se, x, a$m + 2 * a$se, angle = 90, code = 3, length = 0.02, col = sty[[m]]$col, lwd = 0.8)
-        lines(x, a$m, col = sty[[m]]$col, lty = sty[[m]]$lty, lwd = 1.3)
-        points(x, a$m, pch = sty[[m]]$pch, bg = "white", col = sty[[m]]$col, cex = 0.9, lwd = 1.1)
+    sty <- list(IPCW  = list(col = COLS[3], pch = 22, lty = 1, off = -0.07),
+                AIPCW = list(col = COLS[4], pch = 21, lty = 1, off = 0),
+                COR   = list(col = COLS[2], pch = 24, lty = 3, off = 0.07))
+    save_fig(stub("fig_nsweep", 2), 7.0, 2.6, function() {
+      par(mfrow = c(1, 3), mar = c(3.2, 2.8, 1.3, 0.5), oma = c(0, 1.4, 0, 0), mgp = c(1.9, 0.45, 0))
+      for (k in seq_along(scs)) {
+        plot(NA, xlim = c(0.6, length(ns) + 0.4), ylim = ylim, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty = "n")
+        yt <- pretty(ylim, 5); grid_h(yt); abline(h = 1 - alpha, lty = 2, col = "grey40", lwd = 0.8)
+        for (m in names(sty)) {
+          a <- agg[agg$scenario == scs[k] & agg$method == m, ]; a <- a[order(a$n), ]
+          x <- match(a$n, ns) + sty[[m]]$off
+          arrows(x, a$m - 2 * a$se, x, a$m + 2 * a$se, angle = 90, code = 3, length = 0.02, col = sty[[m]]$col, lwd = 0.8)
+          lines(x, a$m, col = sty[[m]]$col, lty = sty[[m]]$lty, lwd = 1.3)
+          points(x, a$m, pch = sty[[m]]$pch, bg = "white", col = sty[[m]]$col, cex = 0.9, lwd = 1.1)
+        }
+        axis(1, at = seq_along(ns), labels = ns, lwd = 0.6, tcl = -0.25, cex.axis = 0.9)
+        axis(2, at = yt, las = 1, lwd = 0.6, tcl = -0.25, cex.axis = 0.9)
+        mtext("Sample size per split", side = 1, line = 1.9, cex = 0.85); tag(k)
+        if (k == 1) legend("bottomright", legend = names(sty), col = vapply(sty, `[[`, "", "col"),
+                           pch = vapply(sty, `[[`, 0, "pch"), lty = vapply(sty, `[[`, 0, "lty"),
+                           pt.bg = "white", lwd = 1.2, bty = "n", cex = 0.85, seg.len = 2.2)
       }
-      axis(1, at = seq_along(ns), labels = ns, lwd = 0.6, tcl = -0.25, cex.axis = 0.9)
-      axis(2, at = yt, las = 1, lwd = 0.6, tcl = -0.25, cex.axis = 0.9)
-      mtext("Sample size per split", side = 1, line = 1.9, cex = 0.85); tag(k)
-      if (k == 1) legend("bottomright", legend = names(sty), col = vapply(sty, `[[`, "", "col"),
-                         pch = vapply(sty, `[[`, 0, "pch"), lty = vapply(sty, `[[`, 0, "lty"),
-                         pt.bg = "white", lwd = 1.2, bty = "n", cex = 0.85, seg.len = 2.2)
-    }
-    mtext("Mean coverage", side = 2, outer = TRUE, line = 0.2, cex = 0.95)
-    dev.off(); made <- c(made, "fig_nsweep.pdf")
+      mtext("Mean coverage", side = 2, outer = TRUE, line = 0.2, cex = 0.95)
+    })
   }
   ## ---- Figure 3: application, distribution over splits of the mean bound
   fa <- file.path(out_dir, sprintf("app_mgus2_alpha%02d.rds", c(5L, 10L)))
   if (all(file.exists(fa))) {
     aps <- lapply(fa, readRDS); tau <- aps[[1]]$tau
-    open_pdf("fig_app.pdf", 7.0, 2.8)
-    par(mfrow = c(1, 2), mar = c(3.7, 2.8, 1.3, 0.5), oma = c(0, 1.4, 0, 0), mgp = c(2, 0.45, 0))
-    for (k in 1:2) {
-      r <- aps[[k]]$results
-      vals <- lapply(METH, function(m) r$meanL[r$method == m])
-      ft <- vapply(METH, function(m) mean(r$fracTau[r$method == m]), 0)
-      plot(NA, xlim = c(0.5, 6.5), ylim = c(0, tau * 1.12), xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty = "n")
-      yt <- pretty(c(0, tau), 5); grid_h(yt)
-      abline(h = tau, lty = 2, col = "grey40", lwd = 0.8)
-      boxplot(vals, at = 1:6, add = TRUE, outline = FALSE, boxwex = 0.55, col = FILL, border = COLS, lwd = 0.8,
-              medlwd = 1.4, whisklty = 1, staplewex = 0.35, xaxt = "n", yaxt = "n", frame.plot = FALSE)
-      text(1:6, tau * 1.075, sprintf("%.0f%%", 100 * ft), cex = 0.8, col = "grey20")
-      axis(2, at = yt, las = 1, lwd = 0.6, tcl = -0.25, cex.axis = 0.9)
-      axis(1, at = 1:6, labels = FALSE, lwd = 0.6, tcl = -0.25)
-      rot_labels(1:6, LAB); tag(k)
-      mtext(bquote(alpha == .(aps[[k]]$alpha)), side = 3, adj = 1, line = 0.25, cex = 0.9)
-    }
-    mtext("Mean lower predictive bound (months)", side = 2, outer = TRUE, line = 0.2, cex = 0.95)
-    dev.off(); made <- c(made, "fig_app.pdf")
+    save_fig(stub("fig_app", 3), 7.0, 2.8, function() {
+      par(mfrow = c(1, 2), mar = c(3.7, 2.8, 1.3, 0.5), oma = c(0, 1.4, 0, 0), mgp = c(2, 0.45, 0))
+      for (k in 1:2) {
+        r <- aps[[k]]$results
+        vals <- lapply(METH, function(m) r$meanL[r$method == m])
+        ft <- vapply(METH, function(m) mean(r$fracTau[r$method == m]), 0)
+        plot(NA, xlim = c(0.5, 6.5), ylim = c(0, tau * 1.12), xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty = "n")
+        yt <- pretty(c(0, tau), 5); grid_h(yt)
+        abline(h = tau, lty = 2, col = "grey40", lwd = 0.8)
+        boxplot(vals, at = 1:6, add = TRUE, outline = FALSE, boxwex = 0.55, col = FILL, border = COLS, lwd = 0.8,
+                medlwd = 1.4, whisklty = 1, staplewex = 0.35, xaxt = "n", yaxt = "n", frame.plot = FALSE)
+        text(1:6, tau * 1.075, sprintf("%.0f%%", 100 * ft), cex = 0.8, col = "grey20")
+        axis(2, at = yt, las = 1, lwd = 0.6, tcl = -0.25, cex.axis = 0.9)
+        axis(1, at = 1:6, labels = FALSE, lwd = 0.6, tcl = -0.25)
+        rot_labels(1:6, LAB); tag(k)
+        mtext(bquote(alpha == .(sprintf("%.2f", aps[[k]]$alpha))), side = 3, adj = 1, line = 0.25, cex = 0.9)
+      }
+      mtext("Mean lower predictive bound (months)", side = 2, outer = TRUE, line = 0.2, cex = 0.95)
+    })
   }
-  ## ---- Supplementary figure: random survival forest nuisances (S6)
+  ## ---- Figure 4 (appendix / Web Figure 1): random survival forest nuisances (S6)
   f_rf <- file.path(out_dir, "results_rf.rds")
   if (file.exists(f_rf)) {
     rr <- readRDS(f_rf); rr <- rr[rr$method %in% METH, ]
-    ylim <- range(unlist(lapply(split(rr$cov, rr$method), function(v) boxplot.stats(v)$stats[c(1, 5)]))) + c(-0.004, 0.004)
-    open_pdf("fig_rf.pdf", 3.5, 2.9)
-    par(mar = c(3.7, 3.4, 0.6, 0.5), mgp = c(2.3, 0.45, 0))
-    box_panel(rr, ylim, NULL); mtext("Coverage", side = 2, line = 2.3, cex = 0.95)
-    dev.off(); made <- c(made, "fig_rf.pdf")
+    ylim <- whisk_range(rr$cov, rr$method)
+    save_fig(stub("fig_rf", 4), 3.5, 2.9, function() {
+      par(mar = c(3.7, 3.4, 0.6, 0.5), mgp = c(2.3, 0.45, 0))
+      box_panel(rr, ylim, NULL); mtext("Coverage", side = 2, line = 2.3, cex = 0.95)
+    })
   }
   made
 }
 
-## ----------------------------------------------------------------------------
-## Driver
-## ----------------------------------------------------------------------------
-args   <- commandArgs(trailingOnly = TRUE)
-cores  <- if (exists("SIM_CORES")) as.integer(SIM_CORES) else if (length(args) >= 1L) as.integer(args[1]) else 1L
-stages <- if (exists("RUN_STAGES")) RUN_STAGES else c("smoke", "main", "nsweep", "rf", "drcheck", "app", "figs")
-OUT <- "out_cr"; dir.create(OUT, showWarnings = FALSE)
+## ============================================================================
+## RUN
+## ============================================================================
+dir.create(OUT, showWarnings = FALSE, recursive = TRUE)
 LOG <- file.path(OUT, "ALL_RESULTS.txt")
-cat(sprintf("cr_all.R version 4 | run started %s | cores = %d | stages: %s\n\n",
-            format(Sys.time()), cores, paste(stages, collapse = ", ")), file = LOG)
+cat(sprintf("Reproduction run started %s | %s | cores = %d | stages: %s\n\n",
+            format(Sys.time()), R.version.string, cores, paste(stages, collapse = ", ")), file = LOG)
 logp <- function(x) { txt <- capture.output(print(x)); writeLines(txt); cat(txt, sep = "\n", file = LOG, append = TRUE) }
 logc <- function(...) { txt <- sprintf(...); cat(txt, "\n"); cat(txt, "\n", file = LOG, append = TRUE) }
 
+## Run a list of (scenario, n, R) cells, save per-replication results and the summary
 run_plan <- function(tag, plan) {
   all_res <- list()
   for (p in plan) {
@@ -577,6 +670,7 @@ run_plan <- function(tag, plan) {
   invisible(summ)
 }
 
+## Run one stage if requested; a failing stage is reported and the others continue
 stage <- function(name, expr) {
   if (!(name %in% stages)) return(invisible(NULL))
   t0 <- Sys.time()
@@ -586,22 +680,33 @@ stage <- function(name, expr) {
        as.numeric(difftime(Sys.time(), t0, units = "mins")))
 }
 
-stage("smoke",  run_plan("smoke", list(list(sc = "S1", n = 1000, R = 3))))
-stage("main",   run_plan("main", lapply(c("S0", "S1", "S2", "S3", "S4", "S5"),
-                                        function(s) list(sc = s, n = 1000, R = CFG$R))))
+## Quick check (not part of the paper)
+stage("smoke", run_plan("smoke", list(list(sc = "S1", n = 1000, R = 3))))
+
+## Table 1 and Figure 1: scenarios S0-S5, n = 1000 per split, 500 replications
+stage("main", run_plan("main", lapply(c("S0", "S1", "S2", "S3", "S4", "S5"),
+                                      function(s) list(sc = s, n = 1000, R = CFG$R))))
+
+## Figure 2: scenarios S1-S3 with n = 500 and 2000 per split, 300 replications
 stage("nsweep", run_plan("nsweep", unlist(lapply(c("S1", "S2", "S3"), function(s)
-                  lapply(c(500, 2000), function(nn) list(sc = s, n = nn, R = 300))), recursive = FALSE)))
+  lapply(c(500, 2000), function(nn) list(sc = s, n = nn, R = 300))), recursive = FALSE)))
+
+## Scenario S6 (random survival forests), 200 replications
 stage("rf", {
   if (!requireNamespace("randomForestSRC", quietly = TRUE))
-    stop("package randomForestSRC not installed; run install.packages('randomForestSRC')")
+    stop("package randomForestSRC is required: install.packages('randomForestSRC')")
   run_plan("rf", list(list(sc = "S6", n = 1000, R = 200)))
 })
+
+## Table A1 / Web Appendix C
 stage("drcheck", {
   logc("===== POPULATION-LEVEL DOUBLE-ROBUSTNESS CHECK =====")
   dc <- dr_check()
   logc("true coverage psi = %.4f (Monte Carlo s.e. of IPCW with true G about %.4f)", dc$psi, dc$mc_se)
   logp(dc$table)
 })
+
+## Section 6: mgus2 application at alpha = 0.05 and 0.10, 100 random splits each
 stage("app", {
   for (a in c(0.05, 0.10)) {
     ap <- app_mgus2(CFG, n_split = 100L, alpha = a, tau = 180, cores = cores)
@@ -612,9 +717,12 @@ stage("app", {
     logp(sm)
   }
 })
+
+## Figures 1-4 (from the saved results)
 stage("figs", {
   made <- make_figures(OUT, alpha = CFG$alpha)
   logc("===== FIGURES written to %s: %s", file.path(OUT, "figs"), paste(made, collapse = ", "))
 })
+
 logp(sessionInfo())
-logc("\nALL DONE %s. Please send back: %s", format(Sys.time()), normalizePath(LOG))
+logc("\nDone %s. Summary of all results: %s", format(Sys.time()), normalizePath(LOG))
