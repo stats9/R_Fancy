@@ -1,4 +1,3 @@
-#!/usr/bin/env Rscript
 ## =============================================================================
 ##  Reproduction code for
 ##    "Doubly robust calibration of lower predictive bounds for a cause-specific
